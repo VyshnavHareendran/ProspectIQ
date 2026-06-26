@@ -1,0 +1,11 @@
+business_name,category,phone,website,address,city,rating,review_count,description,data_source
+ABC Builders,Construction,9876543210,https://abcbuilders.com,MG Road,Kochi,4.5,120,Construction company,Manual
+Green Leaf Restaurant,Restaurant,9876543211,https://greenleaf.com,Kakkanad,Kochi,4.3,85,Family restaurant,Manual
+TechNova Solutions,IT Services,9876543212,https://technova.com,Infopark,Ernakulam,4.8,210,Software company,Manual
+Royal Furniture,Furniture,9876543213,https://royalfurniture.in,Kottayam Town,Kottayam,4.1,65,Furniture showroom,Manual
+Sunrise Traders,Retail,9876543214,,Thrissur Main Road,Thrissur,3.9,40,Retail supplier,Manual
+Ocean Travels,Travel Agency,9876543215,https://oceantravels.in,Marine Drive,Kochi,4.6,95,Travel services,Manual
+Elite Fitness Gym,Fitness,9876543216,https://elitefitness.com,Edappally,Ernakulam,4.4,150,Fitness center,Manual
+Smart Electronics,Electronics,9876543217,,Mavoor Road,Kozhikode,4.0,55,Electronics store,Manual
+Bright Dental Clinic,Healthcare,9876543218,https://brightdental.com,Kaloor,Kochi,4.7,180,Dental clinic,Manual
+Dream Homes Realty,Real Estate,9876543219,https://dreamhomesrealty.com,Technopark Road,Trivandrum,4.2,75,Real estate agency,Manual

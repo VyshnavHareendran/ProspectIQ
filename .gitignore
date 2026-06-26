@@ -1,0 +1,41 @@
+# Python
+backend/venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environment Variables
+backend/.env
+
+# Alembic Cache
+backend/alembic/__pycache__/
+
+# Python Cache
+.pytest_cache/
+.mypy_cache/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# React
+frontend/node_modules/
+frontend/build/
+
+# Python
+*.sqlite3
+
+# IDE
+.idea/
+
+# Bytecode
+*.egg-info/
+dist/
+build/
