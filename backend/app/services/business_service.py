@@ -52,4 +52,31 @@ class BusinessService:
 
         
         # Save Business
+
         return self.repository.create(business)
+    
+    def get_all_businesses(self):
+            """
+            Retrieve all active businesses.
+            """
+            return self.repository.get_all()
+
+    def get_business_by_id(
+        self,
+        business_id: int
+    ):
+        """
+        Retrieve a single business.
+        """
+
+        business = self.repository.get_by_id(
+            business_id
+        )
+
+        if not business:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Business not found."
+            )
+
+        return business

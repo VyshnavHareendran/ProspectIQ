@@ -54,3 +54,35 @@ def create_business(
         business_data=business_data,
         created_by=current_user.id
     )
+
+@router.get(
+    "",
+    response_model=list[BusinessResponse]
+)
+def get_all_businesses(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get all active businesses.
+    """
+
+    repository = BusinessRepository(db)
+
+    service = BusinessService(repository)
+
+    return service.get_all_businesses()
+
+@router.get(
+    "/{business_id}",
+    response_model=BusinessResponse
+)
+def get_business(
+    business_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    repository = BusinessRepository(db)
+    service = BusinessService(repository)
+
+    return service.get_business_by_id(business_id)

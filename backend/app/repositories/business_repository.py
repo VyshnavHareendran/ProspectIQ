@@ -59,10 +59,19 @@ class BusinessRepository:
             .first()
         )
 
-def get_all(self):
+    def get_all(self):
 
-    return (
-        self.db.query(Business)
-        .filter(Business.is_active == True)
-        .all()
-    )
+        businesses = (
+            self.db.query(Business)
+            .filter(Business.is_active == True)
+            .all()
+        )
+
+        return businesses
+    
+    def get_all_businesses(self):
+        """
+        Retrieve all active businesses.
+        """
+
+        return self.repository.get_all()
