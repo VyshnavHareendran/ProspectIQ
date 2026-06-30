@@ -75,3 +75,45 @@ class BusinessRepository:
         """
 
         return self.repository.get_all()
+    
+    def update(
+    self,
+    business: Business
+    ):
+        self.db.commit()
+        self.db.refresh(business)
+        return business
+
+
+    def find_duplicate_for_update(
+        self,
+        business: Business,
+        business_id: int
+    ):
+        return (
+            self.db.query(Business)
+            .filter(
+                Business.id != business_id,
+                (
+                    (Business.phone_number == business.phone_number) |
+                    (Business.google_maps_link == business.google_maps_link)
+                )
+            )
+            .first()
+        )
+    
+    def soft_delete(
+    self,
+    business: Business
+    ):
+        """
+        Soft delete a business.
+        """
+
+        business.is_active = False
+
+        self.db.commit()
+
+        self.db.refresh(business)
+
+        return business

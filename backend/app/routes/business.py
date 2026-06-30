@@ -8,6 +8,7 @@ from app.models.user import User
 
 from app.schemas.business import (
     BusinessCreate,
+    BusinessUpdate,
     BusinessResponse
 )
 
@@ -86,3 +87,52 @@ def get_business(
     service = BusinessService(repository)
 
     return service.get_business_by_id(business_id)
+
+@router.put(
+    "/{business_id}",
+    response_model=BusinessResponse
+)
+def update_business(
+    business_id: int,
+    business_data: BusinessUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Update an existing business.
+
+    Accessible by:
+    - Admin
+    - Employee
+    """
+
+    repository = BusinessRepository(db)
+
+    service = BusinessService(repository)
+
+    return service.update_business(
+        business_id=business_id,
+        business_data=business_data,
+        updated_by=current_user.id
+    )
+
+@router.delete(
+    "/{business_id}"
+)
+def delete_business(
+    business_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+
+    repository = BusinessRepository(db)
+
+    service = BusinessService(repository)
+
+    service.delete_business(
+        business_id
+    )
+
+    return {
+        "message": "Business deleted successfully."
+    }
