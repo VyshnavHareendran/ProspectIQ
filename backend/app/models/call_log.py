@@ -53,4 +53,4 @@ class CallLog(Base):
 
     business = relationship("Business", back_populates="call_logs")
     
-    employee = relationship("User")
+    employee = relationship("User", back_populates="call_logs")
