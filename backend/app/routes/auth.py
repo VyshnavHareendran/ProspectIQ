@@ -6,6 +6,15 @@ from app.schemas.auth import LoginRequest, LoginResponse
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
 
+from app.dependencies.auth import (
+    get_current_user,
+    get_current_admin
+)
+from app.models.user import User
+from app.schemas.auth import CurrentUserResponse
+
+from fastapi.security import OAuth2PasswordRequestForm
+
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"]
@@ -37,3 +46,51 @@ def login(
         )
 
     return result
+
+@router.post(
+    "/token",
+    response_model=LoginResponse
+)
+def login_for_swagger(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db)
+):
+    """
+    OAuth2 login for Swagger UI.
+    """
+
+    user_repository = UserRepository(db)
+
+    auth_service = AuthService(user_repository)
+
+    result = auth_service.login(
+        email=form_data.username,
+        password=form_data.password
+    )
+
+    if not result:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    return result
+
+@router.get(
+    "/me",
+    response_model=CurrentUserResponse
+)
+def get_me(
+    current_user: User = Depends(get_current_user)
+):
+    return current_user
+
+@router.get("/admin-test")
+def admin_test(
+    current_user: User = Depends(get_current_admin)
+):
+    return {
+        "message": "Welcome Admin!",
+        "logged_in_as": current_user.full_name,
+        "role": current_user.role
+    }
