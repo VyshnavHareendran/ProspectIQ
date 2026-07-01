@@ -7,6 +7,7 @@ from app.schemas.business import (
     BusinessUpdate
 )
 
+from typing import Optional
 
 class BusinessService:
 
@@ -58,11 +59,30 @@ class BusinessService:
 
         return self.repository.create(business)
     
-    def get_all_businesses(self):
-            """
-            Retrieve all active businesses.
-            """
-            return self.repository.get_all()
+    def get_all_businesses(
+    self,
+    search: Optional[str] = None,
+    city: Optional[str] = None,
+    category: Optional[str] = None,
+    sort_by: str = "created_at",
+    sort_order: str = "desc",
+    page: int = 1,
+    page_size: int = 20
+    ):
+        """
+        Retrieve businesses with optional search,
+        filtering, sorting and pagination.
+        """
+
+        return self.repository.get_all(
+            search=search,
+            city=city,
+            category=category,
+            sort_by=sort_by,
+            sort_order=sort_order,
+            page=page,
+            page_size=page_size
+        )
 
     def get_business_by_id(
         self,
@@ -139,19 +159,6 @@ class BusinessService:
         # Save changes
         return self.repository.update(business)
     
-
-    def soft_delete(
-    self,
-    business: Business
-    ):
-
-        business.is_active = False
-
-        self.db.commit()
-
-        self.db.refresh(business)
-
-        return business
     
     def delete_business(
     self,
@@ -174,3 +181,4 @@ class BusinessService:
         return self.repository.soft_delete(
             business
         )
+    

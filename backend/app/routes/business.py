@@ -9,12 +9,15 @@ from app.models.user import User
 from app.schemas.business import (
     BusinessCreate,
     BusinessUpdate,
-    BusinessResponse
+    BusinessResponse,
+    BusinessListResponse
 )
 
 from app.repositories.business_repository import BusinessRepository
 from app.services.business_service import BusinessService
 
+from typing import Optional
+from fastapi import Query
 
 router = APIRouter(
     prefix="/businesses",
@@ -56,23 +59,34 @@ def create_business(
         created_by=current_user.id
     )
 
+
 @router.get(
     "",
-    response_model=list[BusinessResponse]
+    response_model=BusinessListResponse
 )
 def get_all_businesses(
+    search: Optional[str] = Query(None),
+    city: Optional[str] = Query(None),
+    category: Optional[str] = Query(None),
+    sort_by: str = Query("created_at"),
+    sort_order: str = Query("desc"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=100),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    """
-    Get all active businesses.
-    """
-
     repository = BusinessRepository(db)
-
     service = BusinessService(repository)
 
-    return service.get_all_businesses()
+    return service.get_all_businesses(
+        search=search,
+        city=city,
+        category=category,
+        sort_by=sort_by,
+        sort_order=sort_order,
+        page=page,
+        page_size=page_size
+    )
 
 @router.get(
     "/{business_id}",
@@ -136,3 +150,5 @@ def delete_business(
     return {
         "message": "Business deleted successfully."
     }
+
+

@@ -4,6 +4,9 @@ from app.models.business import Business
 
 from sqlalchemy import or_, and_
 
+from typing import Optional
+from sqlalchemy import asc, desc
+
 class BusinessRepository:
 
     def __init__(self, db: Session):
@@ -59,22 +62,88 @@ class BusinessRepository:
             .first()
         )
 
-    def get_all(self):
+    def get_all(
+    self,
+    search=None,
+    city=None,
+    category=None,
+    sort_by="created_at",
+    sort_order="desc",
+    page=1,
+    page_size=20
+    ):
 
-        businesses = (
+        query = (
             self.db.query(Business)
             .filter(Business.is_active == True)
+        )
+
+        if search:
+
+            query = query.filter(
+                or_(
+                    Business.business_name.ilike(f"%{search}%"),
+                    Business.category.ilike(f"%{search}%"),
+                    Business.city.ilike(f"%{search}%"),
+                    Business.phone_number.ilike(f"%{search}%"),
+                    Business.email.ilike(f"%{search}%")
+                )
+            )
+
+        if city:
+
+            query = query.filter(
+                Business.city == city
+            )
+
+        if category:
+
+            query = query.filter(
+                Business.category == category
+            )
+
+        allowed_sort_fields = {
+            "business_name": Business.business_name,
+            "google_rating": Business.google_rating,
+            "created_at": Business.created_at,
+            "city": Business.city
+        }
+
+        sort_column = allowed_sort_fields.get(
+            sort_by,
+            Business.created_at
+        )
+
+        if sort_order.lower() == "asc":
+
+            query = query.order_by(
+                asc(sort_column)
+            )
+
+        else:
+
+            query = query.order_by(
+                desc(sort_column)
+            )
+
+        total = query.count()
+
+        businesses = (
+            query
+            .offset((page - 1) * page_size)
+            .limit(page_size)
             .all()
         )
 
-        return businesses
-    
-    def get_all_businesses(self):
-        """
-        Retrieve all active businesses.
-        """
-
-        return self.repository.get_all()
+        return {
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (
+                total + page_size - 1
+            ) // page_size,
+            "items": businesses
+        }
     
     def update(
     self,
@@ -117,3 +186,5 @@ class BusinessRepository:
         self.db.refresh(business)
 
         return business
+    
+    
