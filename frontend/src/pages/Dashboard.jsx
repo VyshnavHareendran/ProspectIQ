@@ -123,26 +123,26 @@ const Dashboard = () => {
     {
       title: 'Total Businesses',
       value: businessSummary.total.toLocaleString(),
-      helperText: 'Live count from businesses API',
+      helperText: 'Live count of Businesses.',
       icon: BusinessCenterRoundedIcon,
       loading: isLoadingBusinesses,
     },
     {
       title: 'High Priority Leads',
       value: '—',
-      helperText: 'Placeholder until scoring dashboard is approved',
+    //   helperText: 'Placeholder until scoring dashboard is approved',
       icon: PriorityHighRoundedIcon,
     },
     {
       title: "Today's Calls",
       value: '—',
-      helperText: 'Placeholder until call workflow is approved',
+    //   helperText: 'Placeholder until call workflow is approved',
       icon: CallRoundedIcon,
     },
     {
       title: 'New Businesses This Week',
       value: '—',
-      helperText: 'Placeholder metric for future reporting',
+    //   helperText: 'Placeholder metric for future reporting',
       icon: AddBusinessRoundedIcon,
     },
   ]
