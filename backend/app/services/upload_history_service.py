@@ -1,4 +1,4 @@
-from fastapi import HTTPException, status
+from fastapi import HTTPException, UploadFile, status
 
 from app.models.upload_history import UploadHistory
 from app.repositories.upload_history_repository import UploadHistoryRepository
@@ -6,6 +6,8 @@ from app.schemas.upload_history import UploadHistoryCreate
 
 from app.csv.csv_reader import CSVReader
 from app.csv.preview_generator import PreviewGenerator
+
+from app.storage.file_storage import FileStorage
 
 
 class UploadHistoryService:
@@ -21,8 +23,10 @@ class UploadHistoryService:
         upload_data: UploadHistoryCreate,
         uploaded_by: int
     ):
+
         upload = UploadHistory(
             filename=upload_data.filename,
+            stored_file_path=upload_data.stored_file_path,
             file_type=upload_data.file_type,
             source_type=upload_data.source_type,
             source_name=upload_data.source_name,
@@ -40,12 +44,14 @@ class UploadHistoryService:
         return self.repository.create(upload)
 
     def get_all_uploads(self):
+
         return self.repository.get_all()
 
     def get_upload_by_id(
         self,
         upload_id: int
     ):
+
         upload = self.repository.get_by_id(upload_id)
 
         if not upload:
@@ -55,22 +61,48 @@ class UploadHistoryService:
             )
 
         return upload
-    
-
-    from fastapi import UploadFile
 
     async def preview_csv(
         self,
-        file: UploadFile
-        ):
-            """
-            Read CSV and generate preview.
-            """
+        file: UploadFile,
+        uploaded_by: int
+    ):
+        """
+        Save uploaded CSV,
+        create upload session,
+        generate preview.
+        """
 
-            dataframe = await CSVReader.read(file)
+        # Step 1: Save the uploaded file
+        saved = await FileStorage.save(file)
 
-            preview = PreviewGenerator.generate(
-                dataframe
-            )
+        # Step 2: Create UploadHistory schema
+        upload = UploadHistoryCreate(
+            filename=file.filename,
+            stored_file_path=saved["path"],
+            file_type="CSV",
+            source_type="CSV",
+            source_name=file.filename
+        )
 
-            return preview
+        # Step 3: Save upload history
+        history = self.create_upload(
+            upload,
+            uploaded_by
+        )
+
+        # Step 4: Read the saved CSV
+        dataframe = CSVReader.read_from_path(
+            saved["path"]
+        )
+
+        # Step 5: Generate preview
+        preview = PreviewGenerator.generate(
+            dataframe
+        )
+
+        # Step 6: Return upload session + preview
+        return {
+            "upload_id": history.id,
+            **preview
+        }

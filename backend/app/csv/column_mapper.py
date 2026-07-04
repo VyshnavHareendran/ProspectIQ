@@ -1,4 +1,4 @@
-#Maps CSV headers to database fields.
+# Maps CSV headers to database fields.
 
 class ColumnMapper:
 
@@ -122,4 +122,19 @@ class ColumnMapper:
             "suggested_mapping": mapping,
             "unmapped_columns": unmapped
         }
-    
+
+    @staticmethod
+    def apply_mapping(
+        dataframe,
+        mapping: dict
+    ):
+        """
+        Rename CSV columns using the
+        mapping confirmed by the frontend.
+        """
+
+        dataframe = dataframe.rename(
+            columns=mapping
+        )
+
+        return dataframe

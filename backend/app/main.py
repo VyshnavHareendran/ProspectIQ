@@ -6,6 +6,7 @@ from app.routes.business import router as business_router
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.upload_history import router as upload_router
+from app.routes.import_route import router as import_router
 
 app = FastAPI(
     title="ProspectIQ",
@@ -25,6 +26,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(business_router)
 app.include_router(upload_router)
+app.include_router(import_router)
 
 @app.get("/")
 def home():

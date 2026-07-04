@@ -10,6 +10,11 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
+# revision identifiers, used by Alembic.
+revision = "ded484e1d968"
+down_revision = "af3ada67cacf"
+branch_labels = None
+depends_on = None
 
 def upgrade():
     op.add_column(
@@ -59,3 +64,6 @@ def upgrade():
             nullable=True
         )
     )
+
+    
+

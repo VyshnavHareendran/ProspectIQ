@@ -16,3 +16,13 @@ class UserRepository:
             .filter(User.email == email)
             .first()
         )
+    
+    def create(
+    self,
+    user: User
+    ):
+        self.db.add(user)
+        self.db.commit()
+        self.db.refresh(user)
+
+        return user

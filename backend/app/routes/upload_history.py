@@ -94,4 +94,7 @@ async def preview_business_csv(
 
     service = UploadHistoryService(repository)
 
-    return await service.preview_csv(file)
+    return await service.preview_csv(
+    file=file,
+    uploaded_by=current_user.id
+    )

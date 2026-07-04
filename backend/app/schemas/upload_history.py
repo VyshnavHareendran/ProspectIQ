@@ -3,8 +3,10 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+
 class UploadHistoryCreate(BaseModel):
     filename: str
+    stored_file_path: str
     file_type: str
     source_type: str = "CSV"
     source_name: Optional[str] = None

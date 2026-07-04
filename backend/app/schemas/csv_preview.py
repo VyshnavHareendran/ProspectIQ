@@ -5,6 +5,8 @@ from pydantic import BaseModel
 
 class CSVPreviewResponse(BaseModel):
 
+    upload_id: int
+
     columns: list[str]
 
     total_rows: int
