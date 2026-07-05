@@ -187,4 +187,62 @@ class BusinessRepository:
 
         return business
     
+    def find_duplicate_from_dict(
+    self,
+    row: dict
+    ):
+        """
+        Check whether a business already exists
+        using imported CSV data.
+        """
+
+        return (
+            self.db.query(Business)
+            .filter(
+                or_(
+
+                    Business.google_maps_link ==
+                    row.get("google_maps_link"),
+
+                    Business.website_url ==
+                    row.get("website_url"),
+
+                    Business.phone_number ==
+                    row.get("phone_number"),
+
+                    and_(
+
+                        Business.business_name ==
+                        row.get("business_name"),
+
+                        Business.address ==
+                        row.get("address")
+
+                    )
+                )
+            )
+            .first()
+        )
+    
+    def bulk_create(
+    self,
+    businesses: list[Business]
+    ):
+        """
+        Bulk insert businesses.
+        """
+
+        self.db.add_all(
+            businesses
+        )
+
+        self.db.commit()
+
+        for business in businesses:
+            self.db.refresh(
+                business
+            )
+
+        return businesses
+    
     
