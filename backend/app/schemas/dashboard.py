@@ -6,10 +6,12 @@ from datetime import datetime
 class DashboardSummaryResponse(BaseModel):
 
     total_businesses: int
-    active_businesses: int
-    inactive_businesses: int
-    total_imports: int
-    completed_imports: int
+
+    high_priority_leads: int
+
+    today_calls: int
+
+    new_businesses_this_week: int
 
 
 class CityDistributionResponse(BaseModel):
@@ -53,3 +55,49 @@ class ImportSummaryResponse(BaseModel):
     processing_imports: int
 
     total_records_imported: int
+
+
+from datetime import datetime
+
+from pydantic import BaseModel
+
+
+class RecentUploadResponse(BaseModel):
+
+    id: int
+
+    filename: str
+
+    file_type: str
+
+    source_type: str
+
+    source_name: str | None = None
+
+    total_records: int
+
+    valid_records: int
+
+    invalid_records: int
+
+    duplicate_records: int
+
+    status: str
+
+    remarks: str | None = None
+
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class RecentActivityResponse(BaseModel):
+
+    type: str
+
+    title: str
+
+    description: str
+
+    created_at: datetime

@@ -14,7 +14,9 @@ from app.schemas.dashboard import (
     CityDistributionResponse,
     CategoryDistributionResponse,
     RecentBusinessResponse,
-    ImportSummaryResponse
+    ImportSummaryResponse,
+    RecentUploadResponse,
+    RecentActivityResponse
 )
 
 router = APIRouter(
@@ -92,3 +94,46 @@ def get_import_summary(
     service = DashboardService(repository)
 
     return service.get_import_summary()
+
+
+@router.get(
+    "/top-rated-businesses",
+    response_model=List[RecentBusinessResponse]
+)
+def get_top_rated_businesses(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+
+    service = DashboardService(repository)
+
+    return service.get_top_rated_businesses()
+
+@router.get(
+    "/recent-uploads",
+    response_model=List[RecentUploadResponse]
+)
+def get_recent_uploads(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+
+    service = DashboardService(repository)
+
+    return service.get_recent_uploads()
+
+@router.get(
+    "/recent-activity",
+    response_model=List[RecentActivityResponse]
+)
+def get_recent_activity(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+
+    service = DashboardService(repository)
+
+    return service.get_recent_activity()
