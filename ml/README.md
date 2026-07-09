@@ -58,7 +58,7 @@ The dataset is not included in this repository because of its size.
 
 You can download it from Google Drive:
 
-**Dataset:** [Google Drive Folder](https://drive.google.com/drive/folders/1aB1j7A9skLgp2fodD8ODpbWIiI725zLA?usp=sharing)
+**Dataset:** [Google Drive Folder](https://drive.google.com/drive/folders/1aB1j7A9skLgp2fodD8ODpbWIil725zLA?usp=sharing)
 
  **Note:** After downloading, update the dataset path in the notebook before running the project.
 
