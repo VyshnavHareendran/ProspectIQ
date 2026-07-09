@@ -77,25 +77,23 @@ const DashboardLayout = ({ children }) => {
           }}
         >
           <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            alignItems={{ xs: 'flex-start', sm: 'flex-end' }}
-            justifyContent="space-between"
-            spacing={1.5}
-          >
-            <Box>
-              <Typography color="text.secondary" variant="body2" fontWeight={500}>
-                Welcome back,
-              </Typography>
-              <Typography component="h2" variant="h2" sx={{ mt: 0.25 }}>
-                {user?.full_name || 'there'}
-              </Typography>
-            </Box>
-
-            <Typography color="text.secondary" variant="body2">
-              {dateFormatter.format(new Date())}
-            </Typography>
-          </Stack>
-
+  direction="row"
+  justifyContent="flex-end"
+  alignItems="center"
+  sx={{
+    mb: 3,
+  }}
+>
+  <Typography
+    variant="body2"
+    color="text.secondary"
+    sx={{
+      fontWeight: 500,
+    }}
+  >
+    {dateFormatter.format(new Date())}
+  </Typography>
+</Stack>
           <Box sx={{ mt: { xs: 3, sm: 4 } }}>{children ?? <Outlet />}</Box>
         </Box>
       </Box>

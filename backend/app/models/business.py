@@ -58,7 +58,7 @@ class Business(Base):
     status = Column(
     String(30),
     default="NEW",
-    nullable=False
+    nullable=True
     )
 
     last_contacted_at = Column(
