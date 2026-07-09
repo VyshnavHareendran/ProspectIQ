@@ -11,6 +11,8 @@ from app.routes.import_route import router as import_router
 from app.routes.dashboard import router as dashboard_router
 from app.routes.call_log import router as call_log_router
 
+from app.routes.report import router as report_router
+
 app = FastAPI(
     title="ProspectIQ",
     version="1.0.0"
@@ -32,6 +34,7 @@ app.include_router(upload_router)
 app.include_router(import_router)
 app.include_router(dashboard_router)
 app.include_router(call_log_router)
+app.include_router(report_router)
 
 @app.get("/")
 def home():
