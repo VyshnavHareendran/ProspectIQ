@@ -43,6 +43,8 @@ class Business(Base):
 
     city = Column(String(100), index=True, nullable=False)
 
+    state = Column(String(100), nullable=True, index=True)
+
     google_maps_link = Column(Text, unique=True, nullable=False)
 
     #Business Metrics

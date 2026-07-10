@@ -85,6 +85,7 @@ class BusinessRepository:
                     Business.business_name.ilike(f"%{search}%"),
                     Business.category.ilike(f"%{search}%"),
                     Business.city.ilike(f"%{search}%"),
+                    Business.state.ilike(f"%{search}%"),
                     Business.phone_number.ilike(f"%{search}%"),
                     Business.email.ilike(f"%{search}%")
                 )

@@ -53,6 +53,12 @@ class ColumnMapper:
             "Town"
         ],
 
+        "state": [
+            "State",
+            "Province",
+            "Region"
+        ],
+
         "google_maps_link": [
             "Google Maps",
             "Google Maps Link",

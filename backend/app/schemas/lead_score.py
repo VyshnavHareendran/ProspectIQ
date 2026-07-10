@@ -44,3 +44,20 @@ class LeadScoreSummaryResponse(BaseModel):
     medium_priority: int
 
     low_priority: int
+
+
+class LeadScoreStatisticsResponse(BaseModel):
+
+    total_leads: int
+
+    high_priority: int
+
+    medium_priority: int
+
+    low_priority: int
+
+    average_score: float
+
+    highest_score: float
+
+    lowest_score: float

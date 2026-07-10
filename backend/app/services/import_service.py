@@ -118,6 +118,8 @@ class ImportService:
 
                 city=row["city"],
 
+                state=row.get("state"),
+
                 google_maps_link=row[
                     "google_maps_link"
                 ],

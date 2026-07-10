@@ -19,6 +19,8 @@ class BusinessCreate(BaseModel):
     address: str
     city: str
 
+    state: str | None = None
+
     google_maps_link: HttpUrl
 
     google_rating: float = Field(ge=0, le=5)
@@ -72,6 +74,8 @@ class BusinessUpdate(BaseModel):
 
     address: Optional[str] = None
     city: Optional[str] = None
+
+    state: str | None = None
 
     google_maps_link: Optional[HttpUrl] = None
 

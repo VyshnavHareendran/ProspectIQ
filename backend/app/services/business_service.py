@@ -35,6 +35,7 @@ class BusinessService:
             website_url=str(business_data.website_url),
             address=business_data.address,
             city=business_data.city,
+            state=business_data.state,
             google_maps_link=str(business_data.google_maps_link),
             google_rating=business_data.google_rating,
             review_count=business_data.review_count,
