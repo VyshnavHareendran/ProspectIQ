@@ -1,0 +1,501 @@
+business_id,name,city,state,category_grouped,stars,review_count,digital_maturity_score,conversion_score_pct,priority
+U-jlsqgnVkYycr2N2YYEcg,Penrod Arts Fair,Indianapolis,IN,Other,4.0,16,0.0,87.7,High
+c2zfvdiLqExtrHGRJahmTQ,Tucson Roller Derby,Tucson,AZ,Other,4.0,12,0.0,87.3,High
+kyosRyLvRHOWAIvfV4s7cw,Sparks Marina Park,Sparks,NV,Active Life,4.0,100,0.0,87.3,High
+ahxnXXeQcAkQ5z6HCm_r0Q,Burger Showdown,Tampa,FL,Other,4.0,16,0.0,87.2,High
+iKk6A3JiiMRDpPXw_niCBg,Palmer Park,New Orleans,LA,Active Life,4.0,13,0.0,87.2,High
+uRtsuwico2-3egGQBNs-Zw,ForCare Medical Center,Tampa,FL,Beauty & Spas,4.0,31,0.09,86.9,High
+lJKN4qB4eIDp3tJ9ocS2Jw,DJ Connection,Carmel,IN,Other,4.0,5,0.0,86.7,High
+_h4b7BcDXWnhm4RZX6I4dg,Riviera Pizza,Medford,NJ,Sandwiches,4.0,19,0.09,86.2,High
+DV08ZJKq_hPS_6Q8GKt0pg,Philly Fry Truck,Philadelphia,PA,Other,4.0,13,0.09,85.7,High
+jEZqOdf6ckeeUy9jWJx6iw,Platt's Farm Market,Clarksboro,NJ,Other,4.0,18,0.03,85.6,High
+l7QQNy9Amvh-Z2ib6Z2P3A,Advanced Chiropractic & Rehabilitation,Tampa,FL,Other,4.0,6,0.06,85.3,High
+TwKeUEsAjJz-pTHTg14agw,Callahan's Grille,Philadelphia,PA,Bars,4.0,35,0.06,85.2,High
+9i7igQSi-DZFpNJrOlnRBg,Makefield Auto Repair,Morrisville,PA,Other,4.0,5,0.0,84.7,High
+vhW6JmZqkLohRPK_iPDi4Q,Fashion Nail,Lutz,FL,Nail Salons,4.0,17,0.03,84.6,High
+pSj2gr3Tijrq3duoGms_XA,Wood Plumbing,Cinnaminson,NJ,Home Services,4.0,5,0.03,84.5,High
+dO2MtKMrmcnUz3AEiHLxBw,Bealls Outlet,Dunedin,FL,Other,4.0,5,0.03,84.3,High
+zc5IGgTLk8BgcqwWwoFhJQ,Glesinger April Ross DPM,Tucson,AZ,Health & Medical,4.0,10,0.06,84.2,High
+SQdgv12hifah8Syr2scKEg,Santa Barbara City Parking Lot #10,Santa Barbara,CA,Other,4.0,14,0.03,83.7,High
+Q8uzNBHUqYeUB-bv6CslhA,Napa Sonoma Grocery Company,Reno,NV,Other,4.0,24,0.12,83.7,High
+n9T38BkbtBk6RTGk_-HvlQ,Old Webster Animal Hospital,Saint Louis,MO,Other,4.5,9,0.0,82.7,High
+2IfFWLGuyIS14AAcA7Q49Q,Lake Rogers Park,Odessa,FL,Other,4.5,17,0.0,82.6,High
+YUC1XymPgps4Cw4NJsX1pw,Beacon Hill Electric,Mount Juliet,TN,Home Services,3.5,11,0.0,82.6,High
+gokNuUe7FUHpBe2sMAL2ew,Romanoff Renovations,Boise,ID,Other,3.5,15,0.0,82.6,High
+h6U-qb9PKolPV0RO9vM6aQ,Ballardini Ranch Trailhead,Reno,NV,Active Life,4.5,10,0.0,82.5,High
+ul0MGusQZBGo4CqiVh6VcA,Krewe of Thoth,New Orleans,LA,Other,4.5,9,0.0,82.3,High
+o9eS7GmIZ4u9DO7n2jrC8w,Madison Nails,Madison,TN,Home Services,3.5,21,0.0,82.2,High
+S5ZsDgND-aB399nLe86Ogw,Cafe Bienville,New Orleans,LA,Other,3.5,7,0.0,81.9,High
+OZkBdAPOE7INwhAV8ZQ-sg,DuPont Environmental Education Center,Wilmington,DE,Other,4.5,5,0.0,81.9,High
+0C4LXoLePedETNdD_W2ouA,Goodwill,Chesterfield,MO,Shopping,3.5,10,0.03,81.7,High
+3IjpO8tHrDkltcshN_m-7g,Southwest Airlines,Tucson,AZ,Other,3.5,30,0.0,81.6,High
+lqw5HDMKArehPJ6XC9HnGw,The Original Farmers Market,Indianapolis,IN,Other,4.0,13,0.503,81.6,High
+oaG8tlKRPVFS4EghVGwdWQ,Old US Mint,New Orleans,LA,Other,3.5,36,0.0,80.6,High
+2VJirTVc2SilOAfyJ5Vn0A,Irmi's Alterations,Belleair Bluffs,FL,Other,3.5,6,0.0,80.3,High
+DQOLYljad7wQnMsS8NUgHQ,Stone Dragon Chinese & Japanese Restaurant,Maple Shade,NJ,Other,3.5,36,0.09,79.9,High
+L_nLW90u71dzqoHJfo4NAg,Victoria's Secret,Tampa,FL,Shopping,3.5,7,0.03,79.7,High
+q7QJlhGxuB1PzPetMa7U3A,Lulu Beauty Salon & Spa,Audubon,PA,Nail Salons,3.5,19,0.03,79.6,High
+jU_yRbi6VAaaXHLclujBQw,Road Ready Repair,Goodlettsville,TN,Other,4.5,10,0.06,79.2,High
+1jSL90jj7k95OsSaQL5O-A,Amoco,Saint Louis,MO,Other,4.5,32,0.03,79.0,High
+Y4TGGLDzAizyXqoc-0aLUg,American Eagle Outfitters,Nashville,TN,Other,3.5,5,0.03,78.9,High
+V5vBQ_LyE99i4EcfjAtyVw,El Amigo Market,Reno,NV,Other,4.5,21,0.09,78.5,High
+9Mym57cM01EBl2x3h-Ei5Q,Elite Beverages No 2,Indianapolis,IN,Food,3.5,8,0.03,78.2,High
+9KM37685AFzsAcAuMvYWdw,Papa Murphy's,Indianapolis,IN,Restaurants,3.5,11,0.15,78.2,High
+gxTighJBXJ-M7imsm9wlHg,Nola Tropical Winery,New Orleans,LA,Other,4.5,13,0.06,77.8,High
+awiOfK2KhF0KI80WjcJ2SA,Barracudaville Sporting Charters,St Petersburg,FL,Event Planning & Services,5.0,5,0.0,77.6,High
+tbX6pe5RdMsd5N4qgQ40CQ,Lindt,Gloucester Township,NJ,Other,4.5,5,0.06,77.4,High
+TYURMcdjX8f0QcIkbEK2IQ,The Wilma Theater,Philadelphia,PA,Other,4.5,50,0.03,76.8,High
+6mMJhAZ7q5tOV_TRk1XUAw,Joe's Cafe,Saint Louis,MO,Other,4.5,9,0.486,75.9,High
+Rv0wpRn_7VCq14zXpIbtWQ,Edmonton Ski Club,Edmonton,AB,Shopping,4.0,7,0.601,75.5,High
+PVw38_27RtV7IRm3MWPB9A,A Plus Collision Center,Reno,NV,Other,4.0,6,0.614,75.0,High
+Hhp8V4zd3WWgYEL95f_24A,Classics Barber Shop,Palm Harbor,FL,Beauty & Spas,4.0,9,0.657,74.6,High
+wmj7ITiIoGnXasJ6G6BH2g,John L Smith Used Cars,West Chester,PA,Hotels & Travel,4.0,8,0.687,73.8,High
+_G37ezVFcX7ALyHko0Tdog,Rheumatology Associates,Norristown,PA,Other,3.0,8,0.0,73.7,High
+IDJNpNJZ9uVpjPHuAu7c4w,Planet Fitness,Philadelphia,PA,Other,4.0,10,0.7,72.6,High
+eQniPgTHeA60npIWVlqZfg,Pure Barre - Brentwood,Brentwood,TN,Other,4.0,9,0.73,72.4,High
+3lXHmv65COx5woh4CcprYg,Santa Barbara Emotors,Santa Barbara,CA,Auto Repair,4.0,10,0.747,72.3,High
+x_teiEdMOErcpAmqisUD5g,HDTV City,Tucson,AZ,Home Services,4.0,9,0.687,71.9,High
+K7c9AqD1y1cZsi5R4j58tg,Bistro 33 & Lakeside Solarium,Indianapolis,IN,Nightlife,4.0,8,0.91,71.8,High
+IfC2yUrZFU3xYon8gb4F1g,Fast Breaks Executive Entertainment,Tarpon Springs,FL,Event Planning & Services,4.0,10,0.73,71.7,High
+uqjGhMkv2CpKb8EA3sRSCw,Happys Tree Service,Clearwater,FL,Other,4.0,12,0.73,71.5,High
+G8efEWTMEiMy5w6i4DjqGw,Blue Oasis Pet Hospital,Mount Juliet,TN,Other,4.0,19,0.657,71.5,High
+QKll-M6DogbebWqlPMoNUg,The Detail Shop,Lansdale,PA,Other,5.0,11,0.03,71.5,High
+Y3oQVZoeKr6c3uo_uokX5w,Modern Line Furniture,Hamilton,NJ,Other,4.0,16,0.644,71.4,High
+rXXAEGtbZuWYHuKLRvBRXQ,Ram Fence Company,Joelton,TN,Other,4.0,8,0.717,71.4,High
+3kekYyYbsDzev5y7vj6HAQ,Doña Kitchen,Tampa,FL,Other,4.5,36,0.503,71.2,High
+bN_nLwTGtcXs7JGda0viGA,YogaSix - Westchase,Tampa,FL,Other,5.0,6,0.06,71.2,High
+7x5A_GbTLveFhLHf7MbGXQ,Wawa,Valrico,FL,Coffee & Tea,4.0,6,0.79,71.1,High
+JEP87uAYqvXzwubKRiDr2Q,Chick-fil-A,Greenwood,IN,Fast Food,4.5,11,0.807,71.0,High
+GoBsUn-KEhKMRq86ZrOwjw,"Amita Talati, MD",Voorhees,NJ,Health & Medical,4.0,8,0.631,70.9,High
+ucUVCwsqtUG02S2Rtuatdw,AAA Rousse Services,St Petersburg,FL,Other,4.0,19,0.73,70.8,High
+wie4Jr_xNJ220AXUfB6z0g,U-Pack Moving,Philadelphia,PA,Other,4.0,15,0.717,70.7,High
+BSSBQAYKG-fBsOHT8J18Iw,The UPS Store,Indianapolis,IN,Other,4.0,5,0.687,70.7,High
+7ENaqdbPmYGSFaa8tXZzFA,Enterprise Rent-A-Car,Philadelphia,PA,Other,4.0,20,0.657,70.5,High
+waJ7fhSZaT-j2GvjoFZ7VQ,Rittenhouse Veterinary Medical Center,Philadelphia,PA,Other,4.0,27,0.571,70.4,High
+iTZqyFeDhloCXkSb35s8Aw,Public Safety Unlimited,Voorhees,NJ,Shopping,4.0,6,0.644,70.4,High
+seSSgQWkIoh0yBoaPUQO6g,Harmonia Beauty Spa,Tampa,FL,Health & Medical,4.0,15,0.717,70.4,High
+RtpBx_VopO4HlXEpDiRTxQ,Kro-Built Company,Reno,NV,Other,3.5,17,0.614,70.4,High
+FuCJg8ToNzCrdMhTE8VtFA,Life Storage,Clearwater,FL,Other,4.0,6,0.687,70.4,High
+Ywyde6lH766xDDrDSJhBYw,Resolution Pest,Wayne,PA,Other,4.0,6,0.687,70.3,High
+z5gg6k1uOEqTU7zrlN7OLA,Bosley Hair Transplant & Restoration,Philadelphia,PA,Beauty & Spas,4.0,5,0.644,70.3,High
+L7wxBug8MF-Ag-u43DkQpg,Cactus Cantina,Wilmington,DE,Other,3.5,23,0.18,70.2,High
+eu0CnrdG9wVS4DVdej8fwQ,Salon Sol,Mount Juliet,TN,Other,4.0,8,0.747,69.9,High
+idN-TpWI1T3_UgufggVQ3Q,The Holistic Connection Belle Meade,Nashville,TN,Food,4.0,10,0.88,69.8,High
+qix2i6FPLuw3Eb4bWWNtyQ,"Erin S Scimone, DMD - The Hills Dental Care",Saint Louis,MO,Other,4.0,7,0.704,69.7,High
+Joa_j0dxAxWIxhM7-OBJhQ,Papa John's Pizza,Camby,IN,Restaurants,3.0,7,0.09,69.7,High
+F3n9g3jCK12co71v8Kr8kg,Nike Factory Store,Nashville,TN,Other,4.0,10,0.76,69.6,High
+VbFRq92U-L8_Z5C-GU-mrQ,Soulard Family Dentistry,Saint Louis,MO,Health & Medical,4.0,14,0.631,69.5,High
+MJisxR8XOSfDDFqU8PtiCg,It's Just Lunch,Philadelphia,PA,Other,1.0,16,0.0,69.2,High
+_dESESvzBzalsQFDGHIXSQ,El Mariachi Loco Cantina,Bridgeton,MO,Restaurants,4.0,13,0.79,69.2,High
+Z1ejnGgj_TAg0qUSSMEMQQ,City Plumbing,Philadelphia,PA,Home Services,4.0,11,0.76,69.0,High
+tCocnBUV7rolDesh4OW55w,Glover Dentistry,Reno,NV,Health & Medical,5.0,15,0.06,69.0,High
+X1L2R7vdndJ6lUf_ie0qNA,Ink Godz Tattoos,Saint Petersburg,FL,Other,4.0,16,0.79,68.9,High
+FocOTqfCE1edt5qrByaljw,Janna Fine Consigner Apparel,Largo,FL,Other,4.0,5,0.687,68.9,High
+gX01IIfP6eAbPsZSjmBHgA,The Disco Dolls,Tampa,FL,Hair Salons,4.0,10,0.747,68.8,High
+IATAoVDD8hPfBJ8mAz6OXQ,Joanna Spas Massage & Facials,Paoli,PA,Other,4.0,8,0.79,68.8,High
+04WeiTVNEnhMa4Ty5bpfZA,Papi's Food Market,Tampa,FL,Other,4.0,13,0.76,68.7,High
+ul1-XS3Hy97MK1XPLU0nww,Deka Lash -Tampa,Tampa,FL,Other,4.0,13,0.79,68.7,High
+GEuJs0FKtdXQYzXVe9oJog,"Craig C Karrasch, DPM",Reno,NV,Health & Medical,3.5,10,0.644,68.7,High
+geGJ_uY6xn2HvkpTbPRREQ,Avenue Two Travel,Villanova,PA,Other,4.0,5,0.644,68.6,High
+t37dsDBpe65qUb81OSFr-g,Philadelphia Theatre Company,Philadelphia,PA,Other,5.0,32,0.03,68.6,High
+Z43-i4rxY0w1yqqZFzUXOg,Fresh&Fresh International Market,Nashville,TN,Other,4.0,23,0.73,68.1,High
+f3Jq7_eztgt_nCx5ezdU5A,Ruby,Nashville,TN,Event Planning & Services,4.0,12,0.79,67.5,High
+Md7Q8pW7w2JgaxXpDG_Bxg,Dance Extreme Academy,Trinity,FL,Other,4.0,5,0.657,67.5,High
+Ius4J4De9y4Gieg91q4lTw,Boise Riverside RV Park,Garden City,ID,Hotels & Travel,3.0,42,0.0,67.3,High
+aVcoLnAgzZDwZBlW0NgQHg,AMG Beauty Bar,Eagleville,PA,Beauty & Spas,5.0,7,0.06,67.1,High
+COyKPtXQWF2G_1KuIzE2Ug,Goodwill Industries,Saint Charles,MO,Other,2.5,8,0.03,67.1,High
+d44LYjJ0fwFm1JKhR95E4g,Enterprise Rent-A-Car,Ruskin,FL,Other,3.5,12,0.657,66.9,High
+xxGGy4CxKJcu2HX8SaYLZQ,Pinellas Animal Hospital,Pinellas Park,FL,Other,4.0,37,0.657,66.9,High
+4_aPE-A05L6G0-2nLqsXWA,AT&T Store,Carmel,IN,Home Services,4.0,8,0.76,66.8,High
+TgDi59Gk4a2qbIXwmrLiVw,Keystone Veterinary Hospital,Newtown,PA,Other,3.5,8,0.657,66.8,High
+sl_oyjNFZX9_zGASwQ4aiA,Professional Automotive Inc,Indianapolis,IN,Auto Repair,3.5,12,0.644,66.8,High
+cShanVtdfIpXgZAl7qVLPg,The Oaks Restaurant,Wesley Chapel,FL,Restaurants,3.0,5,0.12,66.6,High
+NvhkQC5EkPhVCXXTB8ueDQ,Fado,St. Petersburg,FL,Other,4.0,57,0.614,66.5,High
+9m_Pdvl2X0x7AXhm15jWSg,Golden Triangle Tampa,Tampa,FL,Other,3.5,9,0.644,66.4,High
+iq_bTepIL2n5LniF10fGTw,MSG Jewelers,St louis,MO,Other,3.5,8,0.644,66.4,High
+9GIeCRyOksdAqIIx6JDeuQ,Sierra BMW Motorcycle,Sparks,NV,Automotive,4.0,34,0.644,66.4,High
+60_cH7Dzm0C0AoENFbaRcw,Madame John's Legacy,New Orleans,LA,Other,3.5,14,0.657,66.3,High
+WtISDZyrcZQ27-zsbZ132w,Time Zone Toys,Meridian,ID,Shopping,4.5,9,0.687,66.3,High
+2bi937fxsyYPz5bZsLYLcw,Reno Tahoe Equestrian Centre,Reno,NV,Active Life,4.0,6,0.687,66.2,High
+jsJJfWh_iONJoxL5YeRdNA,King Wong,Marlton,NJ,Restaurants,4.0,24,0.79,66.0,High
+c3AIbvC6RE3H8ow3NFK2ew,Publix Super Market- Wesley Chapel,Wesley Chapel,FL,Shopping,4.0,25,0.76,65.7,High
+i8JppYIoqr8zmNllEkcQWw,Monkey Fish Toys,West Chester,PA,Other,4.0,5,0.76,65.7,High
+Iow7UIstU7F5l7DfwLSWfQ,Consignment House,Saint Petersburg,FL,Other,3.5,6,0.657,65.5,High
+pWTHsRGpEIDlefocpIFCsQ,Willow Tree Nursery,Saint Petersburg,FL,Shopping,4.0,33,0.73,65.2,High
+mL5NrbO6lxHUeBrWtou5VQ,Wells Fargo Bank,Philadelphia,PA,Other,3.5,6,0.614,65.2,High
+uSpPy5aw9xwWV31grbHpBQ,Just Bill's Place,Saint Louis,MO,Nightlife,3.5,8,0.747,64.9,High
+6LJn-TuLtlEl1K-TH5Y4lA,New Jersey Philadelphia Air Ducts Dryer Vents Chimneys ADC,Blackwood,NJ,Other,4.0,5,0.76,64.7,High
+FOucHvHWaaBV8Ylg4V-RTA,Megabus,Nashville,TN,Other,2.0,24,0.0,64.6,High
+RVXmg982rUrMI9rTMSKtQA,Absolutely Beautiful Flowers,St. Petersburg,FL,Other,4.0,30,0.76,64.6,High
+2KtFLGVXlJaOv6Rjjj9GBQ,Korean Grill,Edmonton,AB,Other,4.0,27,0.747,64.5,High
+iJEkWDUE25BbNifWaYEfgw,Suzy Jo Donuts,East Norriton,PA,Food,4.0,24,0.76,64.5,High
+3CKwaw7Z5_mkG54k79JaQg,Northwest Scuba,Edmonton,AB,Other,4.5,5,0.657,64.4,High
+kRSxoffFqxuk9KoUWW57Kw,Wags & Whiskers,Nashville,TN,Other,4.5,13,0.7,64.3,High
+iVi8Bx6QUkdv3PJx_RDa0Q,Firpo-Heritage Moving Systems,Aston,PA,Other,3.5,14,0.674,63.8,High
+GgiE4fZmnQQZShZnRcVDYg,Archive Wine + Beer,Reno,NV,Food,4.5,11,0.717,63.8,High
+Ih-mZYBB_8fzsj6QqvArTw,Dairy Queen Grill & Chill,Cumberland,IN,Other,4.0,18,0.88,63.8,High
+AsdSkdYdPBfU-L4YMJLHRg,Towneplace Suites,Edwardsville,IL,Hotels & Travel,3.5,7,0.7,63.7,High
+_SPD9PX_g5gvZtw47cJ2NQ,Hampton Inn Bordentown,Bordentown,NJ,Hotels & Travel,4.0,22,0.76,63.7,High
+cLf7nn5rU7pjijGYNPqOOA,Cellular Necessities,Greenwood,IN,Other,4.5,10,0.73,63.7,High
+IyeCnsaU_SAksA1KQm90IA,Law Offices of David S. Secrest,Santa Barbara,CA,Other,4.5,10,0.73,63.5,High
+KJBJwrCEYYMEU0WetXrhyg,Conways Catering & Deli,Maryville,IL,Restaurants,4.5,8,0.764,63.5,High
+UCjG77r4BpuCyhWJQ_SdaQ,Pinch A Penny Pool Patio Spa,Dunedin,FL,Other,3.5,13,0.73,63.4,High
+m3f3ypSf8mJY1Or4vbvm9g,OSHi Floral Design,Nashville,TN,Hotels & Travel,4.0,36,0.76,63.4,High
+W4Nx1wALHKeO6fm9DxD7bg,World Market,Harahan,LA,Other,4.0,37,0.76,63.4,High
+2Lu5eYJSUSHu-fJmL9qlnA,Home Team Plumbing,Pinellas Park,FL,Other,3.5,11,0.73,63.3,High
+1XXFuvaXKH6_3tlQmujIhw,Karen Ann's Supplies,Saint Louis,MO,Other,4.5,13,0.687,63.2,High
+LhnUeTIYMdYX1FWzrS5GQQ,Restaurante El Mariachi,Trenton,NJ,Restaurants,4.0,20,0.88,63.2,High
+hhyP1eWebvtaHAzlhLrJQg,Sunoco Gas Station,Blue Bell,PA,Other,2.0,7,0.03,63.1,High
+t7b_X58GFy85nDcces6S7A,NATURALLY,Boise,ID,Beauty & Spas,4.5,12,0.704,63.1,High
+da9JChWxdzBzjJOCET_2Rg,Canyon Oaks,Tucson,AZ,Other,2.5,13,0.06,63.0,High
+TghikeYc56lcmet_KwkYCA,Arby's,Fishers,IN,Other,2.0,11,0.09,62.9,High
+V2zPRphk1HtXfSwc8enm8w,Speedway,Brownsburg,IN,Other,3.5,7,0.73,62.9,High
+nQaJwPUL7Fzkq7IFiaznDg,Dental Implant Solutionz,Largo,FL,Other,3.5,7,0.674,62.9,High
+T_6X9BBg9Wh4TkpWM7XuYw,Atomic Tattoos,Largo,FL,Other,3.5,13,0.73,62.9,High
+cvyMpa-T9oY8iVj8bBPUMQ,Santa Barbara Center For Oral & Maxillofacial Surgery,Santa Barbara,CA,Other,4.5,11,0.704,62.9,High
+WgvcQZZoZWVabaTBCClzyg,Oro Valley Country Club,Oro Valley,AZ,Other,4.5,8,0.73,62.8,High
+EtFoZc4rqgDgBsrpMMOz_A,Vapor Bay,Brandon,FL,Other,4.5,10,0.76,62.8,High
+L5O0aokDt6-YIAMMND8Q9w,Wrap It Reno,Sparks,NV,Other,3.5,6,0.76,62.7,High
+F9jfjlNRuFk4WrMPdsr7CA,Lucky Wishbone,Tucson,AZ,Other,3.5,91,0.18,62.7,High
+-mnky5EYC08phgmahqy7uQ,Amigo Used & New Tires,Nashville,TN,Other,4.5,8,0.76,62.6,High
+fcJp711HfLAkPEgWi_GZ0Q,The Langhorne Brewing Company,Langhorne,PA,Food,3.5,15,0.82,62.6,High
+djAcVrhqqf-DXEpiYJ7RHw,Big Lots,Saint Petersburg,FL,Other,4.5,6,0.73,62.5,High
+9iRLEeiicy9RKZw3UfbaaA,Branch Out Tree Care,Santa Barbara,CA,Other,3.5,22,0.614,62.5,High
+H-2QtKo6KEFRp5mx-bV-aA,The UPS Store,Trinity,FL,Other,3.5,6,0.687,62.5,High
+LYLHhcGXbbjR-vPryymnDA,La Chapinita,Trenton,NJ,Other,4.0,6,0.85,62.4,High
+feIHcRlZo_d_OXNFQOO7TQ,The Claim Guide,Malvern,PA,Other,4.5,6,0.73,62.3,High
+lyyRRbxPMcEF9O1Vqx2Jxg,Perfect Choice Flooring,Tampa,FL,Other,4.5,17,0.717,62.3,High
+CYvNOuEU-zcIsFnO7uuJJA,Girlfriends Closet,Tucson,AZ,Other,4.5,11,0.76,62.2,High
+4okE-0mw922NaT_2CSF-Ew,E & J Dominican Hair Salon,Tampa,FL,Beauty & Spas,3.5,16,0.687,62.1,High
+VzJETJvbd_A1AaMJkaAwFA,Vivi Nails,Tampa,FL,Other,3.5,17,0.73,62.1,High
+UqCZu2C0GoE6RcATQR3xow,Bradis Guns,Camby,IN,Other,3.5,17,0.73,62.1,High
+vfS9mrgRfwhoUT_GUzw3Mg,Delta Sky Club,Tampa,FL,Other,4.0,38,0.79,62.1,High
+xsyyMWSKHwnWrDygrdJ8aA,Patriot Parking,Philadelphia,PA,Automotive,1.5,11,0.0,62.0,High
+mu2GzX8oFI78IuhbzkOECQ,Y Not Indian,Edmonton,AB,Restaurants,4.0,21,0.82,62.0,High
+qXmfbAH_TpgTdz0kGnMbFw,Dillard's,Saint Petersburg,FL,Shopping,3.5,10,0.76,62.0,High
+GgC5NLohm3qdg0KpOCz0oA,The Exchange,Indianapolis,IN,Other,4.5,15,0.76,61.9,High
+siercWKxlAPJJrcHGETzLg,Tire Discounters,Hendersonville,TN,Other,3.5,14,0.777,61.8,High
+ZJXc_MYDaoNr2n4uRgfzhg,Circle K,Oro Valley,AZ,Coffee & Tea,3.5,5,0.76,61.8,High
+Oom9PRZP9L57vHKQOA3q4g,Budget Rent A Car System,Philadelphia,PA,Other,1.5,6,0.0,61.8,High
+N1h1QCuVpQR-KgvOZ-ASmw,Ciocca Chevrolet of Quakertown,Quakertown,PA,Auto Repair,3.5,20,0.687,61.8,High
+E-YkOKhcB7a_L4V-PAle2Q,1 and Dunn Appliance Repair,Nashville,TN,Local Services,3.5,12,0.687,61.4,High
+4qAyxRqX4WaoBLUG7eJb0A,Indiana Landmarks -- City Market Catacombs Tours,Indianapolis,IN,Other,3.5,16,0.747,61.4,High
+vE3QOchD6ngcmyRFFGV5xQ,Baymont by Wyndham Indianapolis Northeast,Indianapolis,IN,Other,2.5,17,0.06,61.3,High
+CGrCn1ltNy9CuRacvcmFfw,Boarders Inn & Suites by Cobblestone Hotels - Ashland City,Ashland City,TN,Other,3.5,8,0.76,61.2,High
+zuXlPQ0Jk_5nX6aMsfnLAg,A American Electrical Services,Tucson,AZ,Other,4.5,6,0.674,60.7,High
+ZZTJCY44LuvYqfafnUq1Nw,Vapor Hut,Philadelphia,PA,Other,4.5,7,0.76,60.6,High
+LivXcgmh0JnrCdmt2jCTlQ,Forty Niner Country Club,Tucson,AZ,Other,3.5,16,0.76,60.4,High
+-2ZIgbTr50xq64ODisvKhw,Fonte Brothers/Pioneer Cleaners,Tampa,FL,Other,2.5,5,0.0,60.3,High
+JRXutrGQG4wFZrnG0TTY4w,Magnolia Weddings and Events,New Orleans,LA,Event Planning & Services,4.5,7,0.73,60.3,High
+zU2GDGapAvw0CSG6L-9ZgA,Professional Nail Salon,Downingtown,PA,Nail Salons,3.5,5,0.687,60.2,High
+_qY6dVBchZloskbrvvxeDg,Commune + Co,Tampa,FL,Food,3.5,6,0.734,60.0,High
+8QtgPszOI5-4qwizvWi5lA,Unity Taqueria,Philadelphia,PA,Other,4.0,25,0.88,60.0,High
+vDchrkCo-7jbuTKF5nSbAw,Charming Charlie - Tucson,Tucson,AZ,Other,3.5,7,0.73,59.9,Medium
+wyHFH7jUw1B3K8P3Gtc3qg,Linen Fluff and Fold,Santa Barbara,CA,Other,4.5,21,0.76,59.8,Medium
+Wxphbi_mfeej3_Ozv_mPng,Photo Works,New Orleans,LA,Event Planning & Services,4.0,5,0.687,59.7,Medium
+ZsU4UDadMyXVH45YGn1dTg,Allegheny Family Chiropractic Center,Philadelphia,PA,Health & Medical,4.5,5,0.717,59.5,Medium
+7lAFIfZvj-LLse-M9z24_w,Asian Grocery,Exton,PA,Food,3.5,7,0.73,59.2,Medium
+psL2WQ7bhBIEZmPsMdKB8Q,Laura's Nails And Spa,Prospect Park,PA,Nail Salons,4.5,21,0.717,59.1,Medium
+QQR8GS9vdp7f918qm_RK5g,Catdaddy's,Alton,IL,Other,4.5,10,0.82,58.8,Medium
+DCPpcgpzdJLxmORl9A5QOQ,Therapeutic Elements Center for Massage Therapy,Clearwater,FL,Other,4.5,21,0.747,58.6,Medium
+h_vx0fR8lnwsrJASl_S8Aw,Nevada Auto Sound,Reno,NV,Automotive,4.5,46,0.644,58.1,Medium
+SAuPwpl76bW9t1hDSnhQLQ,Papa John's Pizza,Clearwater,FL,Pizza,2.0,22,0.12,58.0,Medium
+GTCWl4QDG6CV5M_xRkRlbg,Moore Brothers Wine Company,Wilmington,DE,Other,4.5,25,0.79,57.9,Medium
+PKAyJ93qVo8gDEkaDr5riA,Eyes on Canal,New Orleans,LA,Shopping,4.5,25,0.704,57.8,Medium
+9OPXC2iOurymTDvtNiAjKA,Precious Metals Refinery,Marana,AZ,Other,3.5,5,0.687,57.7,Medium
+i6V0AA-gW6oiCo4cUnQo5w,Green Things,Tucson,AZ,Other,4.0,99,0.73,57.2,Medium
+2puERFzZnY0D0D4d8WsYAg,TCM Natural Health & Beauty,Edmonton,AB,Other,3.5,5,0.76,56.9,Medium
+6P3fSXV9QTTNufOmN2-0rg,Southwest Airlines,Indianapolis,IN,Other,3.5,52,0.614,56.6,Medium
+hvsEJzx_c1jVYw_YDawAZg,Pizza King,Whitestown,IN,Restaurants,3.5,10,0.79,56.4,Medium
+NetawOi6wDa1mGJumW4-zQ,O' Be Joyful,Franklin,TN,Bars,4.0,84,0.79,56.1,Medium
+IB-mDNsfOmQBspwmRKWfKA,"Perez Oscar, MD",Tampa,FL,Other,2.5,5,0.06,55.9,Medium
+JJjPO_Q3q9x2NXLcWkImoQ,Filibertos,Tucson,AZ,Other,2.5,38,0.06,55.4,Medium
+XSGv50QU2nyY5oN7W4dYDQ,America's Best Contacts & Eyeglasses,Boise,ID,Other,3.5,28,0.73,55.3,Medium
+bfMrFCDY8NgQq05whI5PHw,Club Monaco Walnut Street,Philadelphia,PA,Other,3.5,28,0.73,55.2,Medium
+Tl14YHQu7uTTo25OD_uGRw,Maurice French Pastries,Metairie,LA,Other,4.0,88,0.747,55.0,Medium
+lhGBI6YnRnPuuGNfWCMwRA,Safelite AutoGlass,Philadelphia,PA,Other,4.0,79,0.687,54.9,Medium
+L8K2CaI2RtzlpqZEHrvnxQ,XPO Logistics,Tampa,FL,Other,4.5,35,0.7,54.9,Medium
+lmlXgMqq36OUHRrXJtl4RQ,La Crema Caffé,Saint Albert,AB,Restaurants,3.5,20,0.82,54.6,Medium
+-OffMC_1lTuedMvULJJ7Bg,Massage Envy - Clearwater,Clearwater,FL,Other,3.5,37,0.73,54.5,Medium
+qm4n5ebzaTZwZA2owMaWpQ,Nail Zone and Spa,St. Petersburg,FL,Beauty & Spas,4.0,84,0.76,54.2,Medium
+wyR4qzy9O-tnA6eTIyv9tg,MassageLuXe,St. Petersburg,FL,Other,4.0,75,0.76,54.0,Medium
+gLy70C_C07OMDryHSdMJMg,Wellfeet Spa,Philadelphia,PA,Other,4.0,73,0.79,53.9,Medium
+_oEowuP5v_lKWB7G91_p1Q,Rita's Italian Ice,Seminole,FL,Food,4.5,25,0.79,53.9,Medium
+B_KHLlzbufFbu-ebTF6oKg,Emilio's Pizza,Folsom,PA,Restaurants,4.0,49,0.82,53.6,Medium
+Y6YQk54WKsNCO3rj2Ec5Qw,Secondline Arts And Antiques,New Orleans,LA,Other,4.5,34,0.704,53.3,Medium
+W_mZGJmPRkZ7ncQTxSVgKA,Adagio Massage Co & Spa,Nashville,TN,Health & Medical,4.0,105,0.76,53.1,Medium
+IigcbMz8J9tGo8wJYlOImA,Nicey Treat,Indianapolis,IN,Other,4.5,45,0.704,52.8,Medium
+XDq-MDZoktl3UuK7u1jVZA,Urgent Care Eleven,New Orleans,LA,Other,4.5,35,0.76,52.4,Medium
+B99BQYWQg8lznF-wKHSXow,360 Chiropractic Wellness,Meridian,ID,Health & Medical,4.5,5,0.644,52.4,Medium
+0reG29yOG8de0y2lGYvP2w,Cousins Maine Lobster - Trenton & Philadelphia,Trenton,NJ,Restaurants,4.0,67,0.79,52.1,Medium
+SYIGuB9-5JmL1TEvHuf2og,Aviators Tavern,Clearwater,FL,Other,3.5,32,0.721,51.6,Medium
+RXr_he4lSOueM1R1FztGRQ,Longbar Pub & Grill,Tampa,FL,Other,4.0,50,0.85,51.4,Medium
+ZFpJ-BvA1riQgzvW29JyiQ,Old Nelson Food Company,Philadelphia,PA,Other,3.5,37,0.79,51.4,Medium
+rXQAf0CahBHSUVGnmFbjbA,Discount Tire,Madison,TN,Other,4.5,46,0.717,51.4,Medium
+ueJFblv3esW2xjqO7IepGg,Bissell Mansion Restaurant and Murder Mystery Dinner Theatre,Saint Louis,MO,Event Planning & Services,3.5,21,0.82,51.1,Medium
+SpkXstMuyVoeQCEof20oBA,European Wax Center,Tucson,AZ,Beauty & Spas,4.0,72,0.82,50.7,Medium
+Z1whpjCi-3RiuBPUtdK44A,Angys’s Cafe And Ice Cream Parlor,Warminster,PA,Other,4.5,22,0.91,50.6,Medium
+-ZSSEnM8kr-beByYKEE42w,The Ultimate Shave Barbershop & Men’s Salon,Glen Mills,PA,Other,3.5,28,0.82,50.4,Medium
+Iq7h7RGnayV1tlS9tylQ9A,Matt's Auto Service,Saint Louis,MO,Other,5.0,5,0.614,50.3,Medium
+LAOdChV60GwEJHE7UwDKyw,Frankie's Deli,Clearwater,FL,Restaurants,3.5,26,0.764,50.3,Medium
+rPnRZvL5Uka_feCz0VBC8w,Massage Oasis,St. Petersburg,FL,Health & Medical,5.0,9,0.7,50.2,Medium
+UQg4lM_XvNiU1IYPgaukfA,Chipotle Mexican Grill,Cherry Hill,NJ,Restaurants,2.5,8,0.7,49.8,Medium
+m1A8l1ChmbqDlBiqtCWvJg,Aspen Dental,Riverview,FL,Health & Medical,3.0,9,0.687,49.6,Medium
+Ka-js9Fn1yRGcyy3VBDPDg,Starbucks,Indianapolis,IN,Food,3.5,29,0.82,49.3,Medium
+PUP0E3EJIeWWaOl8L8AcJw,Certified PreOwned BMW Of Nashville Service Center,Nashville,TN,Other,3.0,13,0.657,49.3,Medium
+Cn7EPZB7acLQb5fzTwFAcw,Chick-fil-A,Audubon,NJ,Other,3.5,30,0.837,49.2,Medium
+MVGbGunIzGMpubzcTC30Jw,Grout Busters - Tile & Grout Cleaning,Tampa,FL,Other,5.0,5,0.614,49.1,Medium
+eS0zchBUJnUqJ8U1iApPUw,Schlafly Bankside,Saint Charles,MO,Other,4.0,56,0.85,49.1,Medium
+CGY7lKZROtZCi2WmahjADg,H&M,New Orleans,LA,Other,3.5,54,0.73,49.0,Medium
+1SS-Md_O5OfmXxVtJBGz-Q,Corporate Ladder Brewing,Palmetto,FL,Food,4.5,45,0.717,49.0,Medium
+tHc3x4ESA3vyr9UiJlL6Pg,The Pie Factory,Largo,FL,Sandwiches,4.0,93,0.94,48.6,Medium
+qo1skGbgDfQN3UItla2YLw,Santa Barbara Museum of Natural History,Santa Barbara,CA,Other,4.0,119,0.747,48.5,Medium
+K8SqWp6GVBV4rmi0kb4Kgw,The George & Leah McKenna Museum of African American Art,New Orleans,LA,Event Planning & Services,5.0,5,0.559,48.5,Medium
+OfYq2Y0HctEHgKfPaxmDZQ,District South Kitchen & Craft,Tampa Bay,FL,Other,4.5,23,0.91,48.4,Medium
+XahxHmkaFOAwXix2VGRAUQ,Richie's,Philadelphia,PA,Other,4.5,50,0.734,48.4,Medium
+y6BfLt9Gvrq2JsJvjkjdIQ,ZARA HALAL GRILL,Philadelphia,PA,Other,4.5,30,0.88,48.4,Medium
+sdffBAE2Hn7Wn8e2hMMJyA,Los Jalapeños Bar & Grill,Oaklyn,NJ,Other,3.5,26,0.88,48.3,Medium
+lD0xUdCD_gk7DmJh8nFKjw,Conicelli Autoplex,Conshohocken,PA,Automotive,3.0,10,0.657,48.2,Medium
+Lb2IksLafq3ay-Rxoq80Vw,Station Tap,Drexel Hill,PA,Other,4.0,68,0.85,48.2,Medium
+uir-rnjB9ot5vwdASaHHxg,Mertz Ford,Millstadt,IL,Other,3.0,7,0.687,48.2,Medium
+pzFX6iOy9OEP99tCSi2KRA,JML Audio,Fenton,MO,Automotive,5.0,8,0.674,48.0,Medium
+CqpbkSMqjeJrtc_3uC-z0A,Ursula's About PHace Rittenhouse,Philadelphia,PA,Shopping,4.5,52,0.734,47.7,Medium
+VEFwpUStGOq5s0LPUvktMw,Mr Gyro's,Indianapolis,IN,Sandwiches,4.0,62,0.88,47.6,Medium
+lK5c7yNBzpIDrGlu0gQtkg,DJ R-Boogie,Reno,NV,Other,5.0,9,0.73,47.4,Medium
+0ctfzwGwE7nxXpAijy_ahg,Trader Joe's,Des Peres,MO,Other,4.5,51,0.73,47.3,Medium
+6a_d8HvXEmN6DQaoaTptKQ,S&B Event Concepts and Catering,Collegeville,PA,Other,5.0,6,0.734,47.3,Medium
+d25NwB0EeDs7-A5KHn94bA,Dallas Pizza & Steak House,Edmonton,AB,Pizza,3.5,32,0.85,47.1,Medium
+WnGA31QM-srnNrXHLc81dQ,Spökhund Cleaning,Nashville,TN,Other,5.0,8,0.687,46.9,Medium
+MJX-MMS0Z0PRTBY2cVqIXA,Bralow's Fresh Fish & Seafood,Philadelphia,PA,Other,3.0,9,0.674,46.9,Medium
+RkDBkw4QW-WwilmcieKXFQ,Hermitage Chiropractic & Rehabilitation,Hermitage,TN,Other,5.0,11,0.644,46.8,Medium
+BiYc_05bL8GNSSRkWnfuFQ,SCM Roofing,Tampa,FL,Other,5.0,10,0.644,46.7,Medium
+ck5Nutbq3LxyZcz6RCkxHw,Olde World Jewelers,Fairview Heights,IL,Other,5.0,9,0.717,46.7,Medium
+NRocyTLczY3qzFQMR2k06w,Integrated Spine & Pain,Cherry Hill,NJ,Other,3.0,6,0.644,46.6,Medium
+ZNWox30LIv7hV5k5YP8tCQ,Bar-Ly Chinatown,Philadelphia,PA,Other,4.0,380,0.91,46.3,Medium
+AcGOk0jbFkvI1QzDpkqA8w,The Rusty Lyon,Dunedin,FL,Other,4.0,146,0.897,46.2,Medium
+KYaxFTVWG_opECuNpdrUKw,Strandhill Public Tampa Heights,Tampa,FL,Nightlife,4.5,27,0.85,46.2,Medium
+9U2w4rQlIgBQqHuTRgp7Rw,Mauhaus,Maplewood,MO,Other,4.0,102,0.824,46.2,Medium
+5vZcxqPojxpW4V1UR0NJ4w,China King,Des Peres,MO,Restaurants,3.5,35,0.82,46.1,Medium
+7O1z-v0XlwMqG8GG930m9g,Orangetheory Fitness Hendersonville,Hendersonville,TN,Other,5.0,8,0.73,46.1,Medium
+1DCUoKRe971ZReg1nk-QIw,Starbucks,Spring Hill,FL,Coffee & Tea,3.0,7,0.73,45.8,Medium
+8kpPGZlU428scAcEsThdKQ,All Tech Automotive,Philadelphia,PA,Other,5.0,14,0.687,45.8,Medium
+eUnDw1oABEFGkHXAmHj43w,Shannon Collins Photography,Abington,PA,Event Planning & Services,5.0,10,0.73,45.6,Medium
+uchErrJXyIcMs2jo6SGYVA,Tung Fong Market,Seminole,FL,Other,5.0,9,0.687,45.6,Medium
+KItDxRwSWQMrxcf7Uy6hhA,Dobbs Auto Center,Swansea,IL,Other,3.0,5,0.687,45.5,Medium
+bVLXDQlW3Mlb9J1cjQD4ZA,Paul's Home Pro Service,Tampa,FL,Home Services,5.0,6,0.644,45.3,Medium
+9QYR6wLNooEHcpUEqK6XWA,Barber Shop,Edwardsville,IL,Hair Salons,5.0,6,0.674,45.3,Medium
+DBh0v8qvYUH-KYqz_7askQ,Farnesi Travel,Haddonfield,NJ,Other,5.0,6,0.687,45.3,Medium
+X8gTzhpYNBIPfrENkgBt1w,Freddy's Frozen Custard & Steakburgers,Smyrna,TN,Other,3.0,8,0.7,45.1,Medium
+NZjVe9ZGh0tOZIp9PKtJDQ,Sustainably You Bodywork & Skincare,Santa Barbara,CA,Other,5.0,17,0.747,45.0,Medium
+sLT6G6iTzxOiB12ZgT1Y1w,Sidelines Grill,Pleasant View,TN,Other,3.5,46,0.85,45.0,Medium
+kwFhJiQyIDX17mjQLb-Wbw,H&M,St. Petersburg,FL,Other,3.0,9,0.73,44.9,Medium
+HuUdDS993Qqshv8UA_rRRw,PureBread Deli,Glen Mills,PA,Other,4.5,56,0.837,44.9,Medium
+pAVplVUnmW9vMUJbiDVyjw,Maryanne S. Ritter Jewelers,Philadelphia,PA,Other,5.0,8,0.717,44.9,Medium
+UdDZEoDyqsxqeqvghYxDTw,Luna Grill & Coffee,Pinellas,FL,Other,5.0,14,0.734,44.8,Medium
+Y9P4MH5mJEf0h-ZL4Te4Dg,Absolute,Saint Louis,MO,Other,5.0,6,0.687,44.8,Medium
+VzHYbwcFJz2CdVCe5r3sDQ,Bookhaven,Philadelphia,PA,Other,4.5,58,0.644,44.8,Medium
+AHZyPzpWgOOBbCr4XUQKmg,T-Mobile,Tucson,AZ,Other,3.0,18,0.73,44.8,Medium
+e7VuAi3IbzdJsVMY33rL-w,Coins & Currency Of Wayne,Wayne,PA,Shopping,5.0,12,0.687,44.7,Medium
+Sz4b74OATuK7TrxlZmk_-w,K Nails Spa,Arnold,MO,Beauty & Spas,3.0,9,0.7,44.7,Medium
+fhqF0it91AuPBjZtYotvfA,Rolls-Royce Heritage Trust Allison,Indianapolis,IN,Other,5.0,7,0.644,44.7,Medium
+3pDzCmDccWPifQ5qDmWQMg,Advanced Chiropractic,Saint Louis,MO,Health & Medical,5.0,6,0.747,44.7,Medium
+B2Ep2fJegEwVp6EDOxjZUA,Eastside Tire & Wheel,Indianapolis,IN,Automotive,5.0,6,0.7,44.5,Medium
+LFBh5DFszWgG_rFkh_MsWw,Fitzgerald Family Chiropractic,Doylestown,PA,Other,5.0,6,0.687,44.5,Medium
+sMMkN5m-7C_gF7wGOZn2bg,Tang's Jewelry Corp,Philadelphia,PA,Other,5.0,12,0.73,44.5,Medium
+1Yi8dGGeGhwJ0RCt9ukRLw,Chef On The Bay,Clearwater,FL,Other,5.0,9,0.747,44.3,Medium
+0jCrQL02o1sWs81IWfhDfw,Tailormade Barber Lounge,Indianapolis,IN,Other,5.0,11,0.704,44.2,Medium
+jiNS6ykXcU63wNgcMHzlmA,Infinity Jewelers,Philadelphia,PA,Other,5.0,16,0.687,44.2,Medium
+WRsYRFAR-j6waUh3p8WLXg,Truckee Meadows Pest Control,Reno,NV,Local Services,5.0,6,0.674,44.2,Medium
+u-q5PIRns-cMvzL4fntlZA,Hair Designs By Soonye,Tampa,FL,Hair Salons,5.0,7,0.644,44.1,Medium
+b6nhar-0ecQpIz6mlvr-Jw,The Book Corner,Philadelphia,PA,Other,4.5,62,0.687,44.1,Medium
+UM17blpuw4l9_K93KZyR4w,Fefa's Cafe,Tampa,FL,Other,3.0,7,0.73,44.0,Medium
+7l2yCtZOr-wfMiIqCW-1mQ,Live Balloons Party Entertainment,Holland,PA,Other,5.0,6,0.73,44.0,Medium
+mwwDJ2ZgfhFUvFtKXa9BtQ,Soy Cubano,Nashville,TN,Restaurants,5.0,21,0.661,44.0,Medium
+E7jw4bNYxy00T1vIkzOdzQ,The Kettle Black,Philadelphia,PA,Other,4.5,98,0.691,44.0,Medium
+Cx01sqUSyXEAnYRMiplYdA,Roadside Bar & Grill,Old Hickory,TN,Other,4.5,31,0.91,43.9,Medium
+8Xi9WR6gmrwnOlXbXaWubQ,Dreams Lash Bar,Bala Cynwyd,PA,Other,5.0,10,0.747,43.8,Medium
+XD469cx9VeHkCrDXfzc8rg,City of Paws Pet Care,Philadelphia,PA,Other,5.0,7,0.7,43.8,Medium
+F-WyXijmUhj82Bk0RQdohQ,Nevada Water & Fire Restoration,Sparks,NV,Other,5.0,12,0.76,43.7,Medium
+0j-7o5KNGov_YQ9aIljPfA,The Mystical Heart Spiritual Center & Store,Mt. Juliet,TN,Health & Medical,5.0,7,0.73,43.7,Medium
+m4TpR-T1Q6uJTvxPHl2vMg,T-Mobile,Palm Harbor,FL,Other,3.0,7,0.73,43.6,Medium
+Hj68GMB1E31JRtm5DbQcPA,Tunisian Sweet,Temple Terrace,FL,Other,5.0,10,0.747,43.6,Medium
+ntcJKo9ziN-_kpNqzxPfGA,Palm Latitudes,Dunedin,FL,Shopping,3.0,15,0.73,43.4,Medium
+GIl7rNn_KIk0BLijtmGrjA,The UPS Store,Wayne,PA,Other,3.0,23,0.73,43.4,Medium
+57U9LoV3ZUTpjUMmceRowA,Aladdin Cleaning and Restoration,Tucson,AZ,Other,5.0,7,0.674,43.3,Medium
+Ed5e1KqM3mihmexmVIjXwA,Folk,Nashville,TN,Other,4.0,183,0.82,43.2,Medium
+ZijcWgADCYVwLOOGPkd3tw,Rite Aid,Philadelphia,PA,Other,3.0,23,0.73,43.1,Medium
+KxkPxl4mBD6wn9a74MPpMA,Le sisters salon,Philadelphia,PA,Other,5.0,7,0.704,43.1,Medium
+XVYTsIpBiFDWQaM_NhNaaQ,Geneva Dental Care,Glenside,PA,Other,5.0,7,0.747,43.0,Medium
+6rF6HSwFlReJa5RdcnjBzA,Nevada Lash & Brow Co.,Reno,NV,Other,5.0,15,0.747,43.0,Medium
+WrnbOW8Gb4u-395Req0Xmw,Big Mouth Biscuits,Indianapolis,IN,Restaurants,3.5,48,0.79,42.9,Medium
+9CwLjlbDL08rYprl_lw2iA,Ability Prosthetics & Orthotics,Reno,NV,Other,5.0,20,0.674,42.7,Medium
+wfjwC57Or7zslhZ0wgsxog,Sissy's Pet Grooming Salon,Tucson,AZ,Other,3.5,61,0.73,42.7,Medium
+5arcOlmZx0_ZMUxMiPbZsQ,Los Arcos,Nashville,TN,Other,3.0,92,0.18,42.7,Medium
+20k6n4HYPMdd-ZkFeolFaA,Bay Hill Environmental,Cherry Hill,NJ,Other,5.0,5,0.644,42.5,Medium
+IgFxKVu_yHlCJsQkTYPPeQ,JAMNOLA,New Orleans,LA,Other,4.5,70,0.76,42.2,Medium
+5gzG1u2VJTAAep7hQiGnqw,Studio J,Tampa,FL,Beauty & Spas,5.0,7,0.717,42.2,Medium
+4wq9bzoCe3Mh0cPbYH1eDg,Max's Steaks,Philadelphia,PA,Other,4.0,679,0.82,42.2,Medium
+BmiVxeMfn3VDQsLt2ALofw,Dunedin Vegan Deli,Clearwater,FL,Other,4.5,64,0.76,42.1,Medium
+p6ah8GpCapSC0RuIZXorQg,Krescent City Kids Learning Academy,New Orleans,LA,Other,2.5,9,0.614,41.8,Medium
+ruzkdHb6QLWDV6NvkkVRMA,Ballpark Lofts,Saint Louis,MO,Home Services,3.0,5,0.717,41.6,Medium
+-AMeu_LMyFPTsa94IwvS4w,Penske Chevrolet - Indianapolis,Indianapolis,IN,Other,3.5,74,0.687,41.6,Medium
+gowa-c0fpgvosQnRWF9V3g,Bacio Italiano,Tucson,AZ,Pizza,4.0,117,0.807,41.5,Medium
+RC7HcGBuhg5Llmhutsw2sw,Tires Plus,Royersford,PA,Other,3.0,26,0.73,41.5,Medium
+oGU1LmdbKyYm_05PN0F77Q,The Great Catch,Lutz,FL,Other,4.0,233,0.88,41.3,Medium
+QfBDGQpJss5Z_-QZTCr1VA,Jiffy Lube,Norristown,PA,Auto Repair,3.0,32,0.73,41.3,Medium
+2xh6fEj_PaJ86izVrPa2oA,Dalmation Cleaning and Restoration,Saint Louis,MO,Home Services,5.0,5,0.717,41.3,Medium
+tFOe2XavTOWFrNtdz9hJ6A,RV Masters,Kenner,LA,Other,5.0,5,0.644,41.2,Medium
+msbXKAnPdEIZJ_qXji2ONw,Polo's Hand Car Wash,Valrico,FL,Other,5.0,5,0.687,41.1,Medium
+-2wh7NTLkWEgsrLJvilnFQ,Istanbul Mediterranean Grill & Market,Tampa,FL,Other,4.5,96,0.837,41.1,Medium
+tJ8aNrenrBATz0fM3mcVcg,Spruce Internal Medicine,Philadelphia,PA,Other,3.0,29,0.717,41.0,Medium
+nq0WaqJXa2SUcRDeailIig,Deluxe Nails & Spa,Franklin,TN,Other,3.5,102,0.79,40.8,Medium
+FgmrruCcUCGibvxRgUk-5g,LA Smoke Shop,Tucson,AZ,Other,3.0,6,0.76,40.8,Medium
+3-t_uaPKVQQmOUAIu7C-PA,Martindale's Natural Market,Springfield,PA,Food,4.5,56,0.717,40.8,Medium
+pjZrxH-U-QhNNofR_1Jy7Q,CARE,Ruskin,FL,Other,2.5,7,0.614,40.7,Medium
+e5YAed0VGfePTkqWCk-3-Q,What The Pho,Indianapolis,IN,Other,4.0,217,0.807,40.3,Medium
+l9NDEqoZOJ7FCXVKSh_u6w,JK Nails,St Charles,MO,Beauty & Spas,3.0,27,0.73,40.2,Medium
+4ywbhw0osjX1FUns1hBlqQ,Delta Spinal Care,Creve Coeur,MO,Other,5.0,5,0.631,40.2,Medium
+1t4XzEVCZTYLldSfjzGdaA,All The Way Debris Removal,Reno,NV,Local Services,5.0,24,0.674,40.1,Medium
+CoWXE9RoL2vuZBjuKque8Q,Lucky's Boba Tea,Tucson,AZ,Food,4.5,56,0.76,40.1,Medium
+d40kntTabz5KrOFmc73CEw,Bommarito Nissan Ballwin,Ballwin,MO,Other,3.0,34,0.687,40.1,Medium
+5-lsWndRatqrCG9pEwcP8g,Got Split Ends,Pinellas Park,FL,Hair Salons,5.0,11,0.79,40.0,Medium
+9hSpwqmthYZO-va4hTpo1w,Jefferson Hospital for Neuroscience,Philadelphia,PA,Health & Medical,2.5,12,0.644,39.9,Medium
+qQM0zKhLYK7Hf33hUk9DWQ,Sharma Skin & Hair Surgery,Edmonton,AB,Other,2.5,8,0.644,39.8,Medium
+RsgqWnowumCj5KpYtd8RqQ,Sharp Cars of Indy,Indianapolis,IN,Other,2.5,10,0.657,39.7,Medium
+xyRqTr-TpKmqAP7SgwB1Og,Toyota of Cool Springs Collision Center,Franklin,TN,Automotive,2.5,10,0.614,39.7,Medium
+BrtXtNgpCXjcyCKqLW3jPg,7-Eleven,Sparks,NV,Automotive,2.0,14,0.85,39.5,Medium
+Au5pYw6A_gdoPRl_JaMVdw,Tonya Szele Events,Santa Barbara,CA,Event Planning & Services,5.0,24,0.644,39.5,Medium
+KLp0HTfQSbmTSNH0MLrF6g,Leap & Bounce 4 Fun,Belleville,IL,Other,2.5,6,0.687,39.5,Medium
+-SHyhef2yNmj9mlnC_htGg,The UPS Store,Tucson,AZ,Other,2.5,14,0.687,39.4,Medium
+gbiqNc7UYooSfg0_zCyItw,Pizza Hut,Edmonton,AB,Restaurants,3.0,9,0.82,39.4,Medium
+ABbH7ciTsVdWkyzvQ-BhFQ,Briarcliff Auto Service,Glenolden,PA,Other,2.5,5,0.657,38.9,Medium
+XHKt5ADeHCphL8lVCsCenA,The Glen Apartments,Lafayette Hill,PA,Home Services,2.5,9,0.657,38.8,Medium
+N3BJpbgzBLBIxPGRwGLjvg,Coast Dental,St. Petersburg,FL,Other,2.5,19,0.644,38.7,Medium
+Jol-uflN4_NdnIDVJtwKog,Massage Envy - Glen Carbon,Glen Carbon,IL,Beauty & Spas,3.0,17,0.76,38.7,Medium
+3bhxChsMIlq3TwSb0KPlUQ,Extilos Barbershop,Tampa,FL,Beauty & Spas,2.5,5,0.657,38.6,Medium
+6QJJmCZZrFoZBm31PUsMew,Citadel Credit Union,Exton,PA,Other,1.5,8,0.657,38.5,Medium
+S0A4VNm1RlajGpmJ1kKoQw,Neighborhood Garage Door Services,Indianapolis,IN,Home Services,3.5,64,0.76,38.4,Medium
+c_cfKwpJz5GuPaNgBbFaIA,Fuddruckers,Saint Louis,MO,Restaurants,3.5,90,0.807,38.1,Medium
+bCAE5NBHpFlgGsGyg2mfWA,Punky's Bar and Grill,St Petersburg,FL,Other,3.5,141,0.897,37.9,Medium
+7lYGijgBkZh7UslCCpazWA,Cherry's Bar & Grill,Tampa,FL,Bars,4.0,132,0.85,37.9,Medium
+AhPis4xBTX10ylpKnpoGYQ,PhillyLiving Management,Philadelphia,PA,Other,2.5,20,0.644,37.7,Medium
+eX_5-PZh9pd-oug09m4dHA,Schnucks Butler Hill,Saint Louis,MO,Restaurants,3.0,11,0.79,37.5,Medium
+BiSdlIuOlf6MqyEZ6aWhfQ,Con Murphy's,Philadelphia,PA,Restaurants,3.5,301,0.88,37.5,Medium
+AmEwrEudqYNLKfb6idqZqg,Picture This & More,Alton,IL,Other,3.0,5,0.747,37.3,Medium
+-bOe__PV8KQM_v1hguxSAA,Hogan Farms Pumpkin Patch & Corn Maze,Brownsburg,IN,Other,2.5,14,0.717,37.1,Medium
+oIZbORAfkBtxkdC6rJbXjA,Arbor Crossing Apartments,Boise,ID,Other,2.0,13,0.7,37.0,Medium
+v4V3ZDGNae7vUAOfzDd3Og,Starbucks,Brentwood,TN,Food,3.0,5,0.76,36.9,Medium
+-dc49jsYqR2zNblJkB9i8w,Homeward Bound Veterinary Services,Reno,NV,Other,5.0,40,0.644,36.7,Medium
+UHPzLbr-bwGcChiCKjUTGg,Ra Bar,Edmonton,AB,Other,2.5,7,0.721,36.6,Medium
+y_j4V5xyL1tUfsnSIKNunQ,Hoorfar Dental Group- Philadelphia,Philadelphia,PA,Other,2.0,7,0.614,36.6,Medium
+Quz_LlKT-HRRxpijmzpIVw,The Creperie,Edmonton,AB,Restaurants,3.5,86,0.85,36.3,Medium
+VzUV-nYnjq3xj7KUlDx4xg,Landmark Mazda,Edmonton,AB,Automotive,2.0,8,0.687,36.0,Medium
+FddjrlmWWI7eyW6MY9IMAg,Cooper Urgent Care Center - Audubon,Audubon,NJ,Health & Medical,2.5,19,0.7,35.9,Medium
+n11F_ytaXT6cpaixRxsGOw,Clearwater Beach Marriott Suites on Sand Key,Clearwater Beach,FL,Other,3.5,170,0.79,35.5,Medium
+DKTBXNxbmHPqq2H5qQ-PLQ,Tires Plus,New Port Richey,FL,Other,2.0,19,0.687,35.5,Medium
+KOPS5Gx5ySeFiTK7tXHWtw,Parkway Cleaners,West Chester,PA,Other,2.0,10,0.687,35.5,Medium
+zcWBWY9nuLwiHEvPXY8leA,Residence Inn by Marriott St. Petersburg Tierra Verde,Tierra Verde,FL,Other,2.5,10,0.7,35.5,Medium
+d0ZjDWpAQG0B7wjzneXhgA,Pulmonary Associates Of Southern Arizona,Tucson,AZ,Other,1.0,7,0.644,35.3,Medium
+hb4o1xsbjxnLustzXhHdJQ,Quest Diagnostics,Sparks,NV,Other,2.0,31,0.687,35.3,Medium
+jfIwOEXcVRyhZjM4ISOh4g,Oreland Pizza,Oreland,PA,Sandwiches,3.0,29,0.82,35.2,Medium
+7k-piL173pqXADKb2lzk0A,DICK'S Sporting Goods,Des Peres,MO,Shopping,2.5,18,0.73,35.2,Medium
+zBM-r0DMUBWlxGr1vEc7fw,Bandana's Bar-B-Q,Saint Louis,MO,Restaurants,3.5,69,0.88,35.0,Medium
+nV8iH4rCF52sxwhL4ff7Ow,Verizon Authorized Retailer - Cellular Sales,Wayne,PA,Shopping,2.5,9,0.73,34.9,Low
+y5ndoUAIMsbN5h7IQ4icQg,Uniforms by Logo Express,Gretna,LA,Other,2.5,5,0.674,34.9,Low
+2DN0MjBHeboPAiQlFu1_hg,Maid Brigade of Middle Tennessee,Nashville,TN,Other,2.0,5,0.644,34.9,Low
+ukIfbNaD-m-2pRZPR6Exjg,Law Offices of Robert M Geller,Tampa,FL,Other,2.0,9,0.7,34.9,Low
+UTxRMnuUwy3B_c3nUJmnJA,Ralphies Bar,Newtown,PA,Bars,3.0,9,0.85,34.7,Low
+y_ukD9QdAsKbpfuaS4NljQ,Kidsteeth Pediatric Dentistry,Swarthmore,PA,Other,2.5,5,0.674,34.6,Low
+y7QoQeNl_Rvm7lMMgy7noQ,"Verizon Authorized Retailer, TCC",Brownsburg,IN,Other,2.0,5,0.7,34.4,Low
+YOZWP7qlFpHn9rodJSFWDw,Starbucks,Palm Harbor,FL,Food,3.0,31,0.82,34.3,Low
+mJbTRr_AJ8rDG78L8Min9w,White Horse Coffee & Creamery,Jenkintown,PA,Food,4.5,64,0.82,34.3,Low
+IkojivrPEM79yzhF3AzN1g,McAlister's Deli,St. Charles,MO,Other,3.5,67,0.91,34.1,Low
+udHVIrP8z10Y4M0ocziJ6g,PetSmart,Indianapolis,IN,Other,2.5,31,0.7,34.1,Low
+fwy1vZ0YFbQwi-JNXkLdcw,Liberty All Floor Care,Philadelphia,PA,Other,1.0,12,0.73,34.0,Low
+FHinXLaal32gWzUfBUdcaw,Liberty Weddings,Philadelphia,PA,Other,2.0,18,0.73,33.8,Low
+WSnm4zgtuPxQfUYvxBT-xg,M. Resnick Plumbing,Doylestown,PA,Other,2.0,16,0.73,33.8,Low
+WK4PNl6XRW441EHrxQFEpg,Cicis,Saint Louis,MO,Pizza,3.0,29,0.807,33.7,Low
+AyKHpTvQq75ggMIhlmgxig,Rushwood Apartments,Philadelphia,PA,Other,1.5,17,0.73,33.6,Low
+GjgCf_M6Bhil-D4cGo5irQ,Goodwill Industries,Maple Shade,NJ,Other,2.5,21,0.73,33.5,Low
+JRTNC0_I6WcF_KwQCNggUQ,Cain & Daniels,Tampa,FL,Other,1.0,6,0.7,33.5,Low
+PDX-Y-is-IVQTDyKWqY_ug,Action Towing,Indianapolis,IN,Other,2.0,6,0.73,33.3,Low
+4vGV7HJkKaMhUM8EXx8XKw,Critter Control  of Tampa,Tampa,FL,Other,2.0,9,0.73,33.0,Low
+kv3Ow7aIV1V9xAtdvTaMKQ,CVS Pharmacy,Moorestown,NJ,Other,2.0,9,0.76,33.0,Low
+Q-m8ZW2L2ZaD2I6QC33I9g,CVS Pharmacy,Marlton,NJ,Other,2.5,15,0.76,32.9,Low
+hbPFy30uNLIziYYQmpi8nQ,Flippers Express Car Wash,Valrico,FL,Other,2.0,10,0.73,32.9,Low
+dIQGbalj-3I8vixZ4M149g,Molly's Rise and Shine,New Orleans,LA,Pizza,4.5,153,0.734,32.6,Low
+3hmjz4VDytVaPy7drmvnDw,McDonald's,Indianapolis,IN,Coffee & Tea,2.5,6,0.85,32.5,Low
+iJn64rU6vapSp8uTjmshcA,Popeye's Louisana Kitchen,Morton,PA,Other,1.5,8,0.73,32.5,Low
+Q-eFove0FiHzcL__AUTyNw,ShopRite of Bordentown,Bordentown,NJ,Food,2.0,18,0.79,32.4,Low
+ZOZ94_vjuogm6PzmuIa1FQ,Viet Orleans Bistro,New Orleans,LA,Other,3.5,172,0.794,32.3,Low
+sqPVNzFKLs6bkGnbISAxVw,Bassett Furniture,Tucson,AZ,Shopping,2.0,5,0.7,32.2,Low
+uGIk2lfXdQGFJxD3xlX2xw,A Massage By Alyssa,Tucson,AZ,Beauty & Spas,1.5,6,0.734,32.1,Low
+UNpgU3vT4n_AOkAHlt4HEA,Safeway,Sahuarita,AZ,Other,2.5,22,0.79,32.1,Low
+I_3LMZ_1m2mzR0oLIOePIg,Pappy's Smokehouse,Saint Louis,MO,Food,4.5,3999,0.88,31.7,Low
+rWGNkRRNSIcQBPL1iiOZKw,Pizza Hut,Edmonton,AB,Pizza,1.5,8,0.76,31.1,Low
+p2kxmxH7oOskYk4VFxNqYA,The Griddle,Eagle,ID,Other,3.5,169,0.85,31.0,Low
+eoUgJ2EDuqa8wsWvPTpOqQ,Saint Francis Veterinary Center,Swedesboro,NJ,Other,2.5,37,0.657,30.9,Low
+HANUMhsKdPgxguzxv0D-cw,Mandarin Hide,Saint Petersburg,FL,Bars,4.5,219,0.777,30.8,Low
+K4otvKJxX-0V-A6k4QhCRg,Rackz BBQ,Carmel,IN,Other,4.5,141,0.91,30.8,Low
+4D0CQDOL-mhAG-UmkBIvaA,Taste Good,Spring Hill,FL,Other,3.0,33,0.82,30.5,Low
+dFY3MZUpQcLcy6vQJs2fMg,Supercuts,Clearwater,FL,Other,2.5,5,0.73,30.3,Low
+uLIhT2MaXhdvRGFywQIITg,Pizza Hut,Saint Louis,MO,Other,2.0,8,0.79,30.3,Low
+_vpIEol9cEn3Y3KLpwbGkg,Chelsea Tavern,Wilmington,DE,Sandwiches,3.5,277,0.94,29.8,Low
+kburcuSQtWvwI4cA44reDg,Greek Village Restaurant & Deli,Seminole,FL,Restaurants,3.5,130,0.867,29.8,Low
+FyoXk7EJ_McV2PSpEFB7NQ,Music City Autoplex,Madison,TN,Automotive,2.0,33,0.717,29.6,Low
+Ep_jh1Pt4Ggyla21f-BQcQ,New Leaf 2 Chinese & Japanese Cuisine,Philadelphia,PA,Nightlife,4.5,137,0.91,29.5,Low
+4o0xTz_indIcqzJ7juHBAw,KQ Burger,Philadelphia,PA,Restaurants,2.5,19,0.824,29.3,Low
+ZbvSN-_WutRkxhO_abGR2g,The Black Pearl,Dunedin,FL,Other,4.5,328,0.85,29.3,Low
+HWLgmRSRDdUwXFkUxf4N-w,Jazmine Cafe,New Orleans,LA,Other,3.5,156,0.807,29.3,Low
+FjGAm10tARIypt5fYGpfqQ,Jersey Mike's Subs,Pinellas Park,FL,Fast Food,3.0,29,0.85,29.1,Low
+IEphZa3bYl_jPwsUq1R2jQ,O'grady's Family Restaurant,Phoenixville,PA,Restaurants,3.0,36,0.82,28.9,Low
+JCt1wQiE2sWeyeQy2iDlkA,T-Mobile,Willow Grove,PA,Other,2.5,5,0.76,28.9,Low
+oo54fNfXC7IkxwpeoPE15w,Taqueria Olvera,Fairview Heights,IL,Restaurants,4.5,189,0.91,28.8,Low
+5Fm6khB-De-OdqATep9J9Q,NYPD Pizza,Philadelphia,PA,Pizza,3.5,198,0.764,28.7,Low
+Zdw5rbtAWguwcT9h_X4xRA,Johnson's Corner Farm,Medford,NJ,Food,3.5,169,0.79,28.6,Low
+kV1xlJ2ooXS4riglhAvJaQ,Dent Artist Paintless Dent Removal,Garden City,ID,Other,5.0,105,0.7,28.5,Low
+UFCN0bYdHroPKu6KV5CJqg,The Eagle,Indianapolis,IN,Nightlife,4.5,2233,0.91,28.4,Low
+pEw7LP0CItZ5TPA9PkBzwA,Ukulele Brand's,Land O Lakes,FL,Restaurants,3.5,224,0.837,28.3,Low
+U7zEcThfhWnf_vOFwu3o8w,Dillard's Spa at Rivergate Mall,Goodlettsville,TN,Beauty & Spas,2.0,8,0.82,28.3,Low
+jOjNpIXzurYiRZMgFjj4-w,Aptive Environmental,Tampa,FL,Other,1.5,35,0.73,28.3,Low
+cdbEEL_0TLOPgdfsB3PUvA,Subway,Collinsville,IL,Restaurants,2.5,9,0.82,28.0,Low
+eIOfChlA3XgQKL4nw1EBjQ,Puccini's Pizza Pasta - West Clay,Carmel,IN,Other,3.0,38,0.88,27.7,Low
+zp6RekkXek1BeUBH0cvpKA,Advanced Plumbing,St. Petersburg,FL,Home Services,2.5,5,0.76,27.6,Low
+5odUAK_z2LPfAEiWgc-n-Q,Tropical Smoothie Cafe,Tampa,FL,Other,2.5,33,0.79,27.5,Low
+dvgl-23sNlov9aY3wMBU2g,Barn in the Bend,Madison,TN,Event Planning & Services,1.5,7,0.687,27.5,Low
+irxL5OGMLI9Ws2w79qkmNw,Applebee's Grill + Bar,Avon,IN,Other,3.0,37,0.85,27.3,Low
+Orwl8KnEPFTH_RdXnztL4g,Extended Stay America - Tampa - Airport - Memorial Hwy.,Tampa,FL,Other,1.5,39,0.76,26.8,Low
+b01W9cJtcB0dtXqnNtsstA,McDonald's,Wood River,IL,Coffee & Tea,2.5,7,0.79,26.8,Low
+NZn0q4SCuznNN1dMvqJliA,Schnucks - Fairview Heights,Fairview Heights,IL,Other,2.5,7,0.79,26.8,Low
+eMcPPFGIngpYjxCYNwhd7Q,Jack in the Box,Florissant,MO,Restaurants,2.0,5,0.79,26.5,Low
+sB45WFgysT617bKWP_WJwA,Budweiser Brewery Experience,Saint Louis,MO,Bars,4.5,605,0.76,26.0,Low
+LWDktsosohdLy4iI2pIOOQ,Bass Pro Shops,Nashville,TN,Other,3.0,49,0.73,25.9,Low
+ZGH8MzJa7Q7iIpmtzBAJAQ,Manayunk Brewery,Philadelphia,PA,Other,3.5,692,0.794,25.9,Low
+GGmioYZou5FlJ5vf2-qLmQ,Chipotle Mexican Grill,Blue Bell,PA,Other,2.0,33,0.79,25.1,Low
+nPKZDWrQxkNU8TYjEicgfw,Auto Spa Boutique,Tucson,AZ,Other,3.0,57,0.73,25.1,Low
+CADaY34LnEGjpSpU7Lee8w,Surfside Taphouse,Clearwater,FL,Other,3.5,334,0.94,24.4,Low
+gt6dgnGtaOXm6HIBBfoFJg,XFINITY,Tucson,AZ,Other,1.5,43,0.73,24.0,Low
+K-0ysAHUo1XBYcw7hB10hw,Historic Streetcar Inn,New Orleans,LA,Hotels & Travel,3.0,101,0.76,24.0,Low
+FazSucP2EYf7DxOwyfHLHA,Tin Roof,Indianapolis,IN,Other,3.0,136,0.794,23.4,Low
+lm-KtpMuHoPVCkC7zpr_xg,The Perfect Cup Cafe,Hockessin,DE,Coffee & Tea,3.5,97,0.91,23.4,Low
+MQ5AbyTEk6IW3lG4GuLutA,La Quinta Inn by Wyndham Indianapolis Airport Lynhurst,Indianapolis,IN,Hotels & Travel,2.5,52,0.76,22.7,Low
+AFG0Xm_iVHyCgikI97F8Yg,Kabuke Japanese Steak House,Souderton,PA,Other,3.0,57,0.88,22.2,Low
+VgGmMEc68H1ZB_mtk83Cgg,Jimmy John's,Philadelphia,PA,Other,2.5,28,0.91,22.2,Low
+WAB73KCeALEJkhdkg0Imlg,White Castle,Belleville,IL,Fast Food,2.5,33,0.85,21.2,Low
+69R0QwXKjNDpilMgtzeLqA,Luna Libre,New Orleans,LA,Other,5.0,50,0.837,21.0,Low
+qZR0xNQP9XTLi9MQuR5oXw,Apple Store - West County,Saint Louis,MO,Other,2.5,100,0.73,20.8,Low
+SAp1Nk3XLbQ-zeJKyASICQ,The Cheesecake Factory - Nashville,Nashville,TN,Restaurants,3.5,415,0.91,20.8,Low
+_4VrDSmqabnuqwaQlOI6-w,IHOP,Florissant,MO,Other,2.5,34,0.85,20.3,Low
+RnURR_OfKGejCsEshpS0ww,Hula Bay Club,Tampa,FL,Restaurants,3.5,686,0.91,20.0,Low
+xchndUNaThx-L-zBUIYAUA,St. Louis Bread,Sunset Hills,MO,Other,2.5,37,0.88,19.7,Low
+4Ry0DT7iq0MavuRk0V-mHA,LA Fitness,Tampa,FL,Other,2.5,145,0.73,18.7,Low
+K_WURZAvXtBd8bW8z2V-Lw,Walmart Supercenter,Tampa,FL,Shopping,2.0,56,0.73,18.6,Low
+-FIYPnxsg3kuHXx46zY18w,Denny's,Tampa,FL,Other,2.0,50,0.85,18.6,Low
+PKFZM2CfJpwLlMurOsuISQ,Westshore Pizza,Lutz,FL,Other,2.5,50,0.85,17.9,Low
+HUKrpwmcMlwPbDF5cz0VkQ,Maypop Coffee & Garden Shop,Webster Groves,MO,Food,5.0,61,0.85,16.7,Low
+b6LAC6kEj3F7SgDzlVuCpg,Crowne Plaza Philadelphia-Cherry Hill,Cherry Hill,NJ,Other,2.5,162,0.76,16.0,Low
+nC0kethcH2AncAD2wHTRRA,Panera Bread,Exton,PA,Other,2.5,65,0.88,15.1,Low
+Aes-0Q_guDeYewMapFs_vg,Longboard's Grill,Santa Barbara,CA,Nightlife,3.0,516,0.85,15.0,Low
+EZpbFQJEgo00XNlKJe-4ew,The Spice & Tea Shoppe,Reno,NV,Food,5.0,127,0.807,14.3,Low
+rf_hUr2C-BfqjbPSk4_1Ig,The Hotel ML,Mt Laurel,NJ,Event Planning & Services,1.5,156,0.674,14.3,Low
+csfMjRRfr-sku6L6bhEf_A,Local Tavern,Philadelphia,PA,Restaurants,2.5,275,0.82,11.0,Low
