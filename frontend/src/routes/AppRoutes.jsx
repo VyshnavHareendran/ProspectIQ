@@ -5,6 +5,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard";
 import Business from "../pages/Business";
 import UploadCSV from "../pages/UploadCSV";
+import CallLogs from "../pages/CallLogs";
 import Login from "../pages/Login";
 
 import { routePaths } from "./routePaths";
@@ -12,7 +13,10 @@ import { routePaths } from "./routePaths";
 const AppRoutes = () => (
   <Routes>
     {/* Public Route */}
-    <Route path={routePaths.login} element={<Login />} />
+    <Route
+      path={routePaths.login}
+      element={<Login />}
+    />
 
     {/* Protected Routes */}
     <Route element={<ProtectedRoute />}>
@@ -30,6 +34,11 @@ const AppRoutes = () => (
         <Route
           path={routePaths.upload}
           element={<UploadCSV />}
+        />
+
+        <Route
+          path={routePaths.callLogs}
+          element={<CallLogs />}
         />
       </Route>
     </Route>
