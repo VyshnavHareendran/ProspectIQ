@@ -16,8 +16,11 @@ export const uploadApi = {
     );
   },
 
-  importBusinesses: (data) =>
-    httpClient.post("/imports/businesses", data),
+  importBusinesses: (uploadId, mapping) =>
+  httpClient.post("/imports/businesses", {
+    upload_id: uploadId,
+    mapping,
+  }),
 
   getUploadHistory: () =>
     httpClient.get("/uploads/history"),

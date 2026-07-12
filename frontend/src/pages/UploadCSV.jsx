@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 import FileDropZone from "../components/upload/FileDropZone";
 import CSVPreviewTable from "../components/upload/CSVPreviewTable";
 import ColumnMappingTable from "../components/upload/ColumnMappingTable";
-import { Button } from "@mui/material";
 import ImportSummary from "../components/upload/ImportSummary";
 import UploadHistoryTable from "../components/upload/UploadHistoryTable";
 import ImportResultDialog from "../components/upload/ImportResultDialog";
@@ -12,64 +11,105 @@ import { uploadApi } from "../api/uploadApi";
 
 const UploadCSV = () => {
   const [file, setFile] = useState(null);
-const [mapping, setMapping] = useState({});
-const [openDialog, setOpenDialog] = useState(false);
-const [previewColumns, setPreviewColumns] = useState([]);
-const [previewRows, setPreviewRows] = useState([]);
-const [uploadId, setUploadId] = useState(null);
+  const [mapping, setMapping] = useState({});
+  const [openDialog, setOpenDialog] = useState(false);
+  const [previewColumns, setPreviewColumns] = useState([]);
+  const [previewRows, setPreviewRows] = useState([]);
+  const [uploadId, setUploadId] = useState(null);
+  const [importResult, setImportResult] = useState(null);
 
-const handlePreview = async (selectedFile) => {
-  if (!selectedFile) return;
+  const handlePreview = async (selectedFile) => {
+    if (!selectedFile) return;
 
-  try {
-    const response = await uploadApi.previewCSV(selectedFile);
+    try {
+      const response = await uploadApi.previewCSV(selectedFile);
 
-    console.log("FULL RESPONSE:", response.data);
-    console.log("COLUMNS:", response.data.columns);
-    console.log("ROWS:", response.data.sample_rows);
-    console.log("FIRST ROW:", response.data.sample_rows[0]);
+      console.log("Preview Response:", response.data);
 
-    setUploadId(response.data.upload_id);
-    setPreviewColumns(response.data.columns);
-    setPreviewRows(response.data.sample_rows);
-    setMapping(response.data.suggested_mapping);
+      setUploadId(response.data.upload_id);
+      setPreviewColumns(response.data.columns);
+      setPreviewRows(response.data.sample_rows);
+      setMapping(response.data.suggested_mapping);
 
-  } catch (error) {
-    console.error(error);
-  }
-};
+      console.log("Upload ID from API:", response.data.upload_id);
+    } catch (error) {
+      console.error("Preview Error:", error);
+    }
+  };
+
+  const handleImport = async () => {
+    console.log("========== IMPORT ==========");
+    console.log("Upload ID:", uploadId);
+    console.log("Mapping:", mapping);
+    console.log("Type:", typeof uploadId);
+
+    if (uploadId === null) {
+      alert("Please upload and preview a CSV first.");
+      return;
+    }
+
+    try {
+      const response = await uploadApi.importBusinesses(
+        uploadId,
+        mapping
+      );
+
+      console.log("Import Success:", response.data);
+
+      setImportResult(response.data);
+      setOpenDialog(true);
+    } catch (error) {
+      console.error("Import Error:", error);
+      console.error("Response:", error.response);
+      console.error("Response Data:", error.response?.data);
+
+      alert("Import failed");
+    }
+  };
+
+  console.log("Current State Upload ID:", uploadId);
 
   return (
     <Box p={3}>
       <Typography variant="h4" mb={3}>
         Upload CSV
       </Typography>
-<FileDropZone
-  file={file}
-  setFile={setFile}
-  onUpload={handlePreview}
-/>
+
+      <FileDropZone
+        file={file}
+        setFile={setFile}
+        onUpload={handlePreview}
+      />
 
       <CSVPreviewTable
         rows={previewRows}
         columns={previewColumns}
       />
 
-      <ColumnMappingTable />
+      <ColumnMappingTable
+        columns={previewColumns}
+        mapping={mapping}
+        setMapping={setMapping}
+      />
+
       <Button
-  variant="contained"
-  size="large"
-  sx={{ mt: 3 }}
-  onClick={() => setOpenDialog(true)}
->
-  Import Businesses
-</Button>
-  <ImportSummary />
-  <UploadHistoryTable />
-  <ImportResultDialog
-  open={openDialog}
-  handleClose={() => setOpenDialog(false)}
-/>
+        variant="contained"
+        size="large"
+        sx={{ mt: 3 }}
+        onClick={handleImport}
+      >
+        Import Businesses
+      </Button>
+
+      <ImportSummary data={importResult} />
+
+      <UploadHistoryTable />
+
+      <ImportResultDialog
+        open={openDialog}
+        handleClose={() => setOpenDialog(false)}
+        result={importResult}
+      />
     </Box>
   );
 };
