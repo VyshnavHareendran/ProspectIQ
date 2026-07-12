@@ -40,3 +40,17 @@ class DashboardService:
     def get_recent_activity(self):
 
         return self.repository.get_recent_activity()
+    
+    def get_top_rated_businesses(self):
+
+        return self.repository.get_top_rated_businesses()
+
+
+    def get_recent_uploads(self):
+
+        return self.repository.get_recent_uploads()
+
+
+    def get_recent_activity(self):
+
+        return self.repository.get_recent_activity()

@@ -1,9 +1,9 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.auth import router as auth_router
 from app.routes.business import router as business_router
-
-from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.upload_history import router as upload_router
 from app.routes.import_route import router as import_router
@@ -17,10 +17,14 @@ from app.routes.lead_score import (
     router as lead_score_router
 )
 
+
 app = FastAPI(
     title="ProspectIQ",
     version="1.0.0"
 )
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 app.add_middleware(
     CORSMiddleware,

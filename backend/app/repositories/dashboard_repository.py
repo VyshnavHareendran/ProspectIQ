@@ -10,6 +10,8 @@ from sqlalchemy import func
 
 from app.models.call_log import CallLog
 
+from app.models.lead_score import LeadScore
+
 class DashboardRepository:
 
     def __init__(
@@ -28,6 +30,16 @@ class DashboardRepository:
         total_businesses = (
             self.db.query(func.count(Business.id))
             .filter(Business.is_active == True)
+            .scalar()
+        )
+
+        high_priority_leads = (
+            self.db.query(
+                func.count(LeadScore.id)
+            )
+            .filter(
+                LeadScore.priority == "HIGH"
+            )
             .scalar()
         )
 
@@ -52,12 +64,12 @@ class DashboardRepository:
 
             "total_businesses": total_businesses,
 
-            "high_priority_leads": 0,
+            "high_priority_leads": high_priority_leads,
 
             "today_calls": today_calls,
 
             "new_businesses_this_week":
-            new_businesses_this_week
+                new_businesses_this_week
 
         }
     

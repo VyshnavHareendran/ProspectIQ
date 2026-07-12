@@ -6,7 +6,6 @@ from app.database import get_db
 from app.services.dashboard_service import DashboardService
 from app.repositories.dashboard_repository import DashboardRepository
 
-from app.schemas.dashboard import DashboardSummaryResponse
 from typing import List
 
 from app.schemas.dashboard import (
@@ -15,6 +14,9 @@ from app.schemas.dashboard import (
     CategoryDistributionResponse,
     RecentBusinessResponse,
     ImportSummaryResponse,
+    RecentUploadResponse,
+    RecentActivityResponse,
+    TopRatedBusinessResponse,
     RecentUploadResponse,
     RecentActivityResponse
 )
@@ -95,10 +97,9 @@ def get_import_summary(
 
     return service.get_import_summary()
 
-
 @router.get(
     "/top-rated-businesses",
-    response_model=List[RecentBusinessResponse]
+    response_model=list[TopRatedBusinessResponse]
 )
 def get_top_rated_businesses(
     db: Session = Depends(get_db)
@@ -112,7 +113,7 @@ def get_top_rated_businesses(
 
 @router.get(
     "/recent-uploads",
-    response_model=List[RecentUploadResponse]
+    response_model=list[RecentUploadResponse]
 )
 def get_recent_uploads(
     db: Session = Depends(get_db)
@@ -126,7 +127,7 @@ def get_recent_uploads(
 
 @router.get(
     "/recent-activity",
-    response_model=List[RecentActivityResponse]
+    response_model=list[RecentActivityResponse]
 )
 def get_recent_activity(
     db: Session = Depends(get_db)
