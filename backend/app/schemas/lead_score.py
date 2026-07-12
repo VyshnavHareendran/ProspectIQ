@@ -1,14 +1,31 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional,List
+
 
 from pydantic import BaseModel
 
+class LeadScoreBusinessResponse(BaseModel):
+
+    id: int
+
+    business_name: str
+
+    category: str
+
+    city: str
+
+    state: str | None = None
+
+    phone_number: str
+
+    google_rating: float
+
+    class Config:
+        from_attributes = True
 
 class LeadScoreResponse(BaseModel):
 
     id: int
-
-    business_id: int
 
     lead_score: float
 
@@ -17,6 +34,8 @@ class LeadScoreResponse(BaseModel):
     score_reason: Optional[str] = None
 
     score_version: int
+
+    business: LeadScoreBusinessResponse
 
     class Config:
         from_attributes = True
@@ -61,3 +80,24 @@ class LeadScoreStatisticsResponse(BaseModel):
     highest_score: float
 
     lowest_score: float
+
+class FeatureImportanceResponse(BaseModel):
+
+    image_url: str
+
+class GenerateAllLeadScoresResponse(BaseModel):
+
+    generated: int
+
+class LeadScoreListResponse(BaseModel):
+
+    total: int
+
+    page: int
+
+    page_size: int
+
+    total_pages: int
+
+    items: list[LeadScoreResponse]
+

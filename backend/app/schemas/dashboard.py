@@ -57,10 +57,22 @@ class ImportSummaryResponse(BaseModel):
     total_records_imported: int
 
 
-from datetime import datetime
+class TopRatedBusinessResponse(BaseModel):
 
-from pydantic import BaseModel
+    id: int
 
+    business_name: str
+
+    category: str
+
+    city: str
+
+    google_rating: float
+
+    review_count: int
+
+    class Config:
+        from_attributes = True
 
 class RecentUploadResponse(BaseModel):
 
@@ -68,29 +80,16 @@ class RecentUploadResponse(BaseModel):
 
     filename: str
 
-    file_type: str
-
-    source_type: str
-
-    source_name: str | None = None
-
-    total_records: int
+    status: str
 
     valid_records: int
 
-    invalid_records: int
-
     duplicate_records: int
-
-    status: str
-
-    remarks: str | None = None
 
     created_at: datetime
 
     class Config:
         from_attributes = True
-
 
 class RecentActivityResponse(BaseModel):
 

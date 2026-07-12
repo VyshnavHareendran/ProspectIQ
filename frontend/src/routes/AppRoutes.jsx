@@ -5,6 +5,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard";
 import Business from "../pages/Business";
 import UploadCSV from "../pages/UploadCSV";
+
+import LeadScores from "../pages/LeadScores";
+
 import CallLogs from "../pages/CallLogs";
 import Login from "../pages/Login";
 
@@ -34,6 +37,11 @@ const AppRoutes = () => (
         <Route
           path={routePaths.upload}
           element={<UploadCSV />}
+        />
+
+        <Route
+          path={routePaths.leadScores}
+          element={<LeadScores />}
         />
 
         <Route

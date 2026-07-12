@@ -6,6 +6,19 @@ import pandas as pd
 
 
 class FeatureBuilder:
+    FEATURE_COLUMNS = [
+        "digital_maturity_score",
+        "has_hours",
+        "num_days_open",
+        "digital_signal_count",
+        "num_attributes",
+        "review_count_log",
+        "stars",
+        "satisfaction_score",
+        "popularity_score",
+        "category_grouped",
+        "state",
+    ]
 
     @staticmethod
     def build(
@@ -51,13 +64,13 @@ class FeatureBuilder:
 
         # ---------- Reviews ----------
 
-        review_count_log = math.log1p(
-            business.review_count
-        )
+        review_count = business.review_count or 0
+
+        review_count_log = math.log1p(review_count)
 
         # ---------- Rating ----------
 
-        stars = business.google_rating
+        stars = business.google_rating if business.google_rating is not None else 0
 
         satisfaction_score = (
             stars / 5
@@ -104,7 +117,7 @@ class FeatureBuilder:
 
         state = business.state or "Unknown"
 
-        return pd.DataFrame([{
+        features = pd.DataFrame([{
 
             "digital_maturity_score":
                 digital_maturity_score,
@@ -140,3 +153,59 @@ class FeatureBuilder:
                 state
 
         }])
+
+        return features[FeatureBuilder.FEATURE_COLUMNS]
+
+    @staticmethod
+    def validate_against_model(features, preprocessor):
+
+        # ColumnTransformer remembers the original input column names
+        expected_columns = list(
+            getattr(
+                preprocessor,
+                "feature_names_in_",
+                FeatureBuilder.FEATURE_COLUMNS
+            )
+        )
+
+        actual_columns = list(features.columns)
+
+        return {
+
+            "expected_columns": expected_columns,
+
+            "actual_columns": actual_columns,
+
+            "missing_columns": [
+
+                column
+
+                for column in expected_columns
+
+                if column not in actual_columns
+
+            ],
+
+            "extra_columns": [
+
+                column
+
+                for column in actual_columns
+
+                if column not in expected_columns
+
+            ],
+
+            "order_matches":
+
+                actual_columns == expected_columns,
+
+            "dtypes": {
+
+                column: str(dtype)
+
+                for column, dtype in features.dtypes.items()
+
+            }
+
+        }

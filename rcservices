@@ -1,0 +1,8 @@
+*   [33m28ae45b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mbackend[m[33m)[m Resolve merge conflict in AppRoutes
+[31m|[m[32m\[m  
+[31m|[m *   [33mf9a0fca[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #2 from VyshnavHareendran/frontend
+[31m|[m [33m|[m[34m\[m  
+[31m|[m [33m|[m * [33mf6a6e79[m Implemented initial Call Logs module UI
+[31m|[m [33m|[m * [33m62a76cb[m Implemented CSV preview and column mapping integration
+* [33m|[m [34m|[m [33m611395a[m Update AppRoutes
+[33m|[m[33m/[m [34m/[m  
