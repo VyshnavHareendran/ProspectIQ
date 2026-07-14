@@ -4,6 +4,8 @@ from app.repositories.user_repository import UserRepository
 from app.core.security import verify_password
 from app.core.auth import create_access_token
 
+from app.models.user import User
+from app.core.security import hash_password
 
 class AuthService:
 
@@ -34,4 +36,60 @@ class AuthService:
         return {
             "access_token": token,
             "token_type": "bearer"
+        }
+    
+    def register(
+    self,
+    full_name: str,
+    email: str,
+    password: str
+    ):
+
+        # Check duplicate email
+        if self.user_repository.email_exists(email):
+            raise ValueError(
+                "Email already registered."
+            )
+
+        # Create employee
+        user = User(
+
+            full_name=full_name,
+
+            email=email,
+
+            password_hash=hash_password(password),
+
+            role="EMPLOYEE"
+
+        )
+
+        return self.user_repository.create(user)
+    
+    def forgot_password(
+    self,
+    email: str,
+    new_password: str
+    ):
+
+        user = self.user_repository.get_by_email(email)
+
+        if not user:
+
+            raise ValueError(
+                "Employee not found."
+            )
+
+        user.password_hash = hash_password(
+            new_password
+        )
+
+        self.user_repository.update(
+            user
+        )
+
+        return {
+
+            "message": "Password updated successfully."
+
         }

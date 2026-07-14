@@ -39,3 +39,31 @@ class UserRepository:
             )
             .first()
         )
+    
+    def email_exists(
+    self,
+    email: str
+    ):
+
+        return (
+
+            self.db.query(User)
+
+            .filter(User.email == email)
+
+            .first()
+
+            is not None
+
+        )
+    
+    def update(
+    self,
+    user: User
+    ):
+
+        self.db.commit()
+
+        self.db.refresh(user)
+
+        return user

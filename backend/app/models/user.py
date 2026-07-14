@@ -43,3 +43,13 @@ class User(Base):
     "UploadHistory",
     back_populates="uploader"
     )
+
+    employee_assignments = relationship(
+        "LeadAssignment",
+        foreign_keys="LeadAssignment.employee_id"
+    )
+
+    admin_assignments = relationship(
+        "LeadAssignment",
+        foreign_keys="LeadAssignment.assigned_by"
+    )

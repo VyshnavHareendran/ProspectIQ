@@ -2,7 +2,15 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.schemas.auth import LoginRequest, LoginResponse
+from app.schemas.auth import (
+    LoginRequest,
+    LoginResponse,
+    RegisterRequest,
+    RegisterResponse,
+    ForgotPasswordRequest,
+    ForgotPasswordResponse,
+    CurrentUserResponse,
+)
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
 
@@ -11,7 +19,6 @@ from app.dependencies.auth import (
     get_current_admin
 )
 from app.models.user import User
-from app.schemas.auth import CurrentUserResponse
 
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -20,6 +27,61 @@ router = APIRouter(
     tags=["Authentication"]
 )
 
+@router.post(
+    "/register",
+    response_model=RegisterResponse,
+    status_code=201
+)
+def register(
+    request: RegisterRequest,
+    db: Session = Depends(get_db)
+):
+
+    user_repository = UserRepository(db)
+
+    auth_service = AuthService(user_repository)
+
+    try:
+
+        return auth_service.register(
+            full_name=request.full_name,
+            email=request.email,
+            password=request.password
+        )
+
+    except ValueError as e:
+
+        raise HTTPException(
+            status_code=400,
+            detail=str(e)
+        )
+
+@router.post(
+    "/forgot-password",
+    response_model=ForgotPasswordResponse
+)
+def forgot_password(
+    request: ForgotPasswordRequest,
+    db: Session = Depends(get_db)
+):
+
+    user_repository = UserRepository(db)
+
+    auth_service = AuthService(user_repository)
+
+    try:
+
+        return auth_service.forgot_password(
+            email=request.email,
+            new_password=request.new_password
+        )
+
+    except ValueError as e:
+
+        raise HTTPException(
+            status_code=404,
+            detail=str(e)
+        )
 
 @router.post(
     "/login",
