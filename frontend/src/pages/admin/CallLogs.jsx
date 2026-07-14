@@ -13,12 +13,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { businessApi } from "../api";
-import { callLogApi } from "../api/callLogApi";
-import CallLogForm from "../components/callLogs/CallLogForm";
-import CallLogTable from "../components/callLogs/CallLogTable";
-import FollowupList from "../components/callLogs/FollowupList";
-import useAuth from "../hooks/useAuth";
+import { businessApi } from "../../api";
+import { callLogApi } from "../../api/callLogApi";
+import CallLogForm from "../../components/callLogs/CallLogForm";
+import CallLogTable from "../../components/callLogs/CallLogTable";
+import FollowupList from "../../components/callLogs/FollowupList";
+import useAuth from "../../hooks/useAuth";
 
 const emptyCallForm = {
   business_id: "",

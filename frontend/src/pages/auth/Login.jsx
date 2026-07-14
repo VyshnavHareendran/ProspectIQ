@@ -1,10 +1,10 @@
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import LoginForm from '../components/auth/LoginForm'
-import BrandMark from '../components/brand/BrandMark'
-import useAuth from '../hooks/useAuth'
-import { routePaths } from '../routes/routePaths'
+import LoginForm from '../../components/auth/LoginForm'
+import BrandMark from '../../components/brand/BrandMark'
+import useAuth from '../../hooks/useAuth'
+import { routePaths } from '../../routes/routePaths'
 
 const LOGIN_ERROR_MESSAGE =
   'Unable to sign in. Check your email and password, then try again.'

@@ -2,14 +2,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 
-import Dashboard from "../pages/Dashboard";
-import Business from "../pages/Business";
-import UploadCSV from "../pages/UploadCSV";
+import Dashboard from "../pages/admin/Dashboard";
+import Business from "../pages/admin/Business";
+import UploadCSV from "../pages/admin/UploadCSV";
 
-import LeadScores from "../pages/LeadScores";
+import LeadScores from "../pages/admin/LeadScores";
 
-import CallLogs from "../pages/CallLogs";
-import Login from "../pages/Login";
+import CallLogs from "../pages/admin/CallLogs";
+import Login from "../pages/auth/Login";
 
 import { routePaths } from "./routePaths";
 

@@ -1,12 +1,12 @@
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded'
 import { Alert, Box, Stack, Typography } from '@mui/material'
 import { useMemo } from 'react'
-import DailyCallList from '../components/leadScore/DailyCallList'
-import FeatureImportance from '../components/leadScore/FeatureImportance'
-import LeadScoreFilters from '../components/leadScore/LeadScoreFilters'
-import LeadScoreTable from '../components/leadScore/LeadScoreTable'
-import SummaryCards from '../components/leadScore/SummaryCards'
-import useLeadScores from '../hooks/useLeadScores'
+import DailyCallList from '../../components/leadScore/DailyCallList'
+import FeatureImportance from '../../components/leadScore/FeatureImportance'
+import LeadScoreFilters from '../../components/leadScore/LeadScoreFilters'
+import LeadScoreTable from '../../components/leadScore/LeadScoreTable'
+import SummaryCards from '../../components/leadScore/SummaryCards'
+import useLeadScores from '../../hooks/useLeadScores'
 
 const getUniqueValues = (leadScores, accessor) =>
   Array.from(

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 
-import FileDropZone from "../components/upload/FileDropZone";
-import CSVPreviewTable from "../components/upload/CSVPreviewTable";
-import ColumnMappingTable from "../components/upload/ColumnMappingTable";
-import ImportSummary from "../components/upload/ImportSummary";
-import UploadHistoryTable from "../components/upload/UploadHistoryTable";
-import ImportResultDialog from "../components/upload/ImportResultDialog";
-import { uploadApi } from "../api/uploadApi";
+import FileDropZone from "../../components/upload/FileDropZone";
+import CSVPreviewTable from "../../components/upload/CSVPreviewTable";
+import ColumnMappingTable from "../../components/upload/ColumnMappingTable";
+import ImportSummary from "../../components/upload/ImportSummary";
+import UploadHistoryTable from "../../components/upload/UploadHistoryTable";
+import ImportResultDialog from "../../components/upload/ImportResultDialog";
+import { uploadApi } from "../../api/uploadApi";
 
 const UploadCSV = () => {
   const [file, setFile] = useState(null);

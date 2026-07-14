@@ -39,7 +39,7 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { businessApi } from "../api";
+import { businessApi } from "../../api";
 
 const emptyBusinessForm = {
   business_name: "",
