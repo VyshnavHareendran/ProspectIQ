@@ -3,7 +3,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 
 import Dashboard from "../pages/admin/Dashboard";
-import Business from "../pages/admin/Business";
+import Businesses from "../pages/admin/Businesses";
 import UploadCSV from "../pages/admin/UploadCSV";
 
 import LeadScores from "../pages/admin/LeadScores";
@@ -31,7 +31,7 @@ const AppRoutes = () => (
 
         <Route
           path={routePaths.businesses}
-          element={<Business />}
+          element={<Businesses />}
         />
 
         <Route
