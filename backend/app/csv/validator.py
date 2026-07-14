@@ -1,6 +1,7 @@
 #Validates rows.
 
 import re
+import math
 
 
 class Validator:
@@ -27,16 +28,22 @@ class Validator:
 
         errors = []
 
-        # Required business name
-        if not row.get("business_name"):
-            errors.append(
-                "Business name is required."
-            )
+        required_fields = {
+            "business_name": "Business name is required.",
+            "category": "Category is required.",
+            "phone_number": "Phone number is required.",
+            "address": "Address is required.",
+            "city": "City is required.",
+        }
+
+        for field, message in required_fields.items():
+            if cls._is_empty(row.get(field)):
+                errors.append(message)
 
         # Email
         email = row.get("email")
 
-        if email:
+        if not cls._is_empty(email):
 
             if not cls.EMAIL_REGEX.match(
                 str(email)
@@ -48,7 +55,7 @@ class Validator:
         # Website
         website = row.get("website_url")
 
-        if website:
+        if not cls._is_empty(website):
 
             if not cls.WEBSITE_REGEX.match(
                 str(website)
@@ -60,7 +67,7 @@ class Validator:
         # Rating
         rating = row.get("google_rating")
 
-        if rating not in [None, ""]:
+        if not cls._is_empty(rating):
 
             try:
 
@@ -82,3 +89,13 @@ class Validator:
             len(errors) == 0,
             errors
         )
+
+    @staticmethod
+    def _is_empty(value):
+        if value is None:
+            return True
+
+        if isinstance(value, float) and math.isnan(value):
+            return True
+
+        return str(value).strip().lower() in ["", "nan", "none", "null"]

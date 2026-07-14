@@ -7,6 +7,9 @@ export const callLogApi = {
   getCallLog: (callLogId) =>
     httpClient.get(`/call-logs/${callLogId}`),
 
+  getCallLogs: () =>
+    httpClient.get("/call-logs"),
+
   getBusinessCallLogs: (businessId) =>
     httpClient.get(`/call-logs/business/${businessId}`),
 

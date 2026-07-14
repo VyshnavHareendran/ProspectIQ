@@ -1,0 +1,6 @@
+business_name,category,phone_number,whatsapp_number,email,website_url,address,city,state,google_maps_link,google_rating,review_count,business_hours,remarks
+Royal Bakery,Restaurant,9539700035,9539700035,contact@royalbakery.com,https://www.royalbakery.com,MG Road,Kochi,Kerala,https://maps.google.com/?q=Royal+Bakery+Kochi,4.5,320,"Mon,Tue,Wed,Thu,Fri,Sat",Premium bakery
+Green Leaf Cafe,Cafe,9847001122,9847001122,hello@greenleafcafe.in,https://greenleafcafe.in,Marine Drive,Kochi,Kerala,https://maps.google.com/?q=Green+Leaf+Cafe,4.3,180,"Mon,Tue,Wed,Thu,Fri,Sat,Sun",Coffee shop
+TechFix Solutions,IT Services,9895123456,9895123456,support@techfix.in,https://techfix.in,Infopark Phase 1,Kochi,Kerala,https://maps.google.com/?q=TechFix+Solutions,4.8,95,"Mon,Tue,Wed,Thu,Fri",B2B services
+Sunrise Dental Clinic,Healthcare,9746112233,9746112233,care@sunrisedental.com,https://sunrisedental.com,Kaloor,Kochi,Kerala,https://maps.google.com/?q=Sunrise+Dental+Clinic,4.7,210,"Mon,Tue,Wed,Thu,Fri,Sat",Dental clinic
+Style Hub,Salon,9876543210,9876543210,info@stylehub.in,https://stylehub.in,Edappally,Kochi,Kerala,https://maps.google.com/?q=Style+Hub,4.2,140,"Mon,Tue,Wed,Thu,Fri,Sat,Sun",Unisex salon

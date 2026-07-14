@@ -11,6 +11,7 @@ import CallStatusChip from "./CallStatusChip";
 const FollowupList = ({
   title,
   followups = [],
+  businessById = {},
 }) => {
   return (
     <>
@@ -42,11 +43,11 @@ const FollowupList = ({
                 <CardContent>
                   <Stack spacing={1}>
                     <Typography variant="subtitle2">
-                      Business ID
+                      Business
                     </Typography>
 
                     <Typography>
-                      {item.business_id}
+                      {businessById[item.business_id]?.business_name || item.business_id}
                     </Typography>
 
                     <CallStatusChip

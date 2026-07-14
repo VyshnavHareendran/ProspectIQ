@@ -32,7 +32,11 @@ class BusinessService:
             phone_number=business_data.phone_number,
             whatsapp_number=business_data.whatsapp_number,
             email=business_data.email,
-            website_url=str(business_data.website_url),
+            website_url=(
+                str(business_data.website_url)
+                if business_data.website_url is not None
+                else None
+            ),
             address=business_data.address,
             city=business_data.city,
             state=business_data.state,

@@ -39,6 +39,16 @@ class CallLogRepository:
             .first()
         )
 
+    def get_all(self):
+
+        return (
+            self.db.query(CallLog)
+            .order_by(
+                CallLog.created_at.desc()
+            )
+            .all()
+        )
+
     def get_by_business(
         self,
         business_id: int

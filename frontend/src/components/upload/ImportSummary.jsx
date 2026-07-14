@@ -7,23 +7,28 @@ const Card = ({ title, value }) => (
   </Paper>
 );
 
-const ImportSummary = () => {
+const ImportSummary = ({ data }) => {
+  if (!data) return null;
+
+  const duplicates =
+    (data.csv_duplicates || 0) + (data.database_duplicates || 0);
+
   return (
     <Grid container spacing={2} sx={{ mt: 4 }}>
       <Grid item xs={12} md={3}>
-        <Card title="Imported" value={245} />
+        <Card title="Imported" value={data.imported_rows || 0} />
       </Grid>
 
       <Grid item xs={12} md={3}>
-        <Card title="Invalid" value={5} />
+        <Card title="Invalid" value={data.invalid_rows || 0} />
       </Grid>
 
       <Grid item xs={12} md={3}>
-        <Card title="Duplicates" value={8} />
+        <Card title="Duplicates" value={duplicates} />
       </Grid>
 
       <Grid item xs={12} md={3}>
-        <Card title="Total" value={258} />
+        <Card title="Total" value={data.total_rows || 0} />
       </Grid>
     </Grid>
   );

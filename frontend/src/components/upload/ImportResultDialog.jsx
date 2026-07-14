@@ -7,22 +7,31 @@ import {
   Typography,
 } from "@mui/material";
 
-const ImportResultDialog = ({ open, handleClose }) => {
+const ImportResultDialog = ({ open, handleClose, result }) => {
+  const duplicates =
+    (result?.csv_duplicates || 0) + (result?.database_duplicates || 0);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Import Successful</DialogTitle>
+      <DialogTitle>
+        {result?.success ? "Import Successful" : "Import Failed"}
+      </DialogTitle>
 
       <DialogContent>
         <Typography sx={{ mb: 1 }}>
-          Imported : <strong>245</strong>
+          Imported : <strong>{result?.imported_rows || 0}</strong>
         </Typography>
 
         <Typography sx={{ mb: 1 }}>
-          Invalid : <strong>5</strong>
+          Invalid : <strong>{result?.invalid_rows || 0}</strong>
+        </Typography>
+
+        <Typography sx={{ mb: 1 }}>
+          Duplicates : <strong>{duplicates}</strong>
         </Typography>
 
         <Typography>
-          Duplicates : <strong>8</strong>
+          Total : <strong>{result?.total_rows || 0}</strong>
         </Typography>
       </DialogContent>
 

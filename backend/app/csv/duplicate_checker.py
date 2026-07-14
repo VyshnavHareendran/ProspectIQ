@@ -17,27 +17,27 @@ class DuplicateChecker:
 
         for row in valid_rows:
 
-            if row.get("google_maps_link"):
+            if DuplicateChecker._has_value(row.get("google_maps_link")):
 
                 key = (
                     "MAP",
-                    row["google_maps_link"].strip().lower()
+                    str(row["google_maps_link"]).strip().lower()
                 )
 
-            elif row.get("email"):
+            elif DuplicateChecker._has_value(row.get("email")):
 
                 key = (
                     "EMAIL",
-                    row["business_name"].strip().lower(),
-                    row["email"].strip().lower()
+                    str(row["business_name"]).strip().lower(),
+                    str(row["email"]).strip().lower()
                 )
 
             else:
 
                 key = (
                     "PHONE",
-                    row["business_name"].strip().lower(),
-                    row["phone_number"].strip()
+                    str(row["business_name"]).strip().lower(),
+                    str(row["phone_number"]).strip()
                 )
 
             if key in seen:
@@ -51,3 +51,10 @@ class DuplicateChecker:
                 unique_rows.append(row)
 
         return unique_rows, duplicate_rows
+
+    @staticmethod
+    def _has_value(value):
+        return (
+            value is not None
+            and str(value).strip().lower() not in ["", "nan", "none", "null"]
+        )

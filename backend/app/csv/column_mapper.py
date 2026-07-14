@@ -5,20 +5,27 @@ class ColumnMapper:
     COLUMN_MAPPING = {
 
         "business_name": [
+            "business_name",
             "Business Name",
             "Business",
             "Company",
             "Company Name",
-            "Shop Name"
+            "Shop Name",
+            "Name",
+            "name"
         ],
 
         "category": [
+            "category",
             "Category",
             "Business Category",
-            "Type"
+            "Type",
+            "category_grouped"
         ],
 
         "phone_number": [
+            "phone_number",
+            "phone",
             "Phone",
             "Phone Number",
             "Mobile",
@@ -27,65 +34,86 @@ class ColumnMapper:
         ],
 
         "whatsapp_number": [
+            "whatsapp_number",
             "WhatsApp",
             "WhatsApp Number"
         ],
 
         "email": [
+            "email",
             "Email",
             "Email Address",
             "Mail"
         ],
 
         "website_url": [
+            "website_url",
+            "website",
             "Website",
             "Website URL",
             "Website Link"
         ],
 
         "address": [
+            "address",
             "Address",
-            "Location"
+            "Location",
+            "full_address"
         ],
 
         "city": [
+            "city",
             "City",
             "Town"
         ],
 
         "state": [
+            "state",
             "State",
             "Province",
             "Region"
         ],
 
         "google_maps_link": [
+            "google_maps_link",
             "Google Maps",
             "Google Maps Link",
             "Map Link"
         ],
 
         "google_rating": [
+            "google_rating",
+            "stars",
+            "rating",
             "Rating",
             "Google Rating",
             "Google Score"
         ],
 
         "review_count": [
+            "review_count",
             "Reviews",
             "Review Count",
             "Number of Reviews"
         ],
 
         "business_hours": [
+            "business_hours",
             "Business Hours",
             "Working Hours",
             "Opening Hours"
         ],
 
         "remarks": [
+            "remarks",
             "Remarks",
             "Notes"
+        ],
+
+        "description": [
+            "description",
+            "Description",
+            "About"
         ]
     }
 
@@ -135,12 +163,39 @@ class ColumnMapper:
         mapping: dict
     ):
         """
-        Rename CSV columns using the
-        mapping confirmed by the frontend.
+        Rename CSV columns using the mapping confirmed by the frontend.
+        Accepts either CSV column -> database field or
+        database field -> CSV column for compatibility with older UI code.
         """
 
+        dataframe_columns = set(dataframe.columns)
+
+        source_matches = sum(
+            1
+            for source in mapping
+            if source in dataframe_columns
+        )
+        value_matches = sum(
+            1
+            for target in mapping.values()
+            if target in dataframe_columns
+        )
+
+        if value_matches > source_matches:
+            csv_to_field_mapping = {
+                csv_column: db_field
+                for db_field, csv_column in mapping.items()
+                if csv_column in dataframe_columns
+            }
+        else:
+            csv_to_field_mapping = {
+                source: target
+                for source, target in mapping.items()
+                if source in dataframe_columns
+            }
+
         dataframe = dataframe.rename(
-            columns=mapping
+            columns=csv_to_field_mapping
         )
 
         return dataframe

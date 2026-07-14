@@ -23,30 +23,41 @@ class BusinessRepository:
         return business
 
     def find_duplicate(self, business: Business):
+        conditions = []
+
+        if self._has_value(business.google_maps_link):
+            conditions.append(
+                Business.google_maps_link == business.google_maps_link
+            )
+
+        if self._has_value(business.website_url):
+            conditions.append(
+                Business.website_url == business.website_url
+            )
+
+        if self._has_value(business.phone_number):
+            conditions.append(
+                Business.phone_number == business.phone_number
+            )
+
+        if (
+            self._has_value(business.business_name)
+            and self._has_value(business.address)
+        ):
+            conditions.append(
+                and_(
+                    Business.business_name == business.business_name,
+                    Business.address == business.address
+                )
+            )
+
+        if not conditions:
+            return None
+
         return (
             self.db.query(Business)
             .filter(
-                or_(
-
-                    Business.google_maps_link ==
-                    business.google_maps_link,
-
-                    Business.website_url ==
-                    business.website_url,
-
-                    Business.phone_number ==
-                    business.phone_number,
-
-                    and_(
-
-                        Business.business_name ==
-                        business.business_name,
-
-                        Business.address ==
-                        business.address
-
-                    )
-                )
+                or_(*conditions)
             )
         .first()
         )
@@ -197,31 +208,67 @@ class BusinessRepository:
         using imported CSV data.
         """
 
-        return (
-            self.db.query(Business)
-            .filter(
-                or_(
+        conditions = []
 
-                    Business.google_maps_link ==
-                    row.get("google_maps_link"),
+        google_maps_link = (
+            str(row.get("google_maps_link")).strip()
+            if self._has_value(row.get("google_maps_link"))
+            else None
+        )
 
-                    Business.website_url ==
-                    row.get("website_url"),
+        website_url = (
+            str(row.get("website_url")).strip()
+            if self._has_value(row.get("website_url"))
+            else None
+        )
 
-                    Business.phone_number ==
-                    row.get("phone_number"),
+        phone_number = (
+            str(row.get("phone_number")).strip()
+            if self._has_value(row.get("phone_number"))
+            else None
+        )
 
-                    and_(
+        business_name = (
+            str(row.get("business_name")).strip()
+            if self._has_value(row.get("business_name"))
+            else None
+        )
 
-                        Business.business_name ==
-                        row.get("business_name"),
+        address = (
+            str(row.get("address")).strip()
+            if self._has_value(row.get("address"))
+            else None
+        )
 
-                        Business.address ==
-                        row.get("address")
+        if google_maps_link:
+            conditions.append(
+                Business.google_maps_link == google_maps_link
+            )
 
-                    )
+        if website_url:
+            conditions.append(
+                Business.website_url == website_url
+            )
+
+        if phone_number:
+            conditions.append(
+                Business.phone_number == phone_number
+            )
+
+        if business_name and address:
+            conditions.append(
+                and_(
+                    Business.business_name == business_name,
+                    Business.address == address
                 )
             )
+
+        if not conditions:
+            return None
+
+        return (
+            self.db.query(Business)
+            .filter(or_(*conditions))
             .first()
         )
     
@@ -245,5 +292,12 @@ class BusinessRepository:
             )
 
         return businesses
+
+    @staticmethod
+    def _has_value(value):
+        return (
+            value is not None
+            and str(value).strip().lower() not in ["", "nan", "none", "null"]
+        )
     
     

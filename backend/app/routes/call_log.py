@@ -67,27 +67,17 @@ def create_call_log(
 
 
 @router.get(
-    "/{call_log_id}",
-    response_model=CallLogResponse,
-    summary="Get Call Log"
+    "",
+    response_model=List[CallLogResponse],
+    summary="Get Call Logs"
 )
-def get_call_log(
-    call_log_id: int,
+def get_call_logs(
     db: Session = Depends(get_db)
 ):
 
     service = get_service(db)
 
-    try:
-
-        return service.get_by_id(call_log_id)
-
-    except ValueError as e:
-
-        raise HTTPException(
-            status_code=404,
-            detail=str(e)
-        )
+    return service.get_all()
 
 
 @router.get(
@@ -146,6 +136,30 @@ def get_pending_followups(
     service = get_service(db)
 
     return service.get_pending_followups()
+
+
+@router.get(
+    "/{call_log_id}",
+    response_model=CallLogResponse,
+    summary="Get Call Log"
+)
+def get_call_log(
+    call_log_id: int,
+    db: Session = Depends(get_db)
+):
+
+    service = get_service(db)
+
+    try:
+
+        return service.get_by_id(call_log_id)
+
+    except ValueError as e:
+
+        raise HTTPException(
+            status_code=404,
+            detail=str(e)
+        )
 
 
 @router.put(

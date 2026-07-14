@@ -1,4 +1,6 @@
 import os
+import math
+from urllib.parse import quote_plus
 
 from sqlalchemy.orm import Session
 
@@ -57,6 +59,8 @@ class ImportService:
             request.mapping
         )
 
+        dataframe = self._prepare_dataframe(dataframe)
+
         # Validate rows
         valid_rows, invalid_rows = (
             self.importer.validate(dataframe)
@@ -96,17 +100,19 @@ class ImportService:
 
             business = Business(
 
-                business_name=row["business_name"],
+                business_name=str(row["business_name"]).strip(),
 
-                category=row["category"],
+                category=str(row["category"]).strip(),
 
                 description=row.get("description"),
 
-                phone_number=row["phone_number"],
+                phone_number=str(row["phone_number"]).strip(),
 
-                whatsapp_number=row.get(
+                whatsapp_number=str(row.get(
                     "whatsapp_number"
-                ),
+                ))
+                if row.get("whatsapp_number")
+                else None,
 
                 email=row.get("email"),
 
@@ -114,9 +120,9 @@ class ImportService:
                     "website_url"
                 ),
 
-                address=row["address"],
+                address=str(row["address"]).strip(),
 
-                city=row["city"],
+                city=str(row["city"]).strip(),
 
                 state=row.get("state"),
 
@@ -124,12 +130,12 @@ class ImportService:
                     "google_maps_link"
                 ],
 
-                google_rating=float(
-                    row.get("google_rating") or 0
+                google_rating=self._to_float(
+                    row.get("google_rating")
                 ),
 
-                review_count=int(
-                    row.get("review_count") or 0
+                review_count=self._to_int(
+                    row.get("review_count")
                 ),
 
                 business_hours=row.get(
@@ -163,7 +169,7 @@ class ImportService:
             # Update upload history
             upload.total_records = len(dataframe)
 
-            upload.valid_records = len(businesses)
+            upload.valid_records = len(valid_rows)
 
             upload.invalid_records = len(
                 invalid_rows
@@ -234,3 +240,119 @@ class ImportService:
                 database_duplicates
             )
         }
+
+    def _prepare_dataframe(self, dataframe):
+        dataframe = dataframe.where(dataframe.notna(), None)
+
+        for column in dataframe.columns:
+            dataframe[column] = dataframe[column].map(self._clean_value)
+
+        optional_defaults = {
+            "description": None,
+            "whatsapp_number": None,
+            "email": None,
+            "website_url": None,
+            "state": None,
+            "google_rating": 0,
+            "review_count": 0,
+            "business_hours": None,
+            "remarks": None,
+        }
+
+        for column, default in optional_defaults.items():
+            if column not in dataframe.columns:
+                dataframe[column] = default
+
+        dataframe["website_url"] = dataframe["website_url"].map(
+            self._normalize_http_url
+        )
+
+        if "google_maps_link" not in dataframe.columns:
+            dataframe["google_maps_link"] = None
+
+        dataframe["google_maps_link"] = dataframe.apply(
+            self._ensure_google_maps_link,
+            axis=1
+        )
+
+        return dataframe
+
+    @staticmethod
+    def _clean_value(value):
+        if value is None:
+            return None
+
+        if isinstance(value, float) and math.isnan(value):
+            return None
+
+        if isinstance(value, str):
+            stripped = value.strip()
+            if stripped.lower() in ["nan", "none", "null"]:
+                return None
+
+            return stripped or None
+
+        try:
+            if value != value:
+                return None
+        except TypeError:
+            pass
+
+        return value
+
+    @staticmethod
+    def _ensure_google_maps_link(row):
+        existing = row.get("google_maps_link")
+
+        if not ImportService._is_empty(existing):
+            return ImportService._normalize_http_url(existing)
+
+        query_parts = [
+            row.get("business_name"),
+            row.get("address"),
+            row.get("city"),
+            row.get("state"),
+        ]
+        query = " ".join(
+            str(part).strip()
+            for part in query_parts
+            if part is not None and str(part).strip() != ""
+        )
+
+        if not query:
+            query = str(row.get("phone_number") or "business").strip()
+
+        return f"https://maps.google.com/?q={quote_plus(query)}"
+
+    @staticmethod
+    def _normalize_http_url(value):
+        if ImportService._is_empty(value):
+            return None
+
+        url = str(value).strip()
+
+        if url.startswith(("http://", "https://")):
+            return url
+
+        return f"https://{url}"
+
+    @staticmethod
+    def _is_empty(value):
+        return (
+            value is None
+            or str(value).strip().lower() in ["", "nan", "none", "null"]
+        )
+
+    @staticmethod
+    def _to_float(value):
+        if ImportService._is_empty(value):
+            return 0.0
+
+        return float(value)
+
+    @staticmethod
+    def _to_int(value):
+        if ImportService._is_empty(value):
+            return 0
+
+        return int(float(value))

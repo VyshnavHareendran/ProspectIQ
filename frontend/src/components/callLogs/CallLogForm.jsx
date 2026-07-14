@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -19,44 +18,32 @@ const statusOptions = [
   "CLOSED",
 ];
 
-const initialForm = {
-  business_id: "",
-  employee_id: "",
-  call_status: "",
-  notes: "",
-  next_followup_date: "",
-};
-
 const CallLogForm = ({
   open,
   onClose,
   onSave,
-  initialData,
+  formData,
+  setFormData,
+  businesses = [],
+  saving = false,
+  isEdit = false,
 }) => {
-  const [formData, setFormData] = useState(initialForm);
-
-  useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-    } else {
-      setFormData(initialForm);
-    }
-  }, [initialData]);
-
   const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setFormData((current) => ({
+      ...current,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = () => {
-    if (
-      !formData.business_id ||
-      !formData.employee_id ||
-      !formData.call_status
-    ) {
-      alert("Please fill all required fields.");
+    if (!isEdit && !formData.business_id) {
+      alert("Please select a business.");
+      return;
+    }
+
+    if (!formData.call_status) {
+      alert("Please select call status.");
       return;
     }
 
@@ -64,40 +51,30 @@ const CallLogForm = ({
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      maxWidth="sm"
-    >
-      <DialogTitle>
-        Call Log
-      </DialogTitle>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle>{isEdit ? "Edit Call Log" : "New Call Log"}</DialogTitle>
 
       <DialogContent>
         <Grid container spacing={2} sx={{ mt: 1 }}>
-
-          <Grid size={12}>
-            <TextField
-              fullWidth
-              label="Business ID"
-              name="business_id"
-              value={formData.business_id}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
-
-          <Grid size={12}>
-            <TextField
-              fullWidth
-              label="Employee ID"
-              name="employee_id"
-              value={formData.employee_id}
-              onChange={handleChange}
-              required
-            />
-          </Grid>
+          {!isEdit ? (
+            <Grid size={12}>
+              <TextField
+                fullWidth
+                select
+                label="Business"
+                name="business_id"
+                value={formData.business_id}
+                onChange={handleChange}
+                required
+              >
+                {businesses.map((business) => (
+                  <MenuItem key={business.id} value={business.id}>
+                    {business.business_name} - {business.city}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+          ) : null}
 
           <Grid size={12}>
             <TextField
@@ -110,10 +87,7 @@ const CallLogForm = ({
               required
             >
               {statusOptions.map((status) => (
-                <MenuItem
-                  key={status}
-                  value={status}
-                >
+                <MenuItem key={status} value={status}>
                   {status}
                 </MenuItem>
               ))}
@@ -140,28 +114,18 @@ const CallLogForm = ({
               name="next_followup_date"
               value={formData.next_followup_date}
               onChange={handleChange}
-              InputLabelProps={{
-                shrink: true,
-              }}
+              InputLabelProps={{ shrink: true }}
             />
           </Grid>
-
         </Grid>
       </DialogContent>
 
       <DialogActions>
-        <Button
-          onClick={onClose}
-          color="inherit"
-        >
+        <Button onClick={onClose} color="inherit" disabled={saving}>
           Cancel
         </Button>
-
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-        >
-          Save
+        <Button variant="contained" onClick={handleSubmit} disabled={saving}>
+          {saving ? "Saving..." : "Save"}
         </Button>
       </DialogActions>
     </Dialog>

@@ -17,6 +17,7 @@ const UploadCSV = () => {
   const [previewRows, setPreviewRows] = useState([]);
   const [uploadId, setUploadId] = useState(null);
   const [importResult, setImportResult] = useState(null);
+  const [historyRefreshKey, setHistoryRefreshKey] = useState(0);
 
   const handlePreview = async (selectedFile) => {
     if (!selectedFile) return;
@@ -29,7 +30,7 @@ const UploadCSV = () => {
       setUploadId(response.data.upload_id);
       setPreviewColumns(response.data.columns);
       setPreviewRows(response.data.sample_rows);
-      setMapping(response.data.suggested_mapping);
+      setMapping(invertMapping(response.data.suggested_mapping));
 
       console.log("Upload ID from API:", response.data.upload_id);
     } catch (error) {
@@ -57,6 +58,7 @@ const UploadCSV = () => {
       console.log("Import Success:", response.data);
 
       setImportResult(response.data);
+      setHistoryRefreshKey((value) => value + 1);
       setOpenDialog(true);
     } catch (error) {
       console.error("Import Error:", error);
@@ -103,7 +105,7 @@ const UploadCSV = () => {
 
       <ImportSummary data={importResult} />
 
-      <UploadHistoryTable />
+      <UploadHistoryTable refreshKey={historyRefreshKey} />
 
       <ImportResultDialog
         open={openDialog}
@@ -113,5 +115,11 @@ const UploadCSV = () => {
     </Box>
   );
 };
+
+const invertMapping = (csvToFieldMapping = {}) =>
+  Object.entries(csvToFieldMapping).reduce((fieldToCsvMapping, [csvColumn, field]) => {
+    fieldToCsvMapping[field] = csvColumn;
+    return fieldToCsvMapping;
+  }, {});
 
 export default UploadCSV;

@@ -11,16 +11,29 @@ import {
 } from "@mui/material";
 
 const REQUIRED_FIELDS = [
-  "business_id",
-  "name",
+  "business_name",
+  "category",
+  "phone_number",
+  "address",
   "city",
+];
+
+const OPTIONAL_FIELDS = [
   "state",
-  "category_grouped",
-  "stars",
+  "google_maps_link",
+  "google_rating",
   "review_count",
-  "digital_maturity_score",
-  "conversion_score_pct",
-  "priority",
+  "email",
+  "website_url",
+  "whatsapp_number",
+  "description",
+  "business_hours",
+  "remarks",
+];
+
+const BUSINESS_FIELDS = [
+  ...REQUIRED_FIELDS,
+  ...OPTIONAL_FIELDS,
 ];
 
 const ColumnMappingTable = ({
@@ -61,9 +74,12 @@ const ColumnMappingTable = ({
         </TableHead>
 
         <TableBody>
-          {REQUIRED_FIELDS.map((field) => (
+          {BUSINESS_FIELDS.map((field) => (
             <TableRow key={field}>
-              <TableCell>{field}</TableCell>
+              <TableCell>
+                {field}
+                {REQUIRED_FIELDS.includes(field) ? " *" : ""}
+              </TableCell>
 
               <TableCell>
                 <Select
@@ -74,6 +90,10 @@ const ColumnMappingTable = ({
                     handleChange(field, e.target.value)
                   }
                 >
+                  <MenuItem value="">
+                    Not mapped
+                  </MenuItem>
+
                   {columns.map((column) => (
                     <MenuItem
                       key={column}

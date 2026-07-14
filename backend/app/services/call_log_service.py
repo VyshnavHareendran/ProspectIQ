@@ -97,6 +97,12 @@ class CallLogService:
 
         return call_log
 
+    def get_all(self):
+
+        return (
+            self.call_log_repository.get_all()
+        )
+
     def get_by_business(
         self,
         business_id: int
@@ -122,7 +128,7 @@ class CallLogService:
     def get_today_followups(self):
 
         return (
-            self.call_log_repository.get_today_calls()
+            self.call_log_repository.get_today_followups()
         )
 
     def get_pending_followups(self):
