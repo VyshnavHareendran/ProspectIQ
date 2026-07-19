@@ -5,7 +5,7 @@ import { routePaths } from '../routes/routePaths'
 
 const ProtectedRoute = ({ children }) => {
   const location = useLocation()
-  const { isAuthenticated, isInitializing } = useAuth()
+  const { user, isAuthenticated, isInitializing } = useAuth()
 
   if (isInitializing) {
     return (
@@ -22,6 +22,18 @@ const ProtectedRoute = ({ children }) => {
   if (!isAuthenticated) {
     return (
       <Navigate to={routePaths.login} replace state={{ from: location }} />
+    )
+  }
+
+  if (
+    user?.must_change_password &&
+    location.pathname !== routePaths.changePassword
+  ) {
+    return (
+      <Navigate
+        to={routePaths.changePassword}
+        replace
+      />
     )
   }
 

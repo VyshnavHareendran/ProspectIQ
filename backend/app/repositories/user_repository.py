@@ -28,15 +28,13 @@ class UserRepository:
 
         return user
     
-    def get_by_id(
-    self,
-    user_id: int
-    ):
+    def get_by_id(self, user_id: int):
 
         return (
             self.db.query(User)
             .filter(
-                User.id == user_id
+                User.id == user_id,
+                User.is_deleted == False
             )
             .first()
         )
@@ -104,6 +102,24 @@ class UserRepository:
 
         return (
             self.db.query(User)
-            .order_by(User.full_name)
+            .filter(
+                User.role == "EMPLOYEE",
+                User.is_deleted == False,
+            )
             .all()
         )
+    
+    def delete_employee(self, employee_id: int):
+
+        employee = self.get_by_id(employee_id)
+
+        if not employee:
+            return None
+
+        employee.is_deleted = True
+        employee.is_active = False
+
+        self.db.commit()
+        self.db.refresh(employee)
+
+        return employee

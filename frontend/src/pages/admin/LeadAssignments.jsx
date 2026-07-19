@@ -153,26 +153,29 @@ export default function LeadAssignments() {
   return (
     <Box>
 
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={3}
+      <Box
+          sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+              mb: 3,
+          }}
       >
-        <Typography
-            variant="h4"
-            fontWeight={600}
-        >
-            Lead Assignments
-        </Typography>
+          <Typography
+              variant="h4"
+              fontWeight={600}
+          >
+              Lead Assignments
+          </Typography>
 
-        <Button
-            variant="contained"
-            onClick={() => setBulkDialogOpen(true)}
-        >
-            Bulk Assign
-        </Button>
-       </Stack>
+          <Button
+              variant="contained"
+              onClick={() => setBulkDialogOpen(true)}
+          >
+              Bulk Assign
+          </Button>
+      </Box>
 
       <LeadAssignmentTable
           leadScores={leadScores}

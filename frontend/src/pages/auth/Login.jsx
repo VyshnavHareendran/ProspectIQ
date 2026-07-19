@@ -20,10 +20,18 @@ const Login = () => {
     setIsLoading(true)
 
     try {
-      const user = await login({
+      const { user, mustChangePassword } = await login({
           email,
           password,
       });
+
+      if (mustChangePassword) {
+          navigate(routePaths.changePassword, {
+              replace: true,
+          });
+
+          return;
+      }
 
       if (user.role === "ADMIN") {
 

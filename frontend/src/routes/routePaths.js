@@ -1,6 +1,7 @@
 export const routePaths = Object.freeze({
   // Public
   login: "/login",
+  changePassword: "/change-password",
 
   // Admin
   dashboard: "/dashboard",
@@ -9,6 +10,7 @@ export const routePaths = Object.freeze({
   callLogs: "/call-logs",
   leadScores: "/lead-scores",
   leadAssignments: "/lead-assignments",
+  employeeManagement: "/employees",
   followups: "/followups",
   reports: "/reports",
   settings: "/settings",

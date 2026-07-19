@@ -74,7 +74,7 @@ const UserMenu = ({ onLogout, user }) => {
           <Stack
             spacing={0.25}
             alignItems="flex-start"
-            sx={{ display: { xs: 'none', sm: 'flex' }, minWidth: 112 }}
+            sx={{ display: { xs: 'none', sm: 'flex' }, minWidth: {sm:112, md:130} }}
           >
             <Typography
               variant="body2"

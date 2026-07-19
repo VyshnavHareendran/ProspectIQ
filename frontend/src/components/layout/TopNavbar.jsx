@@ -46,9 +46,15 @@ const TopNavbar = ({ onMenuClick, onLogout, pageTitle, user }) => (
       <Box sx={{ minWidth: 0 }}>
         <Typography
           component="h1"
-          variant="h3"
           noWrap
-          sx={{ fontSize: { xs: '1rem', sm: '1.125rem' } }}
+          sx={{
+            fontSize: {
+              xs: "1rem",
+              sm: "1.1rem",
+              md: "1.25rem",
+            },
+            fontWeight: 600,
+          }}
         >
           {pageTitle}
         </Typography>
@@ -68,7 +74,10 @@ const TopNavbar = ({ onMenuClick, onLogout, pageTitle, user }) => (
           placeholder="Search workspace..."
           aria-label="Search workspace"
           sx={{
-            display: { xs: 'none', md: 'block' },
+            display: {
+                xs: "none",
+                lg: "block",
+            },
             width: { md: 220, lg: 280 },
             '& .MuiOutlinedInput-root': {
               minHeight: 38,
@@ -88,7 +97,13 @@ const TopNavbar = ({ onMenuClick, onLogout, pageTitle, user }) => (
         />
 
         <Tooltip title="Notifications">
-          <IconButton aria-label="Notifications" sx={{ color: 'text.secondary' }}>
+          <IconButton
+              size="small"
+              aria-label="Notifications"
+              sx={{
+                  color: "text.secondary",
+              }}
+          >
             <Badge color="primary" variant="dot" overlap="circular">
               <NotificationsNoneRoundedIcon fontSize="small" />
             </Badge>

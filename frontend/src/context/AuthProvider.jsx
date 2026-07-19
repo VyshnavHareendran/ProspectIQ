@@ -46,15 +46,24 @@ const AuthProvider = ({ children }) => {
 
   const login = useCallback(async (credentials) => {
     const loginResponse = await authApi.login(credentials)
+
     authStorage.setToken(loginResponse.data.access_token)
 
     try {
       const userResponse = await authApi.getCurrentUser()
+
       setUser(userResponse.data)
-      return userResponse.data
+
+      return {
+        user: userResponse.data,
+        mustChangePassword: loginResponse.data.must_change_password,
+      }
+
     } catch (error) {
+
       authStorage.clearToken()
       setUser(null)
+
       throw error
     }
   }, [])
@@ -64,6 +73,14 @@ const AuthProvider = ({ children }) => {
     setUser(null)
   }, [])
 
+  const refreshUser = useCallback(async () => {
+    const response = await authApi.getCurrentUser()
+
+    setUser(response.data)
+
+    return response.data
+  }, [])
+
   const value = useMemo(
     () => ({
       user,
@@ -71,8 +88,9 @@ const AuthProvider = ({ children }) => {
       isInitializing,
       login,
       logout,
+      refreshUser,
     }),
-    [isInitializing, login, logout, user],
+    [user, isInitializing, login, logout, refreshUser],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

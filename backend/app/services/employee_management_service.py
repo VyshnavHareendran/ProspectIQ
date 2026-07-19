@@ -65,3 +65,14 @@ class EmployeeManagementService:
         )
 
         return user
+    
+    def delete_employee(self, employee_id: int):
+
+        employee = self.user_repository.delete_employee(employee_id)
+
+        if not employee:
+            raise ValueError("Employee not found.")
+
+        return {
+            "message": "Employee deleted successfully."
+        }

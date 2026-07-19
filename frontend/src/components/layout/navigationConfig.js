@@ -9,6 +9,7 @@ import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { routePaths } from '../../routes/routePaths'
 import AssignmentTurnedInRounded from "@mui/icons-material/AssignmentTurnedInRounded";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
+import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
@@ -42,6 +43,11 @@ export const adminNavigationItems = Object.freeze([
     label: 'Lead Assignments',
     path: routePaths.leadAssignments,
     icon: AssignmentIndRoundedIcon,
+  },
+  {
+    label: "Employee Management",
+    path: routePaths.employeeManagement,
+    icon: GroupRoundedIcon,
   },
   {
     label: "Follow-ups",

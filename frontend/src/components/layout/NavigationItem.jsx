@@ -34,7 +34,7 @@ const NavigationItem = ({
           onClick={onClick}
           sx={{
             position: 'relative',
-            minHeight: 44,
+            minHeight: 48,
             justifyContent: collapsed ? 'center' : 'flex-start',
             px: collapsed ? 1.5 : 1.75,
             overflow: 'hidden',

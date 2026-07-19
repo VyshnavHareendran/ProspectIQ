@@ -9,7 +9,8 @@ import LeadScores from "../pages/admin/LeadScores";
 import CallLogs from "../pages/admin/CallLogs";
 import Followups from "../pages/admin/Followups";
 import Login from "../pages/auth/Login";
-
+import ChangePassword from "../pages/auth/ChangePassword";
+import EmployeeManagement from "../pages/admin/EmployeeManagement";
 import LeadAssignments from '../pages/admin/LeadAssignments';
 
 import { routePaths } from "./routePaths";
@@ -31,6 +32,14 @@ const AppRoutes = () => (
       path={routePaths.login}
       element={<Login />}
     />
+
+    {/* Change Password */}
+    <Route element={<ProtectedRoute />}>
+      <Route
+        path={routePaths.changePassword}
+        element={<ChangePassword />}
+      />
+    </Route>
 
     {/* Protected Routes */}
     <Route element={<ProtectedRoute />}>
@@ -65,6 +74,11 @@ const AppRoutes = () => (
           <Route
             path={routePaths.leadAssignments}
             element={<LeadAssignments />}
+          />
+
+          <Route
+              path={routePaths.employeeManagement}
+              element={<EmployeeManagement />}
           />
 
           <Route

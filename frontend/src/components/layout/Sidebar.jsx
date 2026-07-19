@@ -120,7 +120,37 @@ const Sidebar = ({
           </Tooltip>
         )}
 
-        <Box component="nav" sx={{ flex: 1, minHeight: 0, overflowY: 'auto', px: 1.5 }}>
+        <Box
+          component="nav"
+          sx={{
+            flex: 1,
+            minHeight: 0,
+            overflowY: "auto",
+            px: 1.5,
+
+            // Firefox
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(255,255,255,0.18) transparent",
+
+            // Chrome, Edge, Brave
+            "&::-webkit-scrollbar": {
+              width: "6px",
+            },
+
+            "&::-webkit-scrollbar-track": {
+              background: "transparent",
+            },
+
+            "&::-webkit-scrollbar-thumb": {
+              background: "rgba(255,255,255,0.18)",
+              borderRadius: "20px",
+            },
+
+            "&::-webkit-scrollbar-thumb:hover": {
+              background: "rgba(255,255,255,0.30)",
+            },
+          }}
+        >
           {!collapsed && (
             <Typography
               variant="caption"

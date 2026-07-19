@@ -17,7 +17,10 @@ class AuthService:
         user = self.user_repository.get_by_email(email)
 
         if not user:
-            return None
+            raise ValueError("Invalid email or password")
+
+        if user.is_deleted:
+            raise ValueError("Employee account has been deleted.")
 
         if not verify_password(
             password,

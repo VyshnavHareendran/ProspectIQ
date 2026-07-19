@@ -37,6 +37,13 @@ class User(Base):
         server_default=text("true")
     )
 
+    is_deleted = Column(
+        Boolean,
+        nullable=False,
+        default=False,
+        server_default=text("false")
+    )
+
     must_change_password = Column(
         Boolean,
         nullable=False,

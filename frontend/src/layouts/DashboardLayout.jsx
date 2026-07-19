@@ -82,31 +82,44 @@ const DashboardLayout = ({ children }) => {
         <Box
           component="main"
           sx={{
-            width: '100%',
+            width: "100%",
             maxWidth: 1600,
-            mx: 'auto',
-            px: { xs: 2, sm: 3, lg: 4 },
-            py: { xs: 3, sm: 4 },
+            mx: "auto",
+            px: {
+              xs: 1.5,
+              sm: 2,
+              md: 3,
+              lg: 4,
+            },
+            py: {
+              xs: 2,
+              sm: 3,
+              md: 4,
+            },
+            overflowX: "hidden",
           }}
         >
           <Stack
-  direction="row"
-  justifyContent="flex-end"
-  alignItems="center"
-  sx={{
-    mb: 3,
-  }}
->
-  <Typography
-    variant="body2"
-    color="text.secondary"
-    sx={{
-      fontWeight: 500,
-    }}
-  >
-    {dateFormatter.format(new Date())}
-  </Typography>
-</Stack>
+            direction={{
+                xs: "column",
+                sm: "row",
+            }}
+            justifyContent="flex-end"
+            alignItems="center"
+            sx={{
+              mb: 3,
+            }}
+          >
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  fontWeight: 500,
+                }}
+              >
+                {dateFormatter.format(new Date())}
+              </Typography>
+          </Stack>
           <Box sx={{ mt: { xs: 3, sm: 4 } }}>{children ?? <Outlet />}</Box>
         </Box>
       </Box>

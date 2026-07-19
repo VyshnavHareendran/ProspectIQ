@@ -72,7 +72,7 @@ def create_employee(
             detail=str(e),
         )
     
-    
+
 @router.patch(
     "/{employee_id}/status",
     response_model=ChangeEmployeeStatusResponse
@@ -111,4 +111,24 @@ def change_employee_status(
 
             detail=str(e)
 
+        )
+    
+@router.patch("/{employee_id}/delete")
+def delete_employee(
+    employee_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin),
+):
+
+    repository = UserRepository(db)
+
+    service = EmployeeManagementService(repository)
+
+    try:
+        return service.delete_employee(employee_id)
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=404,
+            detail=str(e),
         )
