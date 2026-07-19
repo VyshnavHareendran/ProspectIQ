@@ -14,12 +14,13 @@ import {
 import { useLocation } from 'react-router-dom'
 import BrandMark from '../brand/BrandMark'
 import NavigationItem from './NavigationItem'
-import { getNavigationItem, navigationItems } from './navigationConfig'
+import { getNavigationItem } from "./navigationConfig";
 
 export const SIDEBAR_WIDTH = 264
 export const SIDEBAR_COLLAPSED_WIDTH = 80
 
 const Sidebar = ({
+  navigationItems,
   collapsed,
   onClose,
   onCollapseToggle,
@@ -29,7 +30,11 @@ const Sidebar = ({
   variant,
 }) => {
   const location = useLocation()
-  const activeItem = getNavigationItem(location.pathname)
+  
+  const activeItem = getNavigationItem(
+    location.pathname,
+    navigationItems
+  );
   const width = collapsed ? SIDEBAR_COLLAPSED_WIDTH : SIDEBAR_WIDTH
   const isTemporary = variant === 'temporary'
 

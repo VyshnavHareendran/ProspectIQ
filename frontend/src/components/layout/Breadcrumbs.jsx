@@ -1,17 +1,37 @@
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded'
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import {
   Breadcrumbs as MuiBreadcrumbs,
   Link,
   Typography,
-} from '@mui/material'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
-import { routePaths } from '../../routes/routePaths'
-import { getNavigationItem } from './navigationConfig'
+} from "@mui/material";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+
+import { routePaths } from "../../routes/routePaths";
+import useAuth from "../../hooks/useAuth";
+
+import {
+  getNavigationItem,
+  adminNavigationItems,
+  employeeNavigationItems,
+} from "./navigationConfig";
 
 const Breadcrumbs = () => {
-  const location = useLocation()
-  const currentItem = getNavigationItem(location.pathname)
-  const isDashboard = location.pathname === routePaths.dashboard
+  const location = useLocation();
+  const { user } = useAuth();
+
+  const navigationItems =
+    user?.role === "ADMIN"
+      ? adminNavigationItems
+      : employeeNavigationItems;
+
+  const currentItem = getNavigationItem(
+    location.pathname,
+    navigationItems
+  );
+
+  const isDashboard =
+    location.pathname === routePaths.dashboard ||
+    location.pathname === routePaths.employeeDashboard;
 
   return (
     <MuiBreadcrumbs

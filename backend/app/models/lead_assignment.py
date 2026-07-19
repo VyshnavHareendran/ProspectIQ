@@ -53,9 +53,20 @@ class LeadAssignment(Base):
         nullable=True
     )
 
+    call_outcome = Column(
+        String(100),
+        nullable=True
+    )
+
     assigned_at = Column(
         TIMESTAMP,
         server_default=text("CURRENT_TIMESTAMP")
+    )
+
+    updated_at = Column(
+        TIMESTAMP,
+        server_default=text("CURRENT_TIMESTAMP"),
+        onupdate=text("CURRENT_TIMESTAMP")
     )
 
     business = relationship(
@@ -71,6 +82,11 @@ class LeadAssignment(Base):
     admin = relationship(
         "User",
         foreign_keys=[assigned_by]
+    )
+
+    call_logs = relationship(
+        "CallLog",
+        back_populates="lead_assignment",
     )
 
     is_active = Column(

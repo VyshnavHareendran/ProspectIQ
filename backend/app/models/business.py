@@ -123,10 +123,7 @@ class Business(Base):
         back_populates="business",
     )
 
-    call_logs = relationship(
-    "CallLog",
-    back_populates="business"
-    )
+
 
 
     

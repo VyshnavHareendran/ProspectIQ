@@ -10,9 +10,13 @@ from app.schemas.auth import (
     ForgotPasswordRequest,
     ForgotPasswordResponse,
     CurrentUserResponse,
+    EmployeeResponse,
+    CreateEmployeeRequest,
+    CreateEmployeeResponse,
 )
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
+from app.services.employee_management_service import EmployeeManagementService
 
 from app.dependencies.auth import (
     get_current_user,
@@ -21,6 +25,8 @@ from app.dependencies.auth import (
 from app.models.user import User
 
 from fastapi.security import OAuth2PasswordRequestForm
+
+from typing import List
 
 router = APIRouter(
     prefix="/auth",
@@ -96,18 +102,27 @@ def login(
 
     auth_service = AuthService(user_repository)
 
-    result = auth_service.login(
-        request.email,
-        request.password
-    )
+    try:
 
-    if not result:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password"
+        result = auth_service.login(
+            request.email,
+            request.password
         )
 
-    return result
+        if not result:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid email or password"
+            )
+
+        return result
+
+    except ValueError as e:
+
+        raise HTTPException(
+            status_code=403,
+            detail=str(e)
+        )
 
 @router.post(
     "/token",
@@ -156,3 +171,5 @@ def admin_test(
         "logged_in_as": current_user.full_name,
         "role": current_user.role
     }
+
+

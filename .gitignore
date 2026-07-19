@@ -39,3 +39,6 @@ frontend/build/
 *.egg-info/
 dist/
 build/
+
+# Temporary uploaded files
+backend/app/storage/uploads/temp/

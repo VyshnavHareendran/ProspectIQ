@@ -24,6 +24,9 @@ class AuthService:
             user.password_hash
         ):
             return None
+        
+        if not user.is_active:
+            raise ValueError("Employee account is inactive. Please contact the administrator.")
 
         payload = {
             "sub": user.email,
@@ -93,3 +96,10 @@ class AuthService:
             "message": "Password updated successfully."
 
         }
+    
+    def get_all_employees(self):
+
+        return (
+            self.user_repository
+            .get_all_employees()
+        )

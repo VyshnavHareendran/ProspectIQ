@@ -157,6 +157,30 @@ class BusinessRepository:
             "items": businesses
         }
     
+    def get_unassigned_businesses(
+    self,
+    assigned_business_ids: list[int],
+    limit: int,
+    ):
+        query = (
+            self.db.query(Business)
+            .filter(
+                Business.is_active == True
+            )
+        )
+
+        if assigned_business_ids:
+            query = query.filter(
+                Business.id.notin_(assigned_business_ids)
+            )
+
+        return (
+            query
+            .order_by(Business.id)
+            .limit(limit)
+            .all()
+        )
+
     def update(
     self,
     business: Business
@@ -298,6 +322,16 @@ class BusinessRepository:
         return (
             value is not None
             and str(value).strip().lower() not in ["", "nan", "none", "null"]
+        )
+    
+    def get_active_count(self):
+
+        return (
+            self.db.query(Business)
+            .filter(
+                Business.is_active == True
+            )
+            .count()
         )
     
     

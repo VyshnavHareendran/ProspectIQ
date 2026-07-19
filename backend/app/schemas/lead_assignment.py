@@ -7,6 +7,8 @@ from app.schemas.lead_assignment_status import (
     LeadAssignmentStatus
 )
 
+from app.schemas.business import BusinessResponse
+
 
 class LeadAssignmentCreate(BaseModel):
 
@@ -23,6 +25,14 @@ class LeadAssignmentUpdate(BaseModel):
 
     remarks: Optional[str] = None
 
+class EmployeeLeadUpdate(BaseModel):
+
+    status: LeadAssignmentStatus
+
+    remarks: Optional[str] = None
+
+    call_outcome: Optional[str] = None
+
 
 class LeadAssignmentResponse(BaseModel):
 
@@ -38,10 +48,22 @@ class LeadAssignmentResponse(BaseModel):
 
     remarks: Optional[str]
 
+    call_outcome: Optional[str]
+
     is_active: bool
 
     assigned_at: datetime
 
+    updated_at: Optional[datetime]
+
+    business: BusinessResponse
+
     class Config:
 
         from_attributes = True
+
+class BulkLeadAssignmentRequest(BaseModel):
+
+    employee_ids: list[int]
+
+    count: int

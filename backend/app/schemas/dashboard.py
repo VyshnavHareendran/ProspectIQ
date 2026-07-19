@@ -1,17 +1,21 @@
 from pydantic import BaseModel
 
-from datetime import datetime
+from datetime import datetime, date
 
 
 class DashboardSummaryResponse(BaseModel):
 
     total_businesses: int
 
-    high_priority_leads: int
+    total_employees: int
 
-    today_calls: int
+    total_assignments: int
 
-    new_businesses_this_week: int
+    total_calls: int
+
+    today_followups: int
+
+    average_lead_score: float
 
 
 class CityDistributionResponse(BaseModel):
@@ -100,3 +104,43 @@ class RecentActivityResponse(BaseModel):
     description: str
 
     created_at: datetime
+
+class UpcomingFollowupResponse(BaseModel):
+
+    id: int
+
+    business_name: str
+
+    employee_name: str
+
+    next_followup_date: date
+
+    call_outcome: str | None
+
+class LeadAssignmentStatusResponse(BaseModel):
+
+    status: str
+
+    count: int
+
+class RecentCallResponse(BaseModel):
+
+    id: int
+
+    business_name: str
+
+    employee_name: str
+
+    call_outcome: str
+
+    created_at: datetime
+
+class EmployeePerformanceResponse(BaseModel):
+
+    employee_name: str
+
+    assigned_leads: int
+
+    calls_made: int
+
+    pending_followups: int

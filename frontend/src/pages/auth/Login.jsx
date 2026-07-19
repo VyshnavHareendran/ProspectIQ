@@ -20,8 +20,30 @@ const Login = () => {
     setIsLoading(true)
 
     try {
-      await login({ email, password })
-      navigate(routePaths.dashboard, { replace: true })
+      const user = await login({
+          email,
+          password,
+      });
+
+      if (user.role === "ADMIN") {
+
+          navigate(
+              routePaths.dashboard,
+              {
+                  replace: true,
+              }
+          );
+
+      } else {
+
+          navigate(
+              routePaths.employeeDashboard,
+              {
+                  replace: true,
+              }
+          );
+
+      }
     } catch {
       setErrorMessage(LOGIN_ERROR_MESSAGE)
     } finally {

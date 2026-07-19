@@ -15,8 +15,8 @@ from app.repositories.call_log_repository import (
     CallLogRepository
 )
 
-from app.repositories.business_repository import (
-    BusinessRepository
+from app.repositories.lead_assignment_repository import (
+    LeadAssignmentRepository
 )
 
 from app.repositories.user_repository import (
@@ -26,6 +26,9 @@ from app.repositories.user_repository import (
 from app.services.call_log_service import (
     CallLogService
 )
+
+from app.dependencies.auth import get_current_user
+from app.models.user import User
 
 router = APIRouter(
     prefix="/call-logs",
@@ -37,9 +40,14 @@ def get_service(db: Session):
 
     return CallLogService(
         CallLogRepository(db),
-        BusinessRepository(db),
+        LeadAssignmentRepository(db),
         UserRepository(db)
     )
+
+def get_employee_filter(current_user: User):
+    role = current_user.role.upper()
+
+    return None if role == "ADMIN" else current_user.id
 
 
 @router.post(
@@ -79,20 +87,21 @@ def get_call_logs(
 
     return service.get_all()
 
-
 @router.get(
-    "/business/{business_id}",
+    "/lead-assignment/{lead_assignment_id}",
     response_model=List[CallLogResponse],
-    summary="Get Business Call Logs"
+    summary="Get Lead Assignment Call Logs"
 )
-def get_business_calls(
-    business_id: int,
-    db: Session = Depends(get_db)
+def get_lead_assignment_calls(
+    lead_assignment_id: int,
+    db: Session = Depends(get_db),
 ):
 
     service = get_service(db)
 
-    return service.get_by_business(business_id)
+    return service.get_by_lead_assignment(
+        lead_assignment_id
+    )
 
 
 @router.get(
@@ -115,13 +124,18 @@ def get_employee_calls(
     response_model=List[CallLogResponse],
     summary="Today's Follow-ups"
 )
+
+
 def get_today_followups(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     service = get_service(db)
 
-    return service.get_today_followups()
+    employee_id = get_employee_filter(current_user)
+
+    return service.get_today_followups(employee_id)
 
 
 @router.get(
@@ -130,13 +144,32 @@ def get_today_followups(
     summary="Pending Follow-ups"
 )
 def get_pending_followups(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
 ):
 
     service = get_service(db)
 
-    return service.get_pending_followups()
+    employee_id = get_employee_filter(current_user)
 
+    return service.get_pending_followups(employee_id)
+
+
+@router.get(
+    "/followups/overdue",
+    response_model=List[CallLogResponse],
+    summary="Overdue Follow-ups"
+)
+def get_overdue_followups(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+
+    service = get_service(db)
+
+    employee_id = get_employee_filter(current_user)
+
+    return service.get_overdue_followups(employee_id)
 
 @router.get(
     "/{call_log_id}",

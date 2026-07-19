@@ -9,7 +9,7 @@ import {
   Chip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { uploadApi } from "../../api/uploadApi";
+import { uploadApi } from "../../api/admin/uploadApi";
 
 const getStatusColor = (status) => {
   if (status === "COMPLETED") return "success";

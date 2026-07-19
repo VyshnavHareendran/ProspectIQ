@@ -19,10 +19,10 @@ class CallLog(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    business_id = Column(
+    lead_assignment_id = Column(
         Integer,
-        ForeignKey("businesses.id"),
-        nullable=False
+        ForeignKey("lead_assignments.id"),
+        nullable=False,
     )
 
     employee_id = Column(
@@ -31,9 +31,14 @@ class CallLog(Base):
         nullable=False
     )
 
-    call_status = Column(
+    call_outcome = Column(
         String(30),
         nullable=False
+    )
+
+    duration = Column(
+        String(20),
+        nullable=True
     )
 
     notes = Column(
@@ -51,6 +56,9 @@ class CallLog(Base):
         server_default=text("CURRENT_TIMESTAMP")
     )
 
-    business = relationship("Business", back_populates="call_logs")
+    lead_assignment = relationship(
+        "LeadAssignment",
+        back_populates="call_logs",
+    )
     
     employee = relationship("User", back_populates="call_logs")

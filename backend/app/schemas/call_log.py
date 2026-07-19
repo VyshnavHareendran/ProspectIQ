@@ -1,18 +1,21 @@
+from app.schemas.user import UserResponse
+from app.schemas.lead_assignment import LeadAssignmentResponse
+
 from datetime import date, datetime
 from typing import Optional
 
 from pydantic import BaseModel
 
-from app.schemas.call_status import CallStatus
-
 
 class CallLogCreate(BaseModel):
 
-    business_id: int
+    lead_assignment_id: int
 
     employee_id: int
 
-    call_status: CallStatus
+    call_outcome: str
+
+    duration: Optional[str] = None
 
     notes: Optional[str] = None
 
@@ -21,7 +24,9 @@ class CallLogCreate(BaseModel):
 
 class CallLogUpdate(BaseModel):
 
-    call_status: Optional[CallStatus] = None
+    call_outcome: Optional[str] = None
+
+    duration: Optional[str] = None
 
     notes: Optional[str] = None
 
@@ -32,11 +37,13 @@ class CallLogResponse(BaseModel):
 
     id: int
 
-    business_id: int
+    lead_assignment_id: int
 
     employee_id: int
 
-    call_status: CallStatus
+    call_outcome: str
+
+    duration: Optional[str]
 
     notes: Optional[str]
 
@@ -44,6 +51,9 @@ class CallLogResponse(BaseModel):
 
     created_at: datetime
 
-    class Config:
+    employee: UserResponse
 
+    lead_assignment: LeadAssignmentResponse
+
+    class Config:
         from_attributes = True

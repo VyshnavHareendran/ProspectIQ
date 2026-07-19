@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User
 
+from app.schemas.user_role import UserRole
 
 class UserRepository:
 
@@ -40,6 +41,20 @@ class UserRepository:
             .first()
         )
     
+    def change_status(
+    self,
+    user: User,
+    is_active: bool
+    ):
+
+        user.is_active = is_active
+
+        self.db.commit()
+
+        self.db.refresh(user)
+
+        return user
+    
     def email_exists(
     self,
     email: str
@@ -67,3 +82,11 @@ class UserRepository:
         self.db.refresh(user)
 
         return user
+
+    def get_all_employees(self):
+
+        return (
+            self.db.query(User)
+            .order_by(User.full_name)
+            .all()
+        )

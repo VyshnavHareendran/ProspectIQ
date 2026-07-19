@@ -1,7 +1,6 @@
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { IconButton, Paper, Stack, Tooltip } from "@mui/material";
+import { Paper, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import LeadStatusChip from "./LeadStatusChip";
 import CallStatusChip from "./CallStatusChip";
 
 const formatDateTime = (value) => {
@@ -10,75 +9,121 @@ const formatDateTime = (value) => {
 };
 
 const CallLogTable = ({
-  rows = [],
-  businessById = {},
-  loading = false,
-  onEdit,
-  onDelete,
+    rows = [],
+    loading = false,
+    onRowClick,
+    onViewBusiness,
+    showEmployee = true,
 }) => {
-  const columns = [
-    {
-      field: "business_id",
+  const businessColumn = {
+      field: "business",
       headerName: "Business",
-      flex: 1.3,
+      flex: 1.5,
+      minWidth: 220,
+
+      renderCell: (params) => {
+
+          const business = params.row.lead_assignment?.business;
+
+          if (!business) return "-";
+
+          return (
+              <Button
+                  variant="text"
+                  disableRipple
+                  onClick={(e) => {
+                      e.stopPropagation();
+                      onViewBusiness?.(business.id);
+                  }}
+                  sx={{
+                      p: 0,
+                      minWidth: "auto",
+                      textTransform: "none",
+                      fontWeight: 600,
+                      color: "primary.main",
+
+                      "&:hover": {
+                          background: "transparent",
+                          textDecoration: "underline",
+                      },
+                  }}
+              >
+                  {business.business_name}
+              </Button>
+          );
+      },
+  };
+
+  const employeeColumn = {
+      field: "employee",
+      headerName: "Employee",
+      flex: 1.2,
       minWidth: 180,
       valueGetter: (_value, row) =>
-        businessById[row.business_id]?.business_name || row.business_id,
-    },
-    {
-      field: "employee_id",
-      headerName: "Employee ID",
-      flex: 0.8,
-      minWidth: 110,
-    },
-    {
-      field: "call_status",
-      headerName: "Status",
+          row.employee?.full_name || "-",
+  };
+
+  const statusColumn = {
+      field: "status",
+      headerName: "Lead Status",
       flex: 1,
-      minWidth: 140,
-      renderCell: (params) => <CallStatusChip status={params.value} />,
-    },
-    {
+      minWidth: 150,
+      valueGetter: (_value, row) =>
+          row.lead_assignment?.status || "-",
+      renderCell: (params) => (
+          <LeadStatusChip status={params.value} />
+      ),
+  };
+
+  const outcomeColumn = {
+      field: "call_outcome",
+      headerName: "Call Outcome",
+      flex: 1.2,
+      minWidth: 170,
+      renderCell: (params) => (
+          <CallStatusChip status={params.value} />
+      ),
+  };
+
+  const notesColumn = {
       field: "notes",
       headerName: "Notes",
       flex: 2,
-      minWidth: 220,
-    },
-    {
-      field: "next_followup_date",
-      headerName: "Next Follow-up",
-      flex: 1,
-      minWidth: 140,
+      minWidth: 260,
       valueGetter: (value) => value || "-",
-    },
-    {
+  };
+
+  const followupColumn = {
+      field: "next_followup_date",
+      headerName: "Follow-up",
+      flex: 1,
+      minWidth: 150,
+      valueGetter: (value) => value || "-",
+  };
+
+  const createdColumn = {
       field: "created_at",
-      headerName: "Created At",
-      flex: 1.2,
+      headerName: "Created",
+      flex: 1.3,
       minWidth: 180,
-      valueGetter: (value) => formatDateTime(value),
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      sortable: false,
-      filterable: false,
-      width: 110,
-      renderCell: (params) => (
-        <Stack direction="row" spacing={0.5}>
-          <Tooltip title="Edit call log">
-            <IconButton size="small" onClick={() => onEdit(params.row)}>
-              <EditRoundedIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete call log">
-            <IconButton size="small" color="error" onClick={() => onDelete(params.row)}>
-              <DeleteRoundedIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Stack>
-      ),
-    },
+      valueGetter: (value) =>
+          formatDateTime(value),
+  };
+
+  const columns = [
+      businessColumn,
+
+      ...(showEmployee ? [employeeColumn] : []),
+
+      statusColumn,
+
+      outcomeColumn,
+
+      notesColumn,
+
+      followupColumn,
+
+      createdColumn,
   ];
 
   return (
@@ -88,6 +133,7 @@ const CallLogTable = ({
         rows={rows}
         columns={columns}
         loading={loading}
+        onRowClick={(params) => onRowClick?.(params.row)}
         pageSizeOptions={[10, 25, 50]}
         initialState={{
           pagination: {

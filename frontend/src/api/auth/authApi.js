@@ -1,4 +1,4 @@
-import httpClient from './httpClient'
+import httpClient from '../httpClient'
 
 export const authApi = {
   login(credentials) {
@@ -6,5 +6,8 @@ export const authApi = {
   },
   getCurrentUser(config = {}) {
     return httpClient.get('/auth/me', config)
+  },
+  getEmployees() {
+    return httpClient.get("/auth/employees");
   },
 }

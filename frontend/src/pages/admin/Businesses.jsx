@@ -19,7 +19,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   Grid,
   IconButton,
   InputAdornment,
@@ -39,7 +38,8 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { businessApi } from "../../api";
+import { businessApi } from "../../api/auth";
+import BusinessProfileDrawer from "../../components/business/BusinessProfileDrawer";
 
 const emptyBusinessForm = {
   business_name: "",
@@ -543,37 +543,15 @@ export default function Business() {
 
       <BusinessFormDialog open={openAdd} title="Add Business" form={form} setForm={setForm} onClose={() => setOpenAdd(false)} onSubmit={handleCreate} saving={saving} />
       <BusinessFormDialog open={openEdit} title="Edit Business" form={form} setForm={setForm} onClose={() => setOpenEdit(false)} onSubmit={handleUpdate} saving={saving} isEdit />
-
-      <Dialog open={openView} onClose={() => setOpenView(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Business Details</DialogTitle>
-        <DialogContent>
-          {selectedBusiness ? (
-            <Stack spacing={1.5} mt={1}>
-              {[
-                ["Name", selectedBusiness.business_name],
-                ["Category", selectedBusiness.category],
-                ["Phone", selectedBusiness.phone_number],
-                ["Email", selectedBusiness.email],
-                ["Website", selectedBusiness.website_url],
-                ["Address", selectedBusiness.address],
-                ["City", selectedBusiness.city],
-                ["State", selectedBusiness.state],
-                ["Rating", selectedBusiness.google_rating],
-                ["Reviews", selectedBusiness.review_count],
-                ["Status", selectedBusiness.status],
-              ].map(([label, value]) => (
-                <Box key={label}>
-                  <Typography><b>{label}:</b> {formatValue(value)}</Typography>
-                  <Divider sx={{ mt: 1.5 }} />
-                </Box>
-              ))}
-            </Stack>
-          ) : null}
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" onClick={() => setOpenView(false)}>Close</Button>
-        </DialogActions>
-      </Dialog>
+            
+      <BusinessProfileDrawer
+          open={openView}
+          onClose={() => {
+              setOpenView(false);
+              setSelectedBusiness(null);
+          }}
+          businessId={selectedBusiness?.id}
+      />
 
       <Dialog open={openDelete} onClose={() => setOpenDelete(false)}>
         <DialogTitle>Delete Business</DialogTitle>

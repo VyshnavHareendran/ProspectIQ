@@ -1,4 +1,4 @@
-import httpClient from "./httpClient";
+import httpClient from "../httpClient";
 
 export const uploadApi = {
   previewCSV: (file) => {

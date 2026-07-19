@@ -1,9 +1,10 @@
 from datetime import date
 
 from sqlalchemy.orm import Session
+from sqlalchemy.orm import joinedload
 
 from app.models.call_log import CallLog
-
+from app.models.lead_assignment import LeadAssignment
 
 class CallLogRepository:
 
@@ -40,24 +41,26 @@ class CallLogRepository:
         )
 
     def get_all(self):
-
         return (
             self.db.query(CallLog)
-            .order_by(
-                CallLog.created_at.desc()
+            .options(
+                joinedload(CallLog.employee),
+                joinedload(CallLog.lead_assignment).joinedload(
+                    LeadAssignment.business
+                )
             )
+            .order_by(CallLog.created_at.desc())
             .all()
         )
 
-    def get_by_business(
-        self,
-        business_id: int
+    def get_by_lead_assignment(
+    self,
+    lead_assignment_id: int
     ):
-
         return (
             self.db.query(CallLog)
             .filter(
-                CallLog.business_id == business_id
+                CallLog.lead_assignment_id == lead_assignment_id
             )
             .order_by(
                 CallLog.created_at.desc()
@@ -66,43 +69,110 @@ class CallLogRepository:
         )
 
     def get_by_employee(
-        self,
-        employee_id: int
+    self,
+    employee_id: int
     ):
 
         return (
             self.db.query(CallLog)
+            .options(
+                joinedload(CallLog.employee),
+                joinedload(CallLog.lead_assignment)
+                    .joinedload(LeadAssignment.business)
+            )
             .filter(
                 CallLog.employee_id == employee_id
             )
-            .order_by(
-                CallLog.created_at.desc()
-            )
+            .order_by(CallLog.created_at.desc())
             .all()
         )
 
-    def get_today_followups(self):
+    def get_today_followups(
+    self,
+    employee_id: int | None = None
+    ):
 
-        return (
+        query = (
             self.db.query(CallLog)
+            .options(
+                joinedload(CallLog.employee),
+                joinedload(CallLog.lead_assignment)
+                    .joinedload(LeadAssignment.business)
+            )
             .filter(
                 CallLog.next_followup_date == date.today()
             )
-            .order_by(
+        )
+
+        if employee_id is not None:
+            query = query.filter(
+                CallLog.employee_id == employee_id
+            )
+
+        return (
+            query.order_by(
+                CallLog.next_followup_date.asc(),
                 CallLog.created_at.desc()
             )
             .all()
         )
 
-    def get_pending_followups(self):
+    def get_pending_followups(
+    self,
+    employee_id: int | None = None
+    ):
 
-        return (
+        query = (
             self.db.query(CallLog)
+            .options(
+                joinedload(CallLog.employee),
+                joinedload(CallLog.lead_assignment)
+                    .joinedload(LeadAssignment.business)
+            )
             .filter(
                 CallLog.next_followup_date >= date.today()
             )
-            .order_by(
-                CallLog.next_followup_date.asc()
+        )
+
+        if employee_id is not None:
+            query = query.filter(
+                CallLog.employee_id == employee_id
+            )
+
+        return (
+            query.order_by(
+                CallLog.next_followup_date.asc(),
+                CallLog.created_at.desc()
+            )
+            .all()
+        )
+    
+    def get_overdue_followups(
+    self,
+    employee_id: int | None = None
+    ):
+
+        query = (
+            self.db.query(CallLog)
+            .options(
+                joinedload(CallLog.employee),
+                joinedload(CallLog.lead_assignment)
+                    .joinedload(LeadAssignment.business)
+            )
+            .filter(
+                CallLog.next_followup_date < date.today()
+            )
+        )
+
+        if employee_id is not None:
+            query = query.filter(
+                CallLog.employee_id == employee_id
+            )
+
+        return (
+            query.order_by(
+                CallLog.next_followup_date.asc(),
+                CallLog.created_at.desc()
             )
             .all()
         )

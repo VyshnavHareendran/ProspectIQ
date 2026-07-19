@@ -1,4 +1,4 @@
-import httpClient from "./httpClient";
+import httpClient from "../httpClient";
 
 export const callLogApi = {
   createCallLog: (data) =>
@@ -21,6 +21,9 @@ export const callLogApi = {
 
   getPendingFollowups: () =>
     httpClient.get("/call-logs/followups/pending"),
+
+  getOverdueFollowups: () =>
+    httpClient.get("/call-logs/followups/overdue"),
 
   updateCallLog: (callLogId, data) =>
     httpClient.put(`/call-logs/${callLogId}`, data),

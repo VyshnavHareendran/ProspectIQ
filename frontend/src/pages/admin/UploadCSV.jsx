@@ -7,7 +7,7 @@ import ColumnMappingTable from "../../components/upload/ColumnMappingTable";
 import ImportSummary from "../../components/upload/ImportSummary";
 import UploadHistoryTable from "../../components/upload/UploadHistoryTable";
 import ImportResultDialog from "../../components/upload/ImportResultDialog";
-import { uploadApi } from "../../api/uploadApi";
+import { uploadApi } from "../../api/admin/uploadApi";
 
 const UploadCSV = () => {
   const [file, setFile] = useState(null);

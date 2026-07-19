@@ -1,6 +1,6 @@
 #THESE VALIDATES API REQUESTS AND RESPONSES FOR AUTHENTICATION AND USER MANAGEMENT      
 from pydantic import BaseModel, EmailStr
-
+from app.schemas.user_role import UserRole
 
 class LoginRequest(BaseModel):
 
@@ -57,5 +57,74 @@ class CurrentUserResponse(BaseModel):
     email: EmailStr
     role: str
 
+    is_active: bool
+    must_change_password: bool
+
     class Config:
+        from_attributes = True
+
+class EmployeeResponse(BaseModel):
+
+    id: int
+
+    full_name: str
+
+    email: EmailStr
+
+    role: str
+
+    is_active: bool
+
+    must_change_password: bool
+
+    class Config:
+
+        from_attributes = True
+
+class CreateEmployeeRequest(BaseModel):
+
+    full_name: str
+
+    email: EmailStr
+
+    role: UserRole
+
+
+class CreateEmployeeResponse(BaseModel):
+
+    id: int
+
+    full_name: str
+
+    email: EmailStr
+
+    role: str
+
+    is_active: bool
+
+    must_change_password: bool
+
+    temporary_password: str
+
+    class Config:
+        from_attributes = True
+
+class ChangeEmployeeStatusRequest(BaseModel):
+
+    is_active: bool
+
+class ChangeEmployeeStatusResponse(BaseModel):
+
+    id: int
+
+    full_name: str
+
+    email: EmailStr
+
+    role: str
+
+    is_active: bool
+
+    class Config:
+
         from_attributes = True

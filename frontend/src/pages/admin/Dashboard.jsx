@@ -1,25 +1,29 @@
 import AddBusinessRoundedIcon from '@mui/icons-material/AddBusinessRounded'
+import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded'
+import AssignmentTurnedInRoundedIcon from '@mui/icons-material/AssignmentTurnedInRounded'
+import CallRoundedIcon from '@mui/icons-material/CallRounded'
+import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded'
+import StarRoundedIcon from '@mui/icons-material/StarRounded'
 import BusinessCenterRoundedIcon from '@mui/icons-material/BusinessCenterRounded'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded'
-import CallRoundedIcon from '@mui/icons-material/CallRounded'
-import PriorityHighRoundedIcon from '@mui/icons-material/PriorityHighRounded'
 import ScoreRoundedIcon from '@mui/icons-material/ScoreRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { Grid, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import { dashboardApi } from '../../api/dashboardApi'
-import ActivityTimeline from '../../components/dashboard/ActivityTimeline'
+import { dashboardApi } from '../../api/admin/dashboardApi'
 import CategoryChart from '../../components/dashboard/CategoryChart'
 import CityChart from '../../components/dashboard/CityChart'
 import ImportSummaryCard from '../../components/dashboard/ImportSummaryCard'
 import QuickActionCard from '../../components/dashboard/QuickActionCard'
 import RecentBusinessesTable from '../../components/dashboard/RecentBusinessesTable'
-import RecentUploads from '../../components/dashboard/RecentUploads'
 import StatCard from '../../components/dashboard/StatCard'
-import TopRatedBusinesses from '../../components/dashboard/TopRatedBusinesses'
 import WelcomeCard from '../../components/dashboard/WelcomeCard'
 import useAuth from '../../hooks/useAuth'
 import { routePaths } from '../../routes/routePaths'
+import UpcomingFollowupsCard from '../../components/dashboard/UpcomingFollowupsCard'
+import LeadAssignmentStatusChart from '../../components/dashboard/LeadAssignmentStatusChart'
+import RecentCallLogsCard from '../../components/dashboard/RecentCallLogsCard'
+import EmployeePerformanceTable from '../../components/dashboard/EmployeePerformanceTable'
 
 const quickActions = [
   ['Add Business', 'Open the business creation workflow.', AddBusinessRoundedIcon, routePaths.businesses],
@@ -42,14 +46,15 @@ const getItems = (value) => {
   return []
 }
 
-const getReviewCount = (business) =>
-  business.review_count ?? business.google_review_count ?? business.reviews_count ?? 0
-
 const Dashboard = () => {
   const { user } = useAuth()
   const [now, setNow] = useState(() => new Date())
   const [summary, setSummary] = useState(null)
   const [recentBusinesses, setRecentBusinesses] = useState([])
+  const [upcomingFollowups, setUpcomingFollowups] = useState([])
+  const [assignmentStatus, setAssignmentStatus] = useState([])
+  const [recentCalls, setRecentCalls] = useState([])
+  const [employeePerformance, setEmployeePerformance] = useState([])
   const [importSummary, setImportSummary] = useState(null)
   const [cityData, setCityData] = useState([])
   const [categoryData, setCategoryData] = useState([])
@@ -67,20 +72,39 @@ const Dashboard = () => {
       setLoading(true)
       setDashboardError('')
       try {
-        const [summaryRes, recentRes, importRes, cityRes, categoryRes] =
-          await Promise.all([
+        const [
+            summaryRes,
+            recentRes,
+            importRes,
+            cityRes,
+            categoryRes,
+            followupRes,
+            assignmentStatusRes,
+            recentCallsRes,
+            employeePerformanceRes,
+        ] = await Promise.all([
             dashboardApi.getSummary(),
             dashboardApi.getRecentBusinesses(),
             dashboardApi.getImportSummary(),
             dashboardApi.getCityDistribution(),
             dashboardApi.getCategoryDistribution(),
-          ])
+            dashboardApi.getUpcomingFollowups(),
+            dashboardApi.getLeadAssignmentStatus(),
+            dashboardApi.getRecentCalls(),
+            dashboardApi.getEmployeePerformance(),
+        ])
         if (!isActive) return
         setSummary(summaryRes.data)
         setRecentBusinesses(getItems(recentRes.data))
+        setUpcomingFollowups(followupRes.data)   // <-- THIS IS MISSING
+        setAssignmentStatus(assignmentStatusRes.data)
+        setRecentCalls(recentCallsRes.data)
+        setEmployeePerformance(employeePerformanceRes.data)
         setImportSummary(importRes.data)
         setCityData(getItems(cityRes.data))
         setCategoryData(getItems(categoryRes.data))
+
+        console.log("Upcoming Followups:", followupRes.data)
       } catch (error) {
         if (isActive) setDashboardError(getErrorMessage(error))
       } finally {
@@ -93,37 +117,70 @@ const Dashboard = () => {
     }
   }, [])
 
-  const topBusinesses = useMemo(
-    () =>
-      [...recentBusinesses]
-        .filter((business) => Number(business.google_rating ?? business.rating ?? 0) > 0)
-        .sort((first, second) => {
-          const ratingDiff =
-            Number(second.google_rating ?? second.rating ?? 0) -
-            Number(first.google_rating ?? first.rating ?? 0)
-          return ratingDiff || getReviewCount(second) - getReviewCount(first)
-        }),
-    [recentBusinesses],
-  )
-
   const recentUploads = useMemo(
     () => getItems(importSummary?.recent_uploads || importSummary?.uploads),
     [importSummary],
   )
 
   const stats = [
-    ['Total Businesses', summary?.total_businesses ?? 0, 'Live count of businesses.', BusinessCenterRoundedIcon],
-    ['High Priority Leads', summary?.high_priority_leads ?? 0, 'Leads requiring attention.', PriorityHighRoundedIcon],
-    ["Today's Calls", summary?.todays_calls ?? summary?.today_calls ?? 0, 'Calls scheduled for today.', CallRoundedIcon],
-    ['New Businesses This Week', summary?.new_businesses_this_week ?? 0, 'New records added this week.', AddBusinessRoundedIcon],
-  ].map(([title, value, helperText, icon]) => ({ title, value, helperText, icon, loading }))
+    [
+      'Total Businesses',
+      summary?.total_businesses ?? 0,
+      'Registered businesses',
+      BusinessCenterRoundedIcon,
+    ],
+    [
+      'Employees',
+      summary?.total_employees ?? 0,
+      'Active employees',
+      GroupsRoundedIcon,
+    ],
+    [
+      'Lead Assignments',
+      summary?.total_assignments ?? 0,
+      'Assigned leads',
+      AssignmentTurnedInRoundedIcon,
+    ],
+    [
+      'Total Calls',
+      summary?.total_calls ?? 0,
+      'Calls recorded',
+      CallRoundedIcon,
+    ],
+    [
+      "Today's Follow-ups",
+      summary?.today_followups ?? 0,
+      'Scheduled today',
+      EventAvailableRoundedIcon,
+    ],
+    [
+      'Avg Lead Score',
+      summary?.average_lead_score ?? 0,
+      'Average ML score',
+      StarRoundedIcon,
+    ],
+  ].map(([title, value, helperText, icon]) => ({
+    title,
+    value,
+    helperText,
+    icon,
+    loading,
+  }))
 
   return (
     <Stack spacing={3}>
       <WelcomeCard now={now} user={user} />
       <Grid container spacing={2.5}>
         {stats.map((stat) => (
-          <Grid key={stat.title} size={{ xs: 12, sm: 6, lg: 3 }}>
+          <Grid
+              key={stat.title}
+              size={{
+                  xs: 12,
+                  sm: 6,
+                  md: 4,
+                  xl: 2
+              }}
+          >
             <StatCard {...stat} />
           </Grid>
         ))}
@@ -156,18 +213,45 @@ const Dashboard = () => {
           <RecentBusinessesTable businesses={recentBusinesses} error={dashboardError} loading={loading} />
         </Grid>
         <Grid size={{ xs: 12, xl: 4 }}>
-          <ActivityTimeline />
+          <UpcomingFollowupsCard
+            followups={upcomingFollowups}
+            loading={loading}
+            error={dashboardError}
+          />
         </Grid>
       </Grid>
-      <Grid container spacing={2.5} alignItems="stretch">
+      <Grid container spacing={2.5}>
         <Grid size={{ xs: 12, lg: 6 }}>
           <ImportSummaryCard error={dashboardError} loading={loading} summary={importSummary} />
         </Grid>
         <Grid size={{ xs: 12, lg: 6 }}>
-          <TopRatedBusinesses businesses={topBusinesses} loading={loading} />
+          <LeadAssignmentStatusChart
+              data={assignmentStatus}
+              loading={loading}
+              error={dashboardError}
+          />
+        </Grid>
+        
+        <Grid container spacing={2.5}>
+
+          <Grid size={{ xs: 12 }}>
+              <RecentCallLogsCard
+                calls={recentCalls}
+                loading={loading}
+                error={dashboardError}
+              />
+            </Grid>
+          </Grid>
+        <Grid container spacing={2.5}>
+          <Grid size={{ xs: 12 }}>
+            <EmployeePerformanceTable
+              data={employeePerformance}
+              loading={loading}
+              error={dashboardError}
+            />
+          </Grid>
         </Grid>
       </Grid>
-      <RecentUploads loading={loading} uploads={recentUploads} />
     </Stack>
   )
 }

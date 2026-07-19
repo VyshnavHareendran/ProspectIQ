@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { authApi } from '../api'
+import { authApi } from '../api/auth'
 import { authStorage } from '../utils/authStorage'
 import AuthContext from './AuthContext'
 

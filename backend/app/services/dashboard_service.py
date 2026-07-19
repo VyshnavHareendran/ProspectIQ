@@ -54,3 +54,15 @@ class DashboardService:
     def get_recent_activity(self):
 
         return self.repository.get_recent_activity()
+    
+    def get_upcoming_followups(self):
+        return self.repository.get_upcoming_followups()
+    
+    def get_lead_assignment_status(self):
+        return self.repository.get_lead_assignment_status()
+    
+    def get_recent_calls(self):
+        return self.repository.get_recent_calls()
+    
+    def get_employee_performance(self):
+        return self.repository.get_employee_performance()

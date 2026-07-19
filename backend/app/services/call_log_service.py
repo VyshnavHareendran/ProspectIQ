@@ -4,8 +4,8 @@ from app.repositories.call_log_repository import (
     CallLogRepository
 )
 
-from app.repositories.business_repository import (
-    BusinessRepository
+from app.repositories.lead_assignment_repository import (
+    LeadAssignmentRepository
 )
 
 from app.repositories.user_repository import (
@@ -21,32 +21,29 @@ from app.schemas.call_log import (
 class CallLogService:
 
     def __init__(
-        self,
-        call_log_repository: CallLogRepository,
-        business_repository: BusinessRepository,
-        user_repository: UserRepository
+    self,
+    call_log_repository: CallLogRepository,
+    lead_assignment_repository: LeadAssignmentRepository,
+    user_repository: UserRepository
     ):
 
         self.call_log_repository = call_log_repository
-        self.business_repository = business_repository
+        self.lead_assignment_repository = lead_assignment_repository
         self.user_repository = user_repository
-
+   
     def create(
         self,
         request: CallLogCreate
     ):
 
-        business = (
-            self.business_repository.get_by_id(
-                request.business_id
+        assignment = (
+            self.lead_assignment_repository.get_by_id(
+                request.lead_assignment_id
             )
         )
 
-        if not business:
-
-            raise ValueError(
-                "Business not found."
-            )
+        if not assignment:
+            raise ValueError("Lead assignment not found.")
 
         employee = (
             self.user_repository.get_by_id(
@@ -62,11 +59,13 @@ class CallLogService:
 
         call_log = CallLog(
 
-            business_id=request.business_id,
+            lead_assignment_id=request.lead_assignment_id,
 
             employee_id=request.employee_id,
 
-            call_status=request.call_status,
+            call_outcome=request.call_outcome,
+
+            duration=request.duration,
 
             notes=request.notes,
 
@@ -103,14 +102,14 @@ class CallLogService:
             self.call_log_repository.get_all()
         )
 
-    def get_by_business(
-        self,
-        business_id: int
+    def get_by_lead_assignment(
+    self,
+    lead_assignment_id: int
     ):
 
         return (
-            self.call_log_repository.get_by_business(
-                business_id
+            self.call_log_repository.get_by_lead_assignment(
+                lead_assignment_id
             )
         )
 
@@ -125,17 +124,38 @@ class CallLogService:
             )
         )
 
-    def get_today_followups(self):
+    def get_today_followups(
+    self,
+    employee_id: int | None = None
+    ):
 
         return (
-            self.call_log_repository.get_today_followups()
+            self.call_log_repository.get_today_followups(
+                employee_id
+            )
         )
 
-    def get_pending_followups(self):
+    def get_pending_followups(
+    self,
+    employee_id: int | None = None
+    ):
+
+        return (
+            self.call_log_repository.get_pending_followups(
+                employee_id
+            )
+        )
+    
+    def get_overdue_followups(
+    self,
+    employee_id: int | None = None
+    ):
 
         return (
             self.call_log_repository
-            .get_pending_followups()
+            .get_overdue_followups(
+                employee_id
+            )
         )
 
     def update(

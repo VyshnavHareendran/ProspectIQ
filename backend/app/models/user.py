@@ -2,6 +2,7 @@ from sqlalchemy import (
     Column, 
     Integer, 
     String, 
+    Boolean,
     TIMESTAMP, 
     text
     )
@@ -28,6 +29,20 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
 
     role = Column(String(20), nullable=False)
+
+    is_active = Column(
+        Boolean,
+        nullable=False,
+        default=True,
+        server_default=text("true")
+    )
+
+    must_change_password = Column(
+        Boolean,
+        nullable=False,
+        default=False,
+        server_default=text("false")
+    )
 
     created_at = Column(
         TIMESTAMP,

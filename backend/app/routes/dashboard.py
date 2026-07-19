@@ -18,7 +18,12 @@ from app.schemas.dashboard import (
     RecentActivityResponse,
     TopRatedBusinessResponse,
     RecentUploadResponse,
-    RecentActivityResponse
+    RecentActivityResponse,
+    UpcomingFollowupResponse,
+    LeadAssignmentStatusResponse,
+    RecentCallResponse,
+    EmployeePerformanceResponse,
+    
 )
 
 router = APIRouter(
@@ -138,3 +143,56 @@ def get_recent_activity(
     service = DashboardService(repository)
 
     return service.get_recent_activity()
+
+@router.get(
+    "/upcoming-followups",
+    response_model=List[UpcomingFollowupResponse]
+)
+def get_upcoming_followups(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+    service = DashboardService(repository)
+
+    return service.get_upcoming_followups()
+
+@router.get(
+    "/lead-assignment-status",
+    response_model=List[LeadAssignmentStatusResponse]
+)
+def get_lead_assignment_status(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+    service = DashboardService(repository)
+
+    return service.get_lead_assignment_status()
+
+@router.get(
+    "/recent-calls",
+    response_model=List[RecentCallResponse]
+)
+def get_recent_calls(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+
+    service = DashboardService(repository)
+
+    return service.get_recent_calls()
+
+@router.get(
+    "/employee-performance",
+    response_model=list[EmployeePerformanceResponse]
+)
+def get_employee_performance(
+    db: Session = Depends(get_db)
+):
+
+    repository = DashboardRepository(db)
+    service = DashboardService(repository)
+
+    return service.get_employee_performance()

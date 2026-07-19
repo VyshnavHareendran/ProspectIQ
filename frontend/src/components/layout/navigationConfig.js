@@ -1,3 +1,4 @@
+import AssignmentIndRoundedIcon from '@mui/icons-material/AssignmentIndRounded'
 import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded'
 import CallRoundedIcon from '@mui/icons-material/CallRounded'
@@ -6,8 +7,12 @@ import ScoreRoundedIcon from '@mui/icons-material/ScoreRounded'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { routePaths } from '../../routes/routePaths'
+import AssignmentTurnedInRounded from "@mui/icons-material/AssignmentTurnedInRounded";
+import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 
-export const navigationItems = Object.freeze([
+import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+
+export const adminNavigationItems = Object.freeze([
   {
     label: 'Dashboard',
     path: routePaths.dashboard,
@@ -34,6 +39,16 @@ export const navigationItems = Object.freeze([
     icon: ScoreRoundedIcon,
   },
   {
+    label: 'Lead Assignments',
+    path: routePaths.leadAssignments,
+    icon: AssignmentIndRoundedIcon,
+  },
+  {
+    label: "Follow-ups",
+    path: routePaths.followups,
+    icon: AssignmentTurnedInRounded,
+  },
+  {
     label: 'Reports',
     path: routePaths.reports,
     icon: BarChartRoundedIcon,
@@ -45,9 +60,40 @@ export const navigationItems = Object.freeze([
   },
 ])
 
-export const getNavigationItem = (pathname) =>
+export const employeeNavigationItems = Object.freeze([
+  {
+    label: "Dashboard",
+    path: routePaths.employeeDashboard,
+    icon: DashboardRoundedIcon,
+  },
+  {
+    label: "My Leads",
+    path: routePaths.employeeMyLeads,
+    icon: BusinessRoundedIcon,
+  },
+  {
+    label: "My Call Logs",
+    path: routePaths.employeeMyCallLogs,
+    icon: CallRoundedIcon,
+  },
+  {
+    label: "My Follow-ups",
+    path: routePaths.employeeMyFollowups,
+    icon: EventRepeatIcon,
+  },
+  {
+    label: "Profile",
+    path: routePaths.employeeProfile,
+    icon: PersonRoundedIcon,
+  },
+  {
+    label: "Settings",
+    path: routePaths.employeeSettings,
+    icon: SettingsRoundedIcon,
+  },
+]);
+
+export const getNavigationItem = (pathname, navigationItems) =>
   navigationItems.find(({ path }) =>
-    path === routePaths.dashboard
-      ? pathname === path
-      : pathname === path || pathname.startsWith(`${path}/`),
-  )
+    path === pathname || pathname.startsWith(`${path}/`)
+  );

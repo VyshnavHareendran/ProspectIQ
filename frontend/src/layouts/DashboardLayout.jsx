@@ -4,7 +4,11 @@ import { useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/layout/Sidebar'
 import TopNavbar from '../components/layout/TopNavbar'
-import { getNavigationItem } from '../components/layout/navigationConfig'
+import {
+    getNavigationItem,
+    adminNavigationItems,
+    employeeNavigationItems,
+} from "../components/layout/navigationConfig";
 import useAuth from '../hooks/useAuth'
 import { routePaths } from '../routes/routePaths'
 
@@ -25,7 +29,15 @@ const DashboardLayout = ({ children }) => {
   const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
-  const currentItem = getNavigationItem(location.pathname)
+  const navigationItems =
+      user?.role === "ADMIN"
+          ? adminNavigationItems
+          : employeeNavigationItems;
+
+  const currentItem = getNavigationItem(
+      location.pathname,
+      navigationItems
+  );
   const pageTitle = currentItem?.label || 'Dashboard'
   const sidebarVariant = isDesktop
     ? 'permanent'
@@ -45,6 +57,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: 'background.default' }}>
       <Sidebar
+        navigationItems={navigationItems}
         collapsed={isDesktop && isDesktopCollapsed}
         open={isDesktop || isDrawerOpen}
         variant={sidebarVariant}
