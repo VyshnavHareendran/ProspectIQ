@@ -261,23 +261,21 @@ class LeadAssignmentService:
 
         assignment = self.get_by_id(assignment_id)
 
+        if not assignment:
+            raise ValueError("Lead assignment not found.")
+
         if assignment.employee_id != current_user.id:
             raise ValueError(
                 "You are not assigned to this lead."
             )
 
-        # Update lead assignment
         assignment.status = request.status.value
         assignment.remarks = request.remarks
         assignment.call_outcome = request.call_outcome
 
-        updated_assignment = (
-            self.lead_assignment_repository.update_employee_lead(
-                assignment
-            )
+        return self.lead_assignment_repository.update_employee_lead(
+            assignment
         )
-
-        return updated_assignment
 
     def update(
         self,

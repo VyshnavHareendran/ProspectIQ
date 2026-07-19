@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies.auth import get_current_user
+from app.dependencies.auth import get_verified_user
 
 from app.models.user import User
 
@@ -32,7 +32,7 @@ router = APIRouter(
 def create_upload_history(
     upload_data: UploadHistoryCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     repository = UploadHistoryRepository(db)
@@ -50,14 +50,14 @@ def create_upload_history(
 )
 def get_all_uploads(
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     repository = UploadHistoryRepository(db)
 
     service = UploadHistoryService(repository)
 
-    return service.get_all_uploads()
+    return service.get_all_uploads(current_user)
 
 @router.get(
     "/history/{upload_id}",
@@ -66,7 +66,7 @@ def get_all_uploads(
 def get_upload(
     upload_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     repository = UploadHistoryRepository(db)
@@ -74,7 +74,8 @@ def get_upload(
     service = UploadHistoryService(repository)
 
     return service.get_upload_by_id(
-        upload_id
+        upload_id,
+        current_user
     )
 
 @router.post(
@@ -84,7 +85,7 @@ def get_upload(
 async def preview_business_csv(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
     """
     Preview uploaded CSV.

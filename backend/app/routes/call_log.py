@@ -27,8 +27,11 @@ from app.services.call_log_service import (
     CallLogService
 )
 
-from app.dependencies.auth import get_current_user
+from app.dependencies.auth import (
+    get_verified_user,
+)
 from app.models.user import User
+from app.schemas.user_role import UserRole
 
 router = APIRouter(
     prefix="/call-logs",
@@ -44,10 +47,13 @@ def get_service(db: Session):
         UserRepository(db)
     )
 
-def get_employee_filter(current_user: User):
-    role = current_user.role.upper()
 
-    return None if role == "ADMIN" else current_user.id
+def get_employee_filter(current_user: User):
+
+    if current_user.role == UserRole.ADMIN.value:
+        return None
+
+    return current_user.id
 
 
 @router.post(
@@ -57,7 +63,8 @@ def get_employee_filter(current_user: User):
 )
 def create_call_log(
     request: CallLogCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -80,7 +87,8 @@ def create_call_log(
     summary="Get Call Logs"
 )
 def get_call_logs(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -95,6 +103,7 @@ def get_call_logs(
 def get_lead_assignment_calls(
     lead_assignment_id: int,
     db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -111,7 +120,8 @@ def get_lead_assignment_calls(
 )
 def get_employee_calls(
     employee_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -128,7 +138,7 @@ def get_employee_calls(
 
 def get_today_followups(
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -145,7 +155,7 @@ def get_today_followups(
 )
 def get_pending_followups(
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -162,7 +172,7 @@ def get_pending_followups(
 )
 def get_overdue_followups(
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -178,7 +188,8 @@ def get_overdue_followups(
 )
 def get_call_log(
     call_log_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -203,7 +214,8 @@ def get_call_log(
 def update_call_log(
     call_log_id: int,
     request: CallLogUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -229,7 +241,8 @@ def update_call_log(
 )
 def delete_call_log(
     call_log_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)

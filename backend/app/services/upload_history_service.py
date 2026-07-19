@@ -43,21 +43,32 @@ class UploadHistoryService:
 
         return self.repository.create(upload)
 
-    def get_all_uploads(self):
+    def get_all_uploads(self, current_user):
 
-        return self.repository.get_all()
+        if current_user.role.upper() == "ADMIN":
+            return self.repository.get_all_uploads()
+
+        return self.repository.get_uploads_by_user(
+            current_user.id
+        )
 
     def get_upload_by_id(
-        self,
-        upload_id: int
+    self,
+    upload_id: int,
+    current_user
     ):
 
-        upload = self.repository.get_by_id(upload_id)
+        upload = self.repository.get_upload_by_id(upload_id)
 
         if not upload:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Upload history not found."
+            raise ValueError("Upload not found.")
+
+        if (
+            current_user.role.upper() != "ADMIN"
+            and upload.uploaded_by != current_user.id
+        ):
+            raise ValueError(
+                "You cannot access this upload."
             )
 
         return upload

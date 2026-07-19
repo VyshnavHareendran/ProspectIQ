@@ -21,6 +21,9 @@ from app.schemas.report import (
 
 from fastapi.responses import StreamingResponse
 
+from app.dependencies.auth import get_current_admin
+from app.models.user import User
+
 
 router = APIRouter(
     prefix="/reports",
@@ -42,7 +45,8 @@ def get_service(
     response_model=List[BusinessReportResponse]
 )
 def get_business_report(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     return get_service(db).get_business_report()
@@ -53,7 +57,8 @@ def get_business_report(
     response_model=List[UploadReportResponse]
 )
 def get_upload_report(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     return get_service(db).get_upload_report()
@@ -64,7 +69,8 @@ def get_upload_report(
     response_model=List[CallLogReportResponse]
 )
 def get_call_log_report(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     return get_service(db).get_call_log_report()
@@ -73,7 +79,8 @@ def get_call_log_report(
     "/export/businesses/csv"
 )
 def export_business_csv(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     csv_file = (
@@ -104,7 +111,8 @@ def export_business_csv(
     "/export/uploads/csv"
 )
 def export_upload_csv(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     csv_file = (
@@ -129,7 +137,8 @@ def export_upload_csv(
     "/export/call-logs/csv"
 )
 def export_call_log_csv(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     csv_file = (
@@ -154,7 +163,8 @@ def export_call_log_csv(
     "/export/businesses/excel"
 )
 def export_business_excel(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     excel = (

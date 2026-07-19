@@ -21,6 +21,13 @@ from app.schemas.lead_score import (
     GenerateAllLeadScoresResponse
 )
 
+from app.dependencies.auth import (
+    get_verified_user,
+    get_current_admin,
+)
+
+from app.models.user import User
+
 from typing import Optional
 
 router = APIRouter(
@@ -30,7 +37,8 @@ router = APIRouter(
 
 
 def get_service(
-    db: Session
+    db: Session,
+    current_user: User = Depends(get_verified_user)
 ):
 
     repository = LeadScoreRepository(db)
@@ -56,7 +64,9 @@ def get_all_lead_scores(
 
     category: Optional[str] = None,
 
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+
+    current_user: User = Depends(get_verified_user)
 
 ):
 
@@ -84,7 +94,8 @@ def get_all_lead_scores(
     response_model=List[LeadScoreResponse]
 )
 def get_high_priority_leads(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -96,7 +107,8 @@ def get_high_priority_leads(
     response_model=LeadScoreStatisticsResponse
 )
 def get_statistics(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -108,7 +120,8 @@ def get_statistics(
     response_model=List[LeadScoreResponse]
 )
 def get_daily_call_list(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -120,7 +133,8 @@ def get_daily_call_list(
     response_model=FeatureImportanceResponse
 )
 def get_feature_importance(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -133,7 +147,8 @@ def get_feature_importance(
 )
 def get_business_lead_score(
     business_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
 ):
 
     service = get_service(db)
@@ -158,23 +173,24 @@ def get_business_lead_score(
 )
 def generate_lead_score(
     business_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     service = get_service(db)
 
     try:
-        lead_score = service.generate_score(
-            business_id
-        )
+        lead_score = service.generate_score(business_id)
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc)
+        ) from exc
+
     except Exception as exc:
         raise HTTPException(
             status_code=503,
-            detail=str(exc)
-        ) from exc
-    except ValueError as exc:
-        raise HTTPException(
-            status_code=500,
             detail=str(exc)
         ) from exc
 
@@ -192,20 +208,21 @@ def generate_lead_score(
     response_model=GenerateAllLeadScoresResponse
 )
 def generate_all_lead_scores(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
 ):
 
     service = get_service(db)
 
     try:
         return service.generate_all_scores()
-    except Exception as exc:
-        raise HTTPException(
-            status_code=503,
-            detail=str(exc)
-        ) from exc
     except ValueError as exc:
         raise HTTPException(
             status_code=500,
+            detail=str(exc)
+        ) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=503,
             detail=str(exc)
         ) from exc

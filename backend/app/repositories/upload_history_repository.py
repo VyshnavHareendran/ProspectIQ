@@ -45,3 +45,11 @@ class UploadHistoryRepository:
             )
             .first()
         )
+    
+    def get_uploads_by_user(self, user_id: int):
+
+        return (
+            self.db.query(UploadHistory)
+            .filter(UploadHistory.uploaded_by == user_id)
+            .all()
+        )
