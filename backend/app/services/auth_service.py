@@ -42,6 +42,23 @@ class AuthService:
             "must_change_password": user.must_change_password,
         }
     
+    def change_password(
+    self,
+    user: User,
+    new_password: str
+    ):
+
+        password_hash = hash_password(new_password)
+
+        self.user_repository.change_password(
+            user,
+            password_hash
+        )
+
+        return {
+            "message": "Password changed successfully."
+        }
+    
     def register(
     self,
     full_name: str,

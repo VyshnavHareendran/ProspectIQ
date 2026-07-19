@@ -53,6 +53,16 @@ class ForgotPasswordResponse(BaseModel):
     message: str
 
 
+class ChangePasswordRequest(BaseModel):
+
+    new_password: str
+
+
+class ChangePasswordResponse(BaseModel):
+
+    message: str
+
+
 class CurrentUserResponse(BaseModel):
     id: int
     full_name: str

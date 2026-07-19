@@ -13,6 +13,8 @@ from app.models.user import User
 
 from app.schemas.user_role import UserRole
 
+from app.core.account_validator import validate_account_status
+
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/auth/token"
 )
@@ -67,8 +69,17 @@ def get_current_user(
     return user
 
 
-def get_current_admin(
+
+def get_verified_user(
     current_user: User = Depends(get_current_user)
+):
+    validate_account_status(current_user)
+
+    return current_user
+
+
+def get_current_admin(
+    current_user: User = Depends(get_verified_user)
 ):
     if current_user.role != UserRole.ADMIN.value:
         raise HTTPException(
@@ -79,8 +90,8 @@ def get_current_admin(
     return current_user
 
 def get_current_employee(
-    current_user: User = Depends(get_current_user)
-):
+    current_user: User = Depends(get_verified_user)
+):  
     if current_user.role != UserRole.EMPLOYEE.value:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

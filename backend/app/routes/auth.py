@@ -13,6 +13,8 @@ from app.schemas.auth import (
     EmployeeResponse,
     CreateEmployeeRequest,
     CreateEmployeeResponse,
+    ChangePasswordRequest,
+    ChangePasswordResponse,
 )
 from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
@@ -161,6 +163,30 @@ def get_me(
     current_user: User = Depends(get_current_user)
 ):
     return current_user
+
+@router.post(
+    "/change-password",
+    response_model=ChangePasswordResponse
+)
+def change_password(
+
+    request: ChangePasswordRequest,
+
+    current_user: User = Depends(get_current_user),
+
+    db: Session = Depends(get_db)
+
+):
+
+    repository = UserRepository(db)
+
+    service = AuthService(repository)
+
+    return service.change_password(
+        current_user,
+        request.new_password
+    )
+
 
 @router.get("/admin-test")
 def admin_test(

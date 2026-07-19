@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.dependencies.auth import get_current_user
+from app.dependencies.auth import get_verified_user
 
 from app.models.user import User
 
@@ -33,7 +33,7 @@ router = APIRouter(
 def create_business(
     business_data: BusinessCreate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
     """
     Create a new business.
@@ -73,7 +73,7 @@ def get_all_businesses(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
     repository = BusinessRepository(db)
     service = BusinessService(repository)
@@ -95,7 +95,7 @@ def get_all_businesses(
 def get_business(
     business_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
     repository = BusinessRepository(db)
     service = BusinessService(repository)
@@ -110,7 +110,7 @@ def update_business(
     business_id: int,
     business_data: BusinessUpdate,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
     """
     Update an existing business.
@@ -136,7 +136,7 @@ def update_business(
 def delete_business(
     business_id: int,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_verified_user)
 ):
 
     repository = BusinessRepository(db)

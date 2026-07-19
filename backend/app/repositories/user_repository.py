@@ -55,6 +55,23 @@ class UserRepository:
 
         return user
     
+    def change_password(
+    self,
+    user: User,
+    password_hash: str
+    ):
+
+        user.password_hash = password_hash
+
+        user.must_change_password = False
+
+        self.db.commit()
+
+        self.db.refresh(user)
+
+        return user
+
+    
     def email_exists(
     self,
     email: str
