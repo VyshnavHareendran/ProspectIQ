@@ -1,5 +1,4 @@
-import KeyboardDoubleArrowLeftRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowLeftRounded'
-import KeyboardDoubleArrowRightRoundedIcon from '@mui/icons-material/KeyboardDoubleArrowRightRounded'
+import ViewSidebarRoundedIcon from '@mui/icons-material/ViewSidebarRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import {
   Box,
@@ -71,13 +70,25 @@ const Sidebar = ({
       }}
     >
       <Stack sx={{ height: '100dvh', minHeight: 0 }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent={collapsed ? 'center' : 'space-between'}
-          sx={{ minHeight: 72, px: collapsed ? 2 : 2.5 }}
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'grid',
+            gridTemplateColumns: collapsed ? '1fr' : 'minmax(0, 1fr) 38px',
+            columnGap: 1.25,
+            minHeight: 82,
+            px: collapsed ? 1 : 1.75,
+            py: 1.25,
+          }}
         >
-          <BrandMark showWordmark={!collapsed} textColor="common.white" />
+          <BrandMark
+            showWordmark={!collapsed}
+            textColor="common.white"
+            logoSize={collapsed ? 50 : 48}
+            wordmarkSx={{
+              fontSize: '1.2rem',
+            }}
+          />
 
           {variant === 'permanent' && !collapsed && (
             <Tooltip title="Collapse sidebar">
@@ -86,18 +97,28 @@ const Sidebar = ({
                 aria-label="Collapse sidebar"
                 onClick={onCollapseToggle}
                 sx={{
-                  color: 'rgba(226, 232, 240, 0.64)',
-                  '&:hover': {
-                    color: 'common.white',
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  width: 38,
+                  height: 38,
+                  borderRadius: "50%",
+                  border: "1px solid rgba(148,163,184,.18)",
+                  justifySelf: 'end',
+
+                  color: "rgba(226,232,240,.72)",
+
+                  transition: "all .25s ease",
+
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,.10)",
+                    borderColor: "rgba(226,232,240,.28)",
+                    color: "#fff",
                   },
                 }}
               >
-                <KeyboardDoubleArrowLeftRoundedIcon fontSize="small" />
+                <ViewSidebarRoundedIcon sx={{ fontSize: 21 }} />
               </IconButton>
             </Tooltip>
           )}
-        </Stack>
+        </Box>
 
         {variant === 'permanent' && collapsed && (
           <Tooltip title="Expand sidebar" placement="right">
@@ -106,16 +127,26 @@ const Sidebar = ({
               aria-label="Expand sidebar"
               onClick={onCollapseToggle}
               sx={{
-                mx: 'auto',
-                mb: 1,
-                color: 'rgba(226, 232, 240, 0.64)',
-                '&:hover': {
-                  color: 'common.white',
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                display: "flex",
+                width: 38,
+                height: 38,
+                mx: "auto",
+                mt: -0.5,
+                mb: 1.5,
+                borderRadius: "50%",
+                border: "1px solid rgba(148,163,184,.18)",
+                color: "rgba(226,232,240,0.72)",
+
+                transition: "all .25s ease",
+
+                "&:hover": {
+                  backgroundColor: "rgba(255,255,255,.10)",
+                  borderColor: "rgba(226,232,240,.28)",
+                  color: "#fff",
                 },
               }}
             >
-              <KeyboardDoubleArrowRightRoundedIcon fontSize="small" />
+              <ViewSidebarRoundedIcon sx={{ fontSize: 21 }} />
             </IconButton>
           </Tooltip>
         )}

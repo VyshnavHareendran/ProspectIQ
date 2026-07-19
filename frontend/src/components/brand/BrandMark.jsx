@@ -1,35 +1,75 @@
-import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded'
 import { Box, Stack, Typography } from '@mui/material'
+import logo from '../../assets/logo.png'
+import { Link as RouterLink } from 'react-router-dom'
+import { routePaths } from '../../routes/routePaths'
 
-const BrandMark = ({ showWordmark = true, textColor = 'text.primary' }) => (
-  <Stack direction="row" spacing={1.25} alignItems="center">
+const BrandMark = ({
+  showWordmark = true,
+  textColor = 'text.primary',
+  logoSize = 48,
+  wordmarkVariant = 'h5',
+  wordmarkSx,
+}) => (
+  <Stack
+    component={RouterLink}
+    to={routePaths.dashboard}
+    direction="row"
+    spacing={showWordmark ? 1 : 0}
+    alignItems="center"
+    sx={{
+      textDecoration: 'none',
+      cursor: 'pointer',
+      minWidth: 0,
+    }}
+  >
     <Box
-      aria-hidden="true"
       sx={{
-        display: 'grid',
-        width: 42,
-        height: 42,
+        position: 'relative',
+        width: logoSize,
+        height: logoSize,
         flexShrink: 0,
-        placeItems: 'center',
-        color: 'common.white',
-        borderRadius: 2.5,
-        background:
-          'linear-gradient(145deg, #B85C8D 0%, #7C2D5A 55%, #68224A 100%)',
-        boxShadow: '0 8px 18px rgba(124, 45, 90, 0.24)',
+        overflow: 'hidden',
+        borderRadius: 2,
       }}
     >
-      <AutoAwesomeRoundedIcon sx={{ fontSize: 22 }} />
+      <Box
+        component="img"
+        src={logo}
+        alt="ProspectIQ Logo"
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: logoSize * 2.72,
+          height: logoSize * 1.82,
+          objectFit: 'contain',
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
     </Box>
 
-    {showWordmark && (
+    <Box
+      sx={{
+        display: showWordmark ? 'block' : 'none',
+        minWidth: 0,
+      }}
+    >
       <Typography
         component="span"
-        variant="h3"
-        sx={{ color: textColor, fontWeight: 750, letterSpacing: '-0.025em' }}
+        variant={wordmarkVariant}
+        sx={{
+          color: textColor,
+          display: 'block',
+          fontWeight: 750,
+          letterSpacing: 0,
+          lineHeight: 1,
+          whiteSpace: 'nowrap',
+          ...wordmarkSx,
+        }}
       >
         ProspectIQ
       </Typography>
-    )}
+    </Box>
   </Stack>
 )
 
