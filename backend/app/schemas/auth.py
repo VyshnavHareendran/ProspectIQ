@@ -15,6 +15,8 @@ class LoginResponse(BaseModel):
 
     token_type: str
 
+    must_change_password: bool
+
 
 class RegisterRequest(BaseModel):
 

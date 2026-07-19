@@ -38,7 +38,8 @@ class AuthService:
 
         return {
             "access_token": token,
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "must_change_password": user.must_change_password,
         }
     
     def register(
