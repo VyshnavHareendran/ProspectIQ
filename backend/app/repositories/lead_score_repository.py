@@ -10,6 +10,8 @@ from app.models.business import Business
 
 from app.ml.predictor import Predictor
 
+from app.models.lead_assignment import LeadAssignment
+
 class LeadScoreRepository:
 
     def __init__(
@@ -408,5 +410,32 @@ class LeadScoreRepository:
         except Exception:
             self.db.rollback()
             raise
+
+
+
+    def get_average_score(
+    self,
+    employee_id: int
+    ):
+        average = (
+            self.db.query(
+                func.avg(LeadScore.lead_score)
+            )
+            .join(
+                Business,
+                Business.id == LeadScore.business_id
+            )
+            .join(
+                LeadAssignment,
+                LeadAssignment.business_id == Business.id
+            )
+            .filter(
+                LeadAssignment.employee_id == employee_id,
+                LeadAssignment.is_active == True
+            )
+            .scalar()
+        )
+
+        return round(average or 0, 2)
     
 

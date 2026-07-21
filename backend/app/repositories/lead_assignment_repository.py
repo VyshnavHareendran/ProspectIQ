@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import joinedload
 from app.models.lead_assignment import LeadAssignment
+from app.models.lead_score import LeadScore
+from app.models.business import Business
+from app.schemas.lead_assignment_status import LeadAssignmentStatus
 
 
 class LeadAssignmentRepository:
@@ -90,13 +93,50 @@ class LeadAssignmentRepository:
         return (
             self.db.query(LeadAssignment)
             .options(
-                joinedload(LeadAssignment.business)
+                joinedload(
+                    LeadAssignment.business
+                ).joinedload(
+                    Business.lead_scores
+                )
             )
             .filter(
                 LeadAssignment.employee_id == employee_id,
                 LeadAssignment.is_active == True
             )
             .all()
+        )
+    
+    def get_employee_followup_assignments(
+    self,
+    employee_id: int,
+    ):
+
+        return (
+
+            self.db.query(LeadAssignment)
+
+            .options(
+
+                joinedload(
+                    LeadAssignment.business
+                ).joinedload(
+                    Business.lead_scores
+                )
+
+            )
+
+            .filter(
+
+                LeadAssignment.employee_id == employee_id,
+
+                LeadAssignment.is_active == True,
+
+                LeadAssignment.status == LeadAssignmentStatus.FOLLOW_UP.value
+
+            )
+
+            .all()
+
         )
 
     def get_all(self):
@@ -150,3 +190,75 @@ class LeadAssignmentRepository:
                 .all()
             )
         ]
+    
+    def get_employee_assignment_count(
+    self,
+    employee_id: int
+    ):
+        return (
+            self.db.query(LeadAssignment)
+            .filter(
+                LeadAssignment.employee_id == employee_id,
+                LeadAssignment.is_active == True
+            )
+            .count()
+        )
+    
+    def get_high_priority_count(
+    self,
+    employee_id: int
+    ):
+        return (
+            self.db.query(LeadAssignment)
+            .join(LeadAssignment.business)
+            .join(Business.lead_scores)
+            .filter(
+                LeadAssignment.employee_id == employee_id,
+                LeadAssignment.is_active == True,
+                LeadScore.priority == "High"
+            )
+            .count()
+        )
+    
+    def get_closed_count(
+    self,
+    employee_id: int
+    ):
+        return (
+            self.db.query(LeadAssignment)
+            .filter(
+                LeadAssignment.employee_id == employee_id,
+                LeadAssignment.is_active == True,
+                LeadAssignment.status == LeadAssignmentStatus.CLOSED.value
+            )
+            .count()
+        )
+
+    def get_employee_dashboard_leads(
+    self,
+    employee_id: int
+    ):
+        return (
+
+            self.db.query(
+                LeadAssignment
+            )
+
+            .options(
+
+                joinedload(
+                    LeadAssignment.business
+                ).joinedload(
+                    Business.lead_scores
+                )
+
+            )
+
+            .filter(
+                LeadAssignment.employee_id == employee_id,
+                LeadAssignment.is_active == True
+            )
+
+            .all()
+
+        )

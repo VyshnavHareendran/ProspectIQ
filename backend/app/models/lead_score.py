@@ -22,7 +22,8 @@ class LeadScore(Base):
     business_id = Column(
         Integer,
         ForeignKey("businesses.id"),
-        nullable=False
+        nullable=False,
+        unique=True
     )
 
     lead_score = Column(

@@ -16,6 +16,10 @@ from app.repositories.lead_assignment_repository import LeadAssignmentRepository
 from app.repositories.business_repository import BusinessRepository
 from app.repositories.user_repository import UserRepository
 from app.repositories.call_log_repository import CallLogRepository
+from app.schemas.complete_call import CompleteCallRequest
+from app.dependencies.auth import get_verified_user
+from app.services.followup_service import FollowupService
+
 
 router = APIRouter(
     prefix="/employee",
@@ -76,3 +80,32 @@ def update_my_lead(
             status_code=403,
             detail=str(e)
         )
+    
+@router.post(
+    "/calls/complete",
+    summary="Complete Call",
+)
+def complete_call(
+    request: CompleteCallRequest,
+    current_user: User = Depends(get_current_employee),
+    db: Session = Depends(get_db),
+):
+    service = get_service(db)
+
+    return service.complete_call(
+        request,
+        current_user,
+    )
+
+@router.get("/followups")
+def get_followups(
+    current_user: User = Depends(get_current_employee),
+    db: Session = Depends(get_db),
+):
+
+    service = FollowupService(
+        LeadAssignmentRepository(db),
+        CallLogRepository(db),
+    )
+
+    return service.get_followups(current_user.id)

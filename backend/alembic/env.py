@@ -9,6 +9,7 @@ from app.models.business import Business
 from app.models.upload_history import UploadHistory
 from app.models.lead_score import LeadScore
 from app.models.call_log import CallLog
+from app.models.admin_setting import AdminSetting
 
 from dotenv import load_dotenv
 import os

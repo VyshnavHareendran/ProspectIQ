@@ -246,10 +246,57 @@ class LeadAssignmentService:
             )
         )
     
-    def get_my_leads(self, employee_id: int):
-        return self.lead_assignment_repository.get_employee_assignments(
-            employee_id
+    def get_my_leads(
+    self,
+    employee_id: int,
+    ):
+
+        assignments = (
+            self.lead_assignment_repository
+            .get_employee_assignments(employee_id)
         )
+
+        result = []
+
+        for assignment in assignments:
+
+            business = assignment.business
+
+            latest_score = business.lead_scores[0] if business.lead_scores else None
+
+            result.append({
+
+                "assignment_id": assignment.id,
+
+                "business_id": business.id,
+
+                "business_name": business.business_name,
+
+                "category": business.category,
+
+                "city": business.city,
+
+                "status": assignment.status,
+
+                "assigned_date": assignment.assigned_at,
+
+                "remarks": assignment.remarks,
+
+                "lead_score": (
+                    latest_score.lead_score
+                    if latest_score
+                    else 0
+                ),
+
+                "priority": (
+                    latest_score.priority
+                    if latest_score
+                    else "LOW"
+                )
+
+            })
+
+        return result
     
     
     def update_employee_lead(

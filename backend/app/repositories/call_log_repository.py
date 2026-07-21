@@ -1,10 +1,13 @@
-from datetime import date
-
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import joinedload
 
 from app.models.call_log import CallLog
 from app.models.lead_assignment import LeadAssignment
+
+from datetime import date, timedelta
+from sqlalchemy import func
+from app.models.business import Business
+
 
 class CallLogRepository:
 
@@ -95,10 +98,22 @@ class CallLogRepository:
         query = (
             self.db.query(CallLog)
             .options(
-                joinedload(CallLog.employee),
-                joinedload(CallLog.lead_assignment)
-                    .joinedload(LeadAssignment.business)
-            )
+
+                    joinedload(CallLog.employee),
+
+                    joinedload(
+                        CallLog.lead_assignment
+                    )
+
+                    .joinedload(
+                        LeadAssignment.business
+                    )
+
+                    .joinedload(
+                        Business.lead_scores
+                    )
+
+                )
             .filter(
                 CallLog.next_followup_date == date.today()
             )
@@ -196,3 +211,157 @@ class CallLogRepository:
         self.db.delete(call_log)
 
         self.db.commit()
+
+
+    def get_calls_today_count(
+    self,
+    employee_id: int
+    ):
+        return (
+            self.db.query(CallLog)
+            .filter(
+                CallLog.employee_id == employee_id,
+                func.date(CallLog.created_at) == date.today()
+            )
+            .count()
+        )
+    
+    def get_weekly_calls(
+    self,
+    employee_id: int
+    ):
+
+        start_date = date.today() - timedelta(days=6)
+
+        return (
+
+            self.db.query(
+
+                func.date(
+                    CallLog.created_at
+                ).label("call_date"),
+
+                func.count(
+                    CallLog.id
+                ).label("calls")
+
+            )
+
+            .filter(
+
+                CallLog.employee_id == employee_id,
+
+                func.date(
+                    CallLog.created_at
+                ) >= start_date
+
+            )
+
+            .group_by(
+
+                func.date(
+                    CallLog.created_at
+                )
+
+            )
+
+            .order_by(
+
+                func.date(
+                    CallLog.created_at
+                )
+
+            )
+
+            .all()
+
+        )
+    
+    def get_recent_activities(
+    self,
+    employee_id: int,
+    limit: int = 5
+    ):
+
+        return (
+
+            self.db.query(CallLog)
+
+            .options(
+
+                joinedload(
+                    CallLog.lead_assignment
+                )
+
+                .joinedload(
+                    LeadAssignment.business
+                )
+
+            )
+
+            .filter(
+                CallLog.employee_id == employee_id
+            )
+
+            .order_by(
+                CallLog.created_at.desc()
+            )
+
+            .limit(limit)
+
+            .all()
+
+        )
+    
+    def get_today_followups_count(
+    self,
+    employee_id: int
+    ):
+        return (
+            self.db.query(CallLog)
+            .filter(
+                CallLog.employee_id == employee_id,
+                CallLog.next_followup_date == date.today()
+            )
+            .count()
+        )
+    
+    def get_latest_by_assignment(
+    self,
+    lead_assignment_id: int
+    ):
+
+        return (
+
+            self.db.query(CallLog)
+
+            .filter(
+                CallLog.lead_assignment_id == lead_assignment_id
+            )
+
+            .order_by(
+                CallLog.created_at.desc()
+            )
+
+            .first()
+
+        )
+    
+    def has_calls(
+    self,
+    lead_assignment_id: int
+    ):
+
+        return (
+
+            self.db.query(CallLog)
+
+            .filter(
+                CallLog.lead_assignment_id == lead_assignment_id
+            )
+
+            .count()
+
+            > 0
+
+        )

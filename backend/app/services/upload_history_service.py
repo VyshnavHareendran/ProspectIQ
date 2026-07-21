@@ -46,7 +46,7 @@ class UploadHistoryService:
     def get_all_uploads(self, current_user):
 
         if current_user.role.upper() == "ADMIN":
-            return self.repository.get_all_uploads()
+            return self.repository.get_uploads_by_user(current_user.id)
 
         return self.repository.get_uploads_by_user(
             current_user.id
@@ -58,7 +58,7 @@ class UploadHistoryService:
     current_user
     ):
 
-        upload = self.repository.get_upload_by_id(upload_id)
+        upload = self.repository.get_by_id(upload_id)
 
         if not upload:
             raise ValueError("Upload not found.")

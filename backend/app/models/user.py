@@ -28,6 +28,8 @@ class User(Base):
 
     password_hash = Column(String(255), nullable=False)
 
+    profile_photo = Column(String(255), nullable=True)
+
     role = Column(String(20), nullable=False)
 
     is_active = Column(
