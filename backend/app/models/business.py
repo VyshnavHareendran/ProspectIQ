@@ -30,7 +30,7 @@ class Business(Base):
     description = Column(Text, nullable=True)
 
     #Contact Information    
-    phone_number = Column(String(30), index=True, nullable=False)
+    phone_number = Column(String(30), index=True, nullable=True)
 
     whatsapp_number = Column(String(30), nullable=True)
 
@@ -39,13 +39,11 @@ class Business(Base):
     website_url = Column(String(500), nullable=True)
 
 #Location Information
-    address = Column(Text, nullable=False)
+    address = Column(Text, nullable=True)
 
     city = Column(String(100), index=True, nullable=False)
 
-    state = Column(String(100), nullable=True, index=True)
-
-    google_maps_link = Column(Text, unique=True, nullable=False)
+    google_maps_link = Column(Text, unique=True, nullable=True)
 
     #Business Metrics
     google_rating = Column(Float, nullable=False)
@@ -60,7 +58,7 @@ class Business(Base):
     status = Column(
     String(30),
     default="NEW",
-    nullable=True
+    nullable=False
     )
 
     last_contacted_at = Column(
@@ -117,12 +115,15 @@ class Business(Base):
         "LeadScore",
         back_populates="business"
     )
-
     lead_assignments = relationship(
-        "LeadAssignment",
-        back_populates="business",
-    )
+    "LeadAssignment",
+    back_populates="business",
+) 
 
+    call_logs = relationship(
+    "CallLog",
+    back_populates="business"
+    )
 
 
 

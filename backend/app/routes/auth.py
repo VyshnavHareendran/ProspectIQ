@@ -1,201 +1,24 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+ximport { Navigate, Route, Routes } from 'react-router-dom'
+import ProtectedRoute from '../components/ProtectedRoute'
+import DashboardLayout from '../layouts/DashboardLayout'
+import Dashboard from '../pages/Dashboard'
+import Business from '../pages/Business'
+import Login from '../pages/Login'
+import { routePaths } from './routePaths'
 
-from app.database import get_db
-from app.schemas.auth import (
-    LoginRequest,
-    LoginResponse,
-    RegisterRequest,
-    RegisterResponse,
-    ForgotPasswordRequest,
-    ForgotPasswordResponse,
-    CurrentUserResponse,
-    EmployeeResponse,
-    CreateEmployeeRequest,
-    CreateEmployeeResponse,
-    ChangePasswordRequest,
-    ChangePasswordResponse,
-)
-from app.repositories.user_repository import UserRepository
-from app.services.auth_service import AuthService
-from app.services.employee_management_service import EmployeeManagementService
+const AppRoutes = () => (
+  <Routes>
+    <Route path={routePaths.login} element={<Login />} />
 
-from app.dependencies.auth import (
-    get_current_user,
-    get_current_admin
-)
-from app.models.user import User
+    <Route element={<ProtectedRoute />}>
+      <Route element={<DashboardLayout />}>
+        <Route path={routePaths.dashboard} element={<Dashboard />} />
+        <Route path="/businesses" element={<Business />} />
+      </Route>
+    </Route>
 
-from fastapi.security import OAuth2PasswordRequestForm
-
-from typing import List
-
-router = APIRouter(
-    prefix="/auth",
-    tags=["Authentication"]
+    <Route path="*" element={<Navigate to={routePaths.dashboard} replace />} />
+  </Routes>
 )
 
-@router.post(
-    "/register",
-    response_model=RegisterResponse,
-    status_code=201
-)
-def register(
-    request: RegisterRequest,
-    db: Session = Depends(get_db)
-):
-
-    user_repository = UserRepository(db)
-
-    auth_service = AuthService(user_repository)
-
-    try:
-
-        return auth_service.register(
-            full_name=request.full_name,
-            email=request.email,
-            password=request.password
-        )
-
-    except ValueError as e:
-
-        raise HTTPException(
-            status_code=400,
-            detail=str(e)
-        )
-
-@router.post(
-    "/forgot-password",
-    response_model=ForgotPasswordResponse
-)
-def forgot_password(
-    request: ForgotPasswordRequest,
-    db: Session = Depends(get_db)
-):
-
-    user_repository = UserRepository(db)
-
-    auth_service = AuthService(user_repository)
-
-    try:
-
-        return auth_service.forgot_password(
-            email=request.email,
-            new_password=request.new_password
-        )
-
-    except ValueError as e:
-
-        raise HTTPException(
-            status_code=404,
-            detail=str(e)
-        )
-
-@router.post(
-    "/login",
-    response_model=LoginResponse
-)
-def login(
-    request: LoginRequest,
-    db: Session = Depends(get_db)
-):
-
-    user_repository = UserRepository(db)
-
-    auth_service = AuthService(user_repository)
-
-    try:
-
-        result = auth_service.login(
-            request.email,
-            request.password
-        )
-
-        if not result:
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid email or password"
-            )
-
-        return result
-
-    except ValueError as e:
-
-        raise HTTPException(
-            status_code=403,
-            detail=str(e)
-        )
-
-@router.post(
-    "/token",
-    response_model=LoginResponse
-)
-def login_for_swagger(
-    form_data: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_db)
-):
-    """
-    OAuth2 login for Swagger UI.
-    """
-
-    user_repository = UserRepository(db)
-
-    auth_service = AuthService(user_repository)
-
-    result = auth_service.login(
-        email=form_data.username,
-        password=form_data.password
-    )
-
-    if not result:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid email or password"
-        )
-
-    return result
-
-@router.get(
-    "/me",
-    response_model=CurrentUserResponse
-)
-def get_me(
-    current_user: User = Depends(get_current_user)
-):
-    return current_user
-
-@router.post(
-    "/change-password",
-    response_model=ChangePasswordResponse
-)
-def change_password(
-
-    request: ChangePasswordRequest,
-
-    current_user: User = Depends(get_current_user),
-
-    db: Session = Depends(get_db)
-
-):
-
-    repository = UserRepository(db)
-
-    service = AuthService(repository)
-
-    return service.change_password(
-        current_user,
-        request.new_password
-    )
-
-
-@router.get("/admin-test")
-def admin_test(
-    current_user: User = Depends(get_current_admin)
-):
-    return {
-        "message": "Welcome Admin!",
-        "logged_in_as": current_user.full_name,
-        "role": current_user.role
-    }
-
-
+export default AppRoutes
