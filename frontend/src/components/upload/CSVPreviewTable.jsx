@@ -2,8 +2,6 @@ import { Paper, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 const CSVPreviewTable = ({ rows = [], columns = [] }) => {
-  console.log("Preview Columns:", columns);
-  console.log("Preview Rows:", rows);
 
   if (!rows || rows.length === 0) {
     return null;

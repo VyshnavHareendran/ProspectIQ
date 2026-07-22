@@ -12,10 +12,13 @@ import Login from "../pages/auth/Login";
 import ChangePassword from "../pages/auth/ChangePassword";
 import EmployeeManagement from "../pages/admin/EmployeeManagement";
 import LeadAssignments from '../pages/admin/LeadAssignments';
+import Settings from "../pages/admin/settings/Settings";
+import EmployeePerformance from "../pages/admin/EmployeePerformance";
 
 import { routePaths } from "./routePaths";
 
 import EmployeeDashboard from "../pages/employee/Dashboard";
+import TodaysCalls from "../pages/employee/TodaysCalls";
 import MyLeads from "../pages/employee/MyLeads";
 import MyCallLogs from "../pages/employee/MyCallLogs";
 import MyFollowups from "../pages/employee/MyFollowups";
@@ -67,6 +70,11 @@ const AppRoutes = () => (
           />
 
           <Route
+              path={routePaths.employeePerformance}
+              element={<EmployeePerformance />}
+          />
+
+          <Route
             path={routePaths.leadScores}
             element={<LeadScores />}
           />
@@ -86,6 +94,11 @@ const AppRoutes = () => (
               element={<Followups />}
           />
 
+          <Route
+              path={routePaths.settings}
+              element={<Settings />}
+          />          
+
         </Route>
       </Route>
     </Route>
@@ -97,6 +110,11 @@ const AppRoutes = () => (
           <Route
             path={routePaths.employeeDashboard}
             element={<EmployeeDashboard />}
+          />
+
+          <Route
+              path={routePaths.employeeTodaysCalls}
+              element={<TodaysCalls />}
           />
 
           <Route

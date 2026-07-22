@@ -36,6 +36,12 @@ class CallLog(Base):
         nullable=False
     )
 
+    attempt_number = Column(
+        Integer,
+        nullable=False,
+        default=1
+    )
+
     duration = Column(
         String(20),
         nullable=True

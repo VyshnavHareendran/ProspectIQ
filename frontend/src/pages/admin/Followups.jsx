@@ -27,7 +27,7 @@ const Followups = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState("date");
-    const [employeeFilter, setEmployeeFilter] = useState("all");
+    const [employeeFilter] = useState("all");
     const [openCompleteDialog, setOpenCompleteDialog] = useState(false);
     const [selectedFollowup, setSelectedFollowup] = useState(null);
     
@@ -97,7 +97,7 @@ const Followups = () => {
     
     useEffect(() => {
 
-        loadFollowups();
+        void Promise.resolve().then(loadFollowups);
 
     }, [loadFollowups]);
 
@@ -274,6 +274,7 @@ const Followups = () => {
                         <FollowupCard
                             key={followup.id}
                             followup={followup}
+                            showActions={false}
                             onViewBusiness={(businessId) => {
 
                                 setSelectedBusiness(businessId);

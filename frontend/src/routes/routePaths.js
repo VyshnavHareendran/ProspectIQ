@@ -8,6 +8,7 @@ export const routePaths = Object.freeze({
   businesses: "/businesses",
   upload: "/upload-csv",
   callLogs: "/call-logs",
+  employeePerformance: "/employee-performance",
   leadScores: "/lead-scores",
   leadAssignments: "/lead-assignments",
   employeeManagement: "/employees",
@@ -17,6 +18,7 @@ export const routePaths = Object.freeze({
 
   // Employee
   employeeDashboard: "/employee/dashboard",
+  employeeTodaysCalls: "/employee/todays-calls",
   employeeMyLeads: "/employee/my-leads",
   employeeMyCallLogs: "/employee/my-call-logs",
   employeeMyFollowups: "/employee/followups",

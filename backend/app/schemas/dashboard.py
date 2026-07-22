@@ -137,6 +137,8 @@ class RecentCallResponse(BaseModel):
 
 class EmployeePerformanceResponse(BaseModel):
 
+    employee_id: int
+
     employee_name: str
 
     assigned_leads: int
@@ -144,3 +146,7 @@ class EmployeePerformanceResponse(BaseModel):
     calls_made: int
 
     pending_followups: int
+
+    closed_leads: int
+
+    conversion_rate: float

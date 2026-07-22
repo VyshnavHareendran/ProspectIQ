@@ -42,7 +42,11 @@ const ChangePassword = () => {
       setLoading(true);
 
       await authApi.changePassword({
-        new_password: newPassword,
+
+          new_password: newPassword,
+
+          confirm_password: confirmPassword,
+
       });
 
       const user = await refreshUser();
@@ -57,10 +61,21 @@ const ChangePassword = () => {
         });
       }
     } catch (error) {
-      setError(
-        error.response?.data?.detail ||
-          "Unable to change password."
-      );
+
+      const detail = error.response?.data?.detail;
+
+      if (Array.isArray(detail)) {
+
+          setError(detail[0].msg);
+
+      } else {
+
+          setError(
+              detail || "Unable to change password."
+          );
+
+      }
+
     } finally {
       setLoading(false);
     }

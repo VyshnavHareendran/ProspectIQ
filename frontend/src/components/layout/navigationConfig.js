@@ -10,7 +10,7 @@ import { routePaths } from '../../routes/routePaths'
 import AssignmentTurnedInRounded from "@mui/icons-material/AssignmentTurnedInRounded";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
-
+import PhoneInTalkRoundedIcon from "@mui/icons-material/PhoneInTalkRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 
 export const adminNavigationItems = Object.freeze([
@@ -71,6 +71,11 @@ export const employeeNavigationItems = Object.freeze([
     label: "Dashboard",
     path: routePaths.employeeDashboard,
     icon: DashboardRoundedIcon,
+  },
+  {
+    label: "Today's Calls",
+    path: routePaths.employeeTodaysCalls,
+    icon: PhoneInTalkRoundedIcon,
   },
   {
     label: "My Leads",

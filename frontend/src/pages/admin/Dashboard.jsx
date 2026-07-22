@@ -9,7 +9,7 @@ import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded'
 import ScoreRoundedIcon from '@mui/icons-material/ScoreRounded'
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded'
 import { Grid, Stack, Typography } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { dashboardApi } from '../../api/admin/dashboardApi'
 import CategoryChart from '../../components/dashboard/CategoryChart'
 import CityChart from '../../components/dashboard/CityChart'
@@ -24,6 +24,8 @@ import UpcomingFollowupsCard from '../../components/dashboard/UpcomingFollowupsC
 import LeadAssignmentStatusChart from '../../components/dashboard/LeadAssignmentStatusChart'
 import RecentCallLogsCard from '../../components/dashboard/RecentCallLogsCard'
 import EmployeePerformanceTable from '../../components/dashboard/EmployeePerformanceTable'
+import { settingsApi } from "../../api/admin/settingsApi";
+
 
 const quickActions = [
   ['Add Business', 'Open the business creation workflow.', AddBusinessRoundedIcon, routePaths.businesses],
@@ -61,6 +63,13 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const [dashboardError, setDashboardError] = useState('')
 
+  const [dashboardSettings, setDashboardSettings] = useState({
+    recent_activities: true,
+    statistics: true,
+    charts: true,
+    default_landing_page: "dashboard",
+  });
+
   useEffect(() => {
     const intervalId = window.setInterval(() => setNow(new Date()), 1000)
     return () => window.clearInterval(intervalId)
@@ -82,6 +91,7 @@ const Dashboard = () => {
             assignmentStatusRes,
             recentCallsRes,
             employeePerformanceRes,
+            dashboardSettingsRes,
         ] = await Promise.all([
             dashboardApi.getSummary(),
             dashboardApi.getRecentBusinesses(),
@@ -92,6 +102,7 @@ const Dashboard = () => {
             dashboardApi.getLeadAssignmentStatus(),
             dashboardApi.getRecentCalls(),
             dashboardApi.getEmployeePerformance(),
+            settingsApi.getDashboard(),
         ])
         if (!isActive) return
         setSummary(summaryRes.data)
@@ -100,11 +111,11 @@ const Dashboard = () => {
         setAssignmentStatus(assignmentStatusRes.data)
         setRecentCalls(recentCallsRes.data)
         setEmployeePerformance(employeePerformanceRes.data)
+        setDashboardSettings(dashboardSettingsRes.data);
         setImportSummary(importRes.data)
         setCityData(getItems(cityRes.data))
         setCategoryData(getItems(categoryRes.data))
 
-        console.log("Upcoming Followups:", followupRes.data)
       } catch (error) {
         if (isActive) setDashboardError(getErrorMessage(error))
       } finally {
@@ -116,11 +127,6 @@ const Dashboard = () => {
       isActive = false
     }
   }, [])
-
-  const recentUploads = useMemo(
-    () => getItems(importSummary?.recent_uploads || importSummary?.uploads),
-    [importSummary],
-  )
 
   const stats = [
     [
@@ -170,21 +176,23 @@ const Dashboard = () => {
   return (
     <Stack spacing={3}>
       <WelcomeCard now={now} user={user} />
-      <Grid container spacing={2.5}>
-        {stats.map((stat) => (
-          <Grid
+      {dashboardSettings.statistics && (
+        <Grid container spacing={2.5}>
+          {stats.map((stat) => (
+            <Grid
               key={stat.title}
               size={{
-                  xs: 12,
-                  sm: 6,
-                  md: 4,
-                  xl: 2
+                xs: 12,
+                sm: 6,
+                md: 4,
+                xl: 2,
               }}
-          >
-            <StatCard {...stat} />
-          </Grid>
-        ))}
-      </Grid>
+            >
+              <StatCard {...stat} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
       <Stack spacing={2}>
         <Stack spacing={0.5}>
           <Typography variant="h3">Quick Actions</Typography>
@@ -200,57 +208,84 @@ const Dashboard = () => {
           ))}
         </Grid>
       </Stack>
-      <Grid container spacing={2.5} alignItems="stretch">
-        <Grid size={{ xs: 12, lg: 7 }}>
-          <CityChart data={cityData} error={dashboardError} loading={loading} />
-        </Grid>
-        <Grid size={{ xs: 12, lg: 5 }}>
-          <CategoryChart data={categoryData} error={dashboardError} loading={loading} />
-        </Grid>
-      </Grid>
-      <Grid container spacing={2.5}>
-        <Grid size={{ xs: 12, xl: 8 }}>
-          <RecentBusinessesTable businesses={recentBusinesses} error={dashboardError} loading={loading} />
-        </Grid>
-        <Grid size={{ xs: 12, xl: 4 }}>
-          <UpcomingFollowupsCard
-            followups={upcomingFollowups}
-            loading={loading}
-            error={dashboardError}
-          />
-        </Grid>
-      </Grid>
-      <Grid container spacing={2.5}>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <ImportSummaryCard error={dashboardError} loading={loading} summary={importSummary} />
-        </Grid>
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <LeadAssignmentStatusChart
-              data={assignmentStatus}
-              loading={loading}
+      {dashboardSettings.charts && (
+        <Grid container spacing={2.5} alignItems="stretch">
+          <Grid size={{ xs: 12, lg: 7 }}>
+            <CityChart
+              data={cityData}
               error={dashboardError}
-          />
-        </Grid>
-        
-        <Grid container spacing={2.5}>
-
-          <Grid size={{ xs: 12 }}>
-              <RecentCallLogsCard
-                calls={recentCalls}
-                loading={loading}
-                error={dashboardError}
-              />
-            </Grid>
+              loading={loading}
+            />
           </Grid>
+
+          <Grid size={{ xs: 12, lg: 5 }}>
+            <CategoryChart
+              data={categoryData}
+              error={dashboardError}
+              loading={loading}
+            />
+          </Grid>
+        </Grid>
+      )}
+      {dashboardSettings.recent_activities && (
         <Grid container spacing={2.5}>
-          <Grid size={{ xs: 12 }}>
-            <EmployeePerformanceTable
-              data={employeePerformance}
+          <Grid size={{ xs: 12, xl: 8 }}>
+            <RecentBusinessesTable
+              businesses={recentBusinesses}
+              error={dashboardError}
+              loading={loading}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, xl: 4 }}>
+            <UpcomingFollowupsCard
+              followups={upcomingFollowups}
               loading={loading}
               error={dashboardError}
             />
           </Grid>
         </Grid>
+      )}
+      <Grid container spacing={2.5}>
+
+        {dashboardSettings.recent_activities && (
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <ImportSummaryCard
+              error={dashboardError}
+              loading={loading}
+              summary={importSummary}
+            />
+          </Grid>
+        )}
+
+        {dashboardSettings.charts && (
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <LeadAssignmentStatusChart
+              data={assignmentStatus}
+              loading={loading}
+              error={dashboardError}
+            />
+          </Grid>
+        )}
+
+        {dashboardSettings.recent_activities && (
+          <Grid size={{ xs: 12, lg: 4 }}>
+            <RecentCallLogsCard
+              calls={recentCalls}
+              loading={loading}
+              error={dashboardError}
+            />
+          </Grid>
+        )}
+
+        <Grid size={{ xs: 12, lg: 8 }}>
+          <EmployeePerformanceTable
+            data={employeePerformance}
+            loading={loading}
+            error={dashboardError}
+          />
+        </Grid>
+
       </Grid>
     </Stack>
   )

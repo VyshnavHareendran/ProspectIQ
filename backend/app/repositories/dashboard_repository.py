@@ -462,11 +462,29 @@ class DashboardRepository:
                 .scalar()
             )
 
+            closed_leads = (
+                self.db.query(func.count(LeadAssignment.id))
+                .filter(
+                    LeadAssignment.employee_id == employee.id,
+                    LeadAssignment.is_active == True,
+                    LeadAssignment.status == "CLOSED"
+                )
+                .scalar()
+            )
+
+            conversion_rate = (
+                round((closed_leads / assigned_leads) * 100, 2)
+                if assigned_leads > 0
+                else 0
+            )
+
             performance.append({
+                "employee_id": employee.id,
                 "employee_name": employee.full_name,
                 "assigned_leads": assigned_leads,
                 "calls_made": calls_made,
                 "pending_followups": pending_followups,
+                "closed_leads": closed_leads,
+                "conversion_rate": conversion_rate,
             })
-
         return performance

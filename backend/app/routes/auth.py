@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -27,6 +27,10 @@ from app.dependencies.auth import (
 from app.models.user import User
 
 from fastapi.security import OAuth2PasswordRequestForm
+
+from user_agents import parse
+from app.schemas.session import CurrentSessionResponse
+
 
 from typing import List
 
@@ -184,7 +188,8 @@ def change_password(
 
     return service.change_password(
         current_user,
-        request.new_password
+        request.new_password,
+        request.confirm_password,
     )
 
 
@@ -196,6 +201,28 @@ def admin_test(
         "message": "Welcome Admin!",
         "logged_in_as": current_user.full_name,
         "role": current_user.role
+    }
+
+@router.get(
+    "/current-session",
+    response_model=CurrentSessionResponse,
+)
+def get_current_session(
+    request: Request,
+    current_user: User = Depends(get_current_user),
+):
+
+    ua = parse(request.headers.get("User-Agent", ""))
+
+    return {
+        "browser": f"{ua.browser.family} {ua.browser.version_string}",
+        "operating_system": f"{ua.os.family} {ua.os.version_string}",
+        "ip_address": request.client.host,
+        "last_login": (
+            current_user.last_login.strftime("%d %b %Y %I:%M %p")
+            if current_user.last_login
+            else "N/A"
+        ),
     }
 
 

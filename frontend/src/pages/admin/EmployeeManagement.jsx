@@ -64,10 +64,6 @@ const EmployeeManagement = () => {
     severity: "success",
     });
 
-  useEffect(() => {
-    loadEmployees();
-  }, []);
-
   const loadEmployees = async () => {
     try {
       setLoading(true);
@@ -75,7 +71,7 @@ const EmployeeManagement = () => {
       const response = await employeeManagementApi.getEmployees();
 
       setEmployees(response.data);
-    } catch (err) {
+    } catch {
       setSnackbar({
             open: true,
             message: "Unable to load employees.",
@@ -85,6 +81,10 @@ const EmployeeManagement = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    void Promise.resolve().then(loadEmployees);
+  }, []);
 
   const handleStatusChange = async (employee) => {
     try {

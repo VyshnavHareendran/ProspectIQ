@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import BusinessIcon from "@mui/icons-material/Business";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutlineOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -25,9 +25,18 @@ const FollowupCard = ({
     followup,
     onViewBusiness,
     onComplete,
+    onCall,
+    showActions = true,
 }) => {
 
-    const business = followup.lead_assignment.business;
+    const assignment =
+        followup.assignment ?? followup.lead_assignment;
+    const latestCall = followup.latest_call ?? followup;
+    const business = assignment?.business;
+
+    if (!business) {
+        return null;
+    }
 
     return (
 
@@ -92,7 +101,7 @@ const FollowupCard = ({
                     </Stack>
 
                     <FollowupStatusChip
-                        date={followup.next_followup_date}
+                        date={latestCall?.next_followup_date}
                     />
 
                 </Stack>
@@ -125,11 +134,11 @@ const FollowupCard = ({
                         alignItems="center"
                     >
 
-                        <PersonOutlineIcon color="primary" />
+                        <LocationOnOutlinedIcon color="primary" />
 
                         <Typography>
 
-                            {followup.employee.full_name}
+                            {business.city}
 
                         </Typography>
 
@@ -153,7 +162,7 @@ const FollowupCard = ({
                             <Box mt={0.5}>
 
                                 <Chip
-                                    label={followup.call_outcome}
+                                    label={latestCall?.call_outcome ?? "Unknown"}
                                     color="primary"
                                     variant="outlined"
                                 />
@@ -174,7 +183,7 @@ const FollowupCard = ({
                             <Box mt={0.5}>
 
                                 <FollowupStatusChip
-                                    date={followup.next_followup_date}
+                                    date={latestCall?.next_followup_date}
                                 />
 
                             </Box>
@@ -196,54 +205,45 @@ const FollowupCard = ({
                     flexWrap="wrap"
                     spacing={2}
                 >
-
-                    <Stack
-                        direction="row"
-                        spacing={1}
-                        flexWrap="wrap"
-                    >
-
-                        <Button
-                            size="small"
-                            startIcon={<CallIcon />}
-                            variant="outlined"
-                            onClick={() => {
-
-                                if (business.phone_number) {
-
-                                    window.open(`tel:${business.phone_number}`);
-
-                                }
-
-                            }}
+                    {showActions ? (
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            flexWrap="wrap"
                         >
-                            Call
-                        </Button>
+                            <Button
+                                size="small"
+                                startIcon={<CallIcon />}
+                                variant="outlined"
+                                onClick={() => onCall?.(followup)}
+                            >
+                                Call
+                            </Button>
 
-                        <Button
-                            size="small"
-                            startIcon={<EventIcon />}
-                            variant="outlined"
-                            onClick={() => {
+                            <Button
+                                size="small"
+                                startIcon={<EventIcon />}
+                                variant="outlined"
+                                onClick={() => {
 
-                                console.log("Reschedule", followup.id);
+                                }}
+                            >
+                                Reschedule
+                            </Button>
 
-                            }}
-                        >
-                            Reschedule
-                        </Button>
-
-                        <Button
-                            size="small"
-                            startIcon={<CheckCircleIcon />}
-                            color="success"
-                            variant="outlined"
-                            onClick={() => onComplete(followup)}
-                        >
-                            Complete
-                        </Button>
-
-                    </Stack>
+                            <Button
+                                size="small"
+                                startIcon={<CheckCircleIcon />}
+                                color="success"
+                                variant="outlined"
+                                onClick={() => onComplete?.(followup)}
+                            >
+                                Complete
+                            </Button>
+                        </Stack>
+                    ) : (
+                        <Box />
+                    )}
 
                     <Button
                         variant="contained"

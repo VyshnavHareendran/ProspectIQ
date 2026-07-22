@@ -1,119 +1,103 @@
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
-import NotificationsNoneRoundedIcon from '@mui/icons-material/NotificationsNoneRounded'
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import {
-  Badge,
   Box,
   IconButton,
-  InputAdornment,
   Paper,
   Stack,
-  TextField,
-  Tooltip,
   Typography,
-} from '@mui/material'
-import Breadcrumbs from './Breadcrumbs'
-import UserMenu from './UserMenu'
+} from "@mui/material";
 
-const TopNavbar = ({ onMenuClick, onLogout, pageTitle, user }) => (
+import { useTheme } from "@mui/material/styles";
+import Breadcrumbs from "./Breadcrumbs";
+import UserMenu from "./UserMenu";
+
+const TopNavbar = ({ onMenuClick, onLogout, pageTitle, user }) => {
+
+  const theme = useTheme();
+
+  return (
   <Paper
     component="header"
     square
     elevation={0}
     sx={{
-      position: 'sticky',
+      position: "sticky",
       top: 0,
-      zIndex: 'appBar',
-      display: 'flex',
+      zIndex: "appBar",
+      display: "flex",
       minHeight: 72,
-      alignItems: 'center',
+      alignItems: "center",
       px: { xs: 2, sm: 3 },
-      borderBottom: '1px solid',
-      borderColor: 'divider',
-      backgroundColor: 'rgba(255, 255, 255, 0.92)',
-      backdropFilter: 'blur(14px)',
+      borderBottom: "1px solid",
+      borderColor: "divider",
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? "rgba(0,0,0,0.92)"
+          : "rgba(255,255,255,0.92)",
+      backdropFilter: "blur(14px)",
     }}
   >
-    <Stack direction="row" alignItems="center" spacing={1.5} sx={{ width: '100%' }}>
-      <IconButton
-        aria-label="Toggle navigation"
-        onClick={onMenuClick}
-        sx={{ display: { lg: 'none' }, color: 'text.secondary' }}
-      >
-        <MenuRoundedIcon />
-      </IconButton>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
 
-      <Box sx={{ minWidth: 0 }}>
-        <Typography
-          component="h1"
-          noWrap
-          sx={{
-            fontSize: {
-              xs: "1rem",
-              sm: "1.1rem",
-              md: "1.25rem",
-            },
-            fontWeight: 600,
-          }}
-        >
-          {pageTitle}
-        </Typography>
-        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <Breadcrumbs />
-        </Box>
-      </Box>
-
+      {/* Left Side */}
       <Stack
         direction="row"
         alignItems="center"
-        justifyContent="flex-end"
-        spacing={{ xs: 0.5, sm: 1 }}
-        sx={{ flex: 1, minWidth: 0 }}
+        spacing={2}
+        sx={{
+          flex: 1,
+        }}
       >
-        <TextField
-          placeholder="Search workspace..."
-          aria-label="Search workspace"
+        <IconButton
+          aria-label="Toggle navigation"
+          onClick={onMenuClick}
           sx={{
-            display: {
-                xs: "none",
-                lg: "block",
-            },
-            width: { md: 220, lg: 280 },
-            '& .MuiOutlinedInput-root': {
-              minHeight: 38,
-              backgroundColor: 'background.default',
-            },
+            display: { lg: "none" },
+            color: "text.secondary",
           }}
-          slotProps={{
-            input: {
-              readOnly: true,
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
+        >
+          <MenuRoundedIcon />
+        </IconButton>
 
-        <Tooltip title="Notifications">
-          <IconButton
-              size="small"
-              aria-label="Notifications"
-              sx={{
-                  color: "text.secondary",
-              }}
+        <Box sx={{ minWidth: 0 }}>
+          <Typography
+            component="h1"
+            noWrap
+            sx={{
+              fontSize: {
+                xs: "1rem",
+                sm: "1.1rem",
+                md: "1.25rem",
+              },
+              fontWeight: 600,
+            }}
           >
-            <Badge color="primary" variant="dot" overlap="circular">
-              <NotificationsNoneRoundedIcon fontSize="small" />
-            </Badge>
-          </IconButton>
-        </Tooltip>
+            {pageTitle}
+          </Typography>
 
-        <UserMenu user={user} onLogout={onLogout} />
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Breadcrumbs />
+          </Box>
+        </Box>
       </Stack>
-    </Stack>
+
+      {/* Right Side */}
+      <Box>
+        <UserMenu
+          user={user}
+          onLogout={onLogout}
+        />
+      </Box>
+
+    </Box>
   </Paper>
-)
+  );
+};
 
 export default TopNavbar

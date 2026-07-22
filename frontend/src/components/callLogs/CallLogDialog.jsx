@@ -30,13 +30,6 @@ export default function CallDialog({
   const [notes, setNotes] = useState("");
 
   const handleSave = () => {
-    console.log({
-      business,
-      status,
-      duration,
-      notes,
-    });
-
     onClose();
   };
 

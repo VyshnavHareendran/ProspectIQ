@@ -138,6 +138,38 @@ class LeadAssignmentRepository:
             .all()
 
         )
+    
+    def get_all_followup_assignments(self):
+
+        return (
+
+            self.db.query(LeadAssignment)
+
+            .options(
+
+                joinedload(
+                    LeadAssignment.employee
+                ),
+
+                joinedload(
+                    LeadAssignment.business
+                ).joinedload(
+                    Business.lead_scores
+                )
+
+            )
+
+            .filter(
+
+                LeadAssignment.is_active == True,
+
+                LeadAssignment.status == LeadAssignmentStatus.FOLLOW_UP.value
+
+            )
+
+            .all()
+
+        )
 
     def get_all(self):
 
@@ -238,6 +270,7 @@ class LeadAssignmentRepository:
     self,
     employee_id: int
     ):
+
         return (
 
             self.db.query(
@@ -255,10 +288,48 @@ class LeadAssignmentRepository:
             )
 
             .filter(
+
                 LeadAssignment.employee_id == employee_id,
-                LeadAssignment.is_active == True
+
+                LeadAssignment.is_active == True,
+
+                LeadAssignment.status.in_([
+
+                    LeadAssignmentStatus.NEW.value,
+
+                    LeadAssignmentStatus.IN_PROGRESS.value
+
+                ])
+
+            )
+
+            .order_by(
+                LeadAssignment.status.desc()
             )
 
             .all()
+
+        )
+    
+    def get_followup_count(
+    self,
+    employee_id: int
+    ):
+
+        return (
+
+            self.db.query(LeadAssignment)
+
+            .filter(
+
+                LeadAssignment.employee_id == employee_id,
+
+                LeadAssignment.is_active == True,
+
+                LeadAssignment.status == LeadAssignmentStatus.FOLLOW_UP.value
+
+            )
+
+            .count()
 
         )

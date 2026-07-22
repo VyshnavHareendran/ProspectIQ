@@ -5,6 +5,7 @@ from app.repositories.lead_score_repository import (
 from typing import Optional
 
 
+
 class LeadScoreService:
 
     def __init__(
@@ -86,3 +87,6 @@ class LeadScoreService:
             self.repository.generate_all_scores()
         )
             
+
+
+

@@ -4,6 +4,9 @@ export const authApi = {
   login(credentials) {
     return httpClient.post('/auth/login', credentials)
   },
+  getCurrentSession() {
+    return httpClient.get("/auth/current-session");
+  },
   getCurrentUser(config = {}) {
     return httpClient.get('/auth/me', config)
   },

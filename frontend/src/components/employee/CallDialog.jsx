@@ -20,8 +20,9 @@ import Link from "@mui/material/Link";
 import { useEffect, useState } from "react";
 import { employeeApi } from "../../api/employee/employeeApi";
 import { callLogApi } from "../../api/callLog/callLogApi";
+import { dailyQueueApi } from "../../api/employee";
 
-const UpdateLeadDialog = ({
+const CallDialog = ({
   open,
   onClose,
   lead,
@@ -37,16 +38,18 @@ const UpdateLeadDialog = ({
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
-  if (lead) {
-        console.log(lead);
+        if (!lead) return undefined;
 
-        setStatus(lead.status);
-        setRemarks(lead.remarks || "");
-        setCallOutcome(lead.call_outcome || "");
-        setNotes("");
-        setNextFollowupDate("");
-        setDuration("");
-    }
+        const resetTimer = window.setTimeout(() => {
+            setStatus(lead.status);
+            setRemarks(lead.remarks || "");
+            setCallOutcome(lead.call_outcome || "");
+            setNotes("");
+            setNextFollowupDate("");
+            setDuration("");
+        }, 0);
+
+        return () => window.clearTimeout(resetTimer);
     }, [lead]);
 
     if (!lead) return null;
@@ -58,23 +61,31 @@ const UpdateLeadDialog = ({
             return;
         }
 
+        if (
+            (
+                callOutcome === "CALL_BACK" ||
+                callOutcome === "FOLLOW_UP"
+            ) &&
+            !nextFollowupDate
+        ) {
+            alert("Please select a Next Follow-up Date.");
+            return;
+        }
+
         try {
 
             setSaving(true);
 
             await employeeApi.updateLead(
-                lead.id,
+                lead.assignment_id,
                 {
-                    status,
                     remarks,
                     call_outcome: callOutcome,
                 }
             );
 
-            console.log("Creating Call Log...");
-
             await callLogApi.createCallLog({
-                lead_assignment_id: lead.id,
+                lead_assignment_id: lead.assignment_id,
                 employee_id: lead.employee_id,
                 call_outcome: callOutcome,
                 duration,
@@ -82,11 +93,28 @@ const UpdateLeadDialog = ({
                 next_followup_date: nextFollowupDate || null,
             });
 
-            console.log("Call Log Created");
+            if (lead.queue_id) {
 
-            await onSuccess();
+              try {
 
-            onClose();
+                  await dailyQueueApi.completeQueueItem(
+                      lead.queue_id
+                  );
+
+              } catch (err) {
+
+                  console.error(
+                      "Queue Complete Error:",
+                      err
+                  );
+
+              }
+
+          }
+
+          await onSuccess();
+
+          onClose();
 
         } catch (error) {
 
@@ -123,7 +151,7 @@ const UpdateLeadDialog = ({
 
           <TextField
             label="Business"
-            value={lead.business.business_name}
+            value={lead.business_name}
             fullWidth
             disabled
           />
@@ -137,21 +165,21 @@ const UpdateLeadDialog = ({
             <Stack direction="row" spacing={1} alignItems="center">
                 <CallRoundedIcon fontSize="small" />
                 <Typography>
-                {lead.business.phone_number || "No phone"}
+                {lead.phone_number || "No phone"}
                 </Typography>
             </Stack>
 
             <Stack direction="row" spacing={1} alignItems="center">
                 <EmailRoundedIcon fontSize="small" />
                 <Typography>
-                {lead.business.email || "No email"}
+                {lead.email || "No email"}
                 </Typography>
             </Stack>
 
             <Stack direction="row" spacing={1} alignItems="center">
                 <LanguageRoundedIcon fontSize="small" />
                 <Link
-                href={lead.business.website_url}
+                href={lead.website_url}
                 target="_blank"
                 rel="noopener"
                 >
@@ -162,7 +190,7 @@ const UpdateLeadDialog = ({
             <Stack direction="row" spacing={1} alignItems="center">
                 <PlaceRoundedIcon fontSize="small" />
                 <Link
-                href={lead.business.google_maps_link}
+                href={lead.google_maps_link}
                 target="_blank"
                 rel="noopener"
                 >
@@ -174,36 +202,37 @@ const UpdateLeadDialog = ({
 
           <TextField
             select
-            label="Status"
-            value={status}
-            onChange={(e) =>
-                setStatus(e.target.value)
-            }
-            fullWidth
-          >
-            <MenuItem value="NEW">New</MenuItem>
-
-            <MenuItem value="IN_PROGRESS">
-            In Progress
-            </MenuItem>
-
-            <MenuItem value="FOLLOW_UP">
-            Follow Up
-            </MenuItem>
-
-            <MenuItem value="CLOSED">
-            Closed
-            </MenuItem>
-            
-          </TextField>
-
-          <TextField
-            select
             label="Call Outcome"
             value={callOutcome}
-            onChange={(e) =>
-                setCallOutcome(e.target.value)
-            }
+            onChange={(e) => {
+
+              const outcome = e.target.value;
+
+              setCallOutcome(outcome);
+
+              switch (outcome) {
+
+                  case "INTERESTED":
+                      setStatus("IN_PROGRESS");
+                      break;
+
+                  case "CALL_BACK":
+                  case "FOLLOW_UP":
+                      setStatus("FOLLOW_UP");
+                      break;
+
+                  case "NO_ANSWER":
+                      setStatus("IN_PROGRESS");
+                      break;
+
+                  case "NOT_INTERESTED":
+                      setStatus("CLOSED");
+                      break;
+
+                  default:
+                      break;
+              }
+            }}
             fullWidth
           >
             <MenuItem value="INTERESTED">
@@ -214,8 +243,8 @@ const UpdateLeadDialog = ({
               Not Interested
             </MenuItem>
 
-            <MenuItem value="CALL_BACK">
-              Call Back
+            <MenuItem value="FOLLOW_UP">
+                Follow Up
             </MenuItem>
 
             <MenuItem value="NO_ANSWER">
@@ -288,4 +317,4 @@ const UpdateLeadDialog = ({
   );
 };
 
-export default UpdateLeadDialog;
+export default CallDialog;

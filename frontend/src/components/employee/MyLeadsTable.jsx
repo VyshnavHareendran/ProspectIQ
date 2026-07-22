@@ -9,12 +9,11 @@ import {
   Chip,
   Button,
 } from "@mui/material";
+import { Typography } from "@mui/material";
 
-import CallRoundedIcon from "@mui/icons-material/CallRounded";
 
 const MyLeadsTable = ({
     leads,
-    onUpdate,
     onViewBusiness,
 }) => {
   return (
@@ -80,29 +79,29 @@ const MyLeadsTable = ({
                     fontSize: 13,
                 }}
             >
+                Lead Score
+            </TableCell>
+
+            <TableCell
+                sx={{
+                    fontWeight: 700,
+                    color: "text.secondary",
+                    textTransform: "uppercase",
+                    fontSize: 13,
+                }}
+            >
+                Priority
+            </TableCell>
+
+            <TableCell
+                sx={{
+                    fontWeight: 700,
+                    color: "text.secondary",
+                    textTransform: "uppercase",
+                    fontSize: 13,
+                }}
+            >
                 Status
-            </TableCell>
-
-            <TableCell
-                sx={{
-                    fontWeight: 700,
-                    color: "text.secondary",
-                    textTransform: "uppercase",
-                    fontSize: 13,
-                }}
-            >
-                Assigned Date
-            </TableCell>
-
-            <TableCell
-                sx={{
-                    fontWeight: 700,
-                    color: "text.secondary",
-                    textTransform: "uppercase",
-                    fontSize: 13,
-                }}
-            >
-                Remarks
             </TableCell>
 
             <TableCell align = "center"
@@ -113,7 +112,18 @@ const MyLeadsTable = ({
                     fontSize: 13,
                 }}
             >
-                Action
+                Assigned Date
+            </TableCell>
+
+            <TableCell align = "center"
+                sx={{
+                    fontWeight: 700,
+                    color: "text.secondary",
+                    textTransform: "uppercase",
+                    fontSize: 13,
+                }}
+            >
+                Remarks
             </TableCell>
 
           </TableRow>
@@ -125,7 +135,7 @@ const MyLeadsTable = ({
           {leads.map((lead) => (
 
             <TableRow
-                key={lead.id}
+                key={lead.assignment_id}
                 hover
                 sx={{
                     "&:last-child td": {
@@ -139,11 +149,7 @@ const MyLeadsTable = ({
                 <Button
                     variant="text"
                     disableRipple
-                    onClick={() =>
-                        onViewBusiness(
-                            lead.business.id
-                        )
-                    }
+                    onClick={() => onViewBusiness(lead.business_id)}
                     sx={{
                         p: 0,
                         minWidth: "auto",
@@ -156,17 +162,37 @@ const MyLeadsTable = ({
                         },
                     }}
                 >
-                    {lead.business.business_name}
+                    {lead.business_name}
                 </Button>
 
               </TableCell>
 
               <TableCell>
-                {lead.business.category}
+                {lead.category}
               </TableCell>
 
               <TableCell>
-                {lead.business.city}
+                {lead.city}
+              </TableCell>
+
+              <TableCell align="center">
+                <Typography fontWeight={700}>
+                    {Number(lead.lead_score).toFixed(1)}
+                </Typography>
+              </TableCell>
+
+              <TableCell align="center">
+                <Chip
+                    label={lead.priority}
+                    color={
+                        lead.priority?.toUpperCase() === "HIGH"
+                            ? "error"
+                            : lead.priority?.toUpperCase() === "MEDIUM"
+                            ? "warning"
+                            : "success"
+                    }
+                    size="small"
+                />
               </TableCell>
 
               <TableCell>
@@ -190,22 +216,12 @@ const MyLeadsTable = ({
 
               <TableCell>
                 {new Date(
-                  lead.assigned_at
+                    lead.assigned_date
                 ).toLocaleDateString()}
               </TableCell>
 
               <TableCell>
                 {lead.remarks || "-"}
-              </TableCell>
-
-              <TableCell align="center">
-                <Button
-                    variant="contained"
-                    startIcon={<CallRoundedIcon />}
-                    onClick={() => onUpdate(lead)}
-                >
-                    Call
-                </Button>
               </TableCell>
 
             </TableRow>

@@ -56,7 +56,7 @@ const CallLogs = () => {
           callLogApi.getPendingFollowups(),
       ]);
       
-      console.log("CALL LOGS:", logsRes.data);
+  
 
       setCallLogs(Array.isArray(logsRes.data) ? logsRes.data : []);
       setTodayFollowups(Array.isArray(todayRes.data) ? todayRes.data : []);
@@ -104,15 +104,6 @@ const CallLogs = () => {
         !employeeFilter ||
         employee.toUpperCase() ===
           employeeFilter.toUpperCase();
-
-      console.log({
-        outcome,
-        outcomeFilter,
-        matchesOutcome,
-        employee,
-        employeeFilter,
-        matchesEmployee,
-      });
 
       return (
         matchesSearch &&

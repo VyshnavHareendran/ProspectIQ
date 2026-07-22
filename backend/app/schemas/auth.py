@@ -1,5 +1,5 @@
 #THESE VALIDATES API REQUESTS AND RESPONSES FOR AUTHENTICATION AND USER MANAGEMENT      
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, model_validator
 from app.schemas.user_role import UserRole
 
 class LoginRequest(BaseModel):
@@ -57,6 +57,7 @@ class ChangePasswordRequest(BaseModel):
 
     new_password: str
 
+    confirm_password: str
 
 class ChangePasswordResponse(BaseModel):
 

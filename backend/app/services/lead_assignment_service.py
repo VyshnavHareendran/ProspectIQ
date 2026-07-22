@@ -30,6 +30,8 @@ from app.schemas.lead_assignment_status import (
 
 from app.schemas.user_role import UserRole
 
+from datetime import datetime
+
 class LeadAssignmentService:
 
     def __init__(
@@ -373,5 +375,51 @@ class LeadAssignmentService:
                 assignment
             )
         )
+    
+    def complete_call(
+    self,
+    request,
+    current_user,
+    ):
+        assignment = self.get_by_id(request.assignment_id)
+
+        if assignment.employee_id != current_user.id:
+            raise ValueError("You are not assigned to this lead.")
+
+        # Create call log
+        call_log = CallLog(
+            assignment_id=assignment.id,
+            employee_id=current_user.id,
+            call_status=request.call_status,
+            remarks=request.remarks,
+            duration=request.duration,
+            next_followup_date=request.next_followup_date,
+            created_at=datetime.utcnow(),
+        )
+
+        self.call_log_repository.create(call_log)
+
+        # Update assignment
+        assignment.call_outcome = request.call_status
+        assignment.remarks = request.remarks
+
+        if request.call_status == "FOLLOW_UP":
+            assignment.status = LeadAssignmentStatus.FOLLOW_UP.value
+
+        elif request.call_status in ["INTERESTED", "NO_ANSWER", "BUSY"]:
+            assignment.status = LeadAssignmentStatus.IN_PROGRESS.value
+
+        elif request.call_status in [
+            "NOT_INTERESTED",
+            "WRONG_NUMBER",
+            "CLOSED",
+        ]:
+            assignment.status = LeadAssignmentStatus.CLOSED.value
+
+        self.lead_assignment_repository.update_employee_lead(assignment)
+
+        return {
+            "message": "Call completed successfully."
+        }
     
     

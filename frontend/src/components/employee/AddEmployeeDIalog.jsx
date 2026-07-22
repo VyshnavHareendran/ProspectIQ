@@ -12,6 +12,7 @@ import {
   Select,
   Stack,
   TextField,
+  Snackbar,
 } from "@mui/material";
 
 import { employeeManagementApi } from "../../api/admin/employeeManagementApi";
@@ -27,7 +28,7 @@ const AddEmployeeDialog = ({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const resetForm = () => {
     setFullName("");
     setEmail("");
@@ -42,25 +43,52 @@ const AddEmployeeDialog = ({
 
   const handleCreate = async () => {
 
+      setError("");
 
-        setError("");
+      if (!fullName || !email) {
 
-        if (!fullName || !email) {
-            return;
-        }
-        try {
-            const response = await employeeManagementApi.createEmployee({
-                full_name: fullName,
-                email,
-                role,
-            });
-        } catch (err) {
-            console.log(err);
+          setError("Full name and email are required.");
 
-        }
-    };
+          return;
+      }
+
+      try {
+
+          setLoading(true);
+
+          const response = await employeeManagementApi.createEmployee({
+
+              full_name: fullName,
+
+              email,
+
+              role,
+
+          });
+
+          onEmployeeCreated(response.data);
+
+          handleClose();
+
+      } catch (err) {
+
+          const message =
+              err.response?.data?.detail ??
+              "Unable to create employee.";
+
+          setError(message);
+
+          setSnackbarOpen(true);
+
+      } finally {
+
+          setLoading(false);
+
+      }
+  };
 
   return (
+   <> 
     <Dialog
       open={open}
       onClose={handleClose}
@@ -72,12 +100,6 @@ const AddEmployeeDialog = ({
       <DialogContent>
 
         <Stack spacing={3} mt={1}>
-
-          {error && (
-            <Alert severity="error">
-              {error}
-            </Alert>
-          )}
 
           <TextField
             label="Full Name"
@@ -139,6 +161,26 @@ const AddEmployeeDialog = ({
       </DialogActions>
 
     </Dialog>
+    <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+        }}
+    >
+
+        <Alert
+            severity="error"
+            onClose={() => setSnackbarOpen(false)}
+            variant="filled"
+        >
+            {error}
+        </Alert>
+
+    </Snackbar>
+   </>
   );
 };
 

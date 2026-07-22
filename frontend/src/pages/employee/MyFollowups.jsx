@@ -11,11 +11,12 @@ import {
     Typography,
 } from "@mui/material";
 
-import { callLogApi } from "../../api/callLog/callLogApi";
+import { followupApi } from "../../api/followup/followupApi";
 import BusinessProfileDrawer from "../../components/business/BusinessProfileDrawer";
 import FollowupCard from "../../components/followups/FollowupCard";
 import FollowupSummaryCards from "../../components/followups/FollowupSummaryCards";
-import CompleteFollowupDialog from "../../components/followups/CompleteFollowupDialog";
+import CloseLeadDialog from "../../components/employee/CloseLeadDialog";
+import CallDialog from "../../components/employee/CallDialog";
 
 const Followups = () => {
 
@@ -27,9 +28,15 @@ const Followups = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState("date");
-    const [openCompleteDialog, setOpenCompleteDialog] = useState(false);
-    const [selectedFollowup, setSelectedFollowup] = useState(null);
-    
+    const [selectedLead, setSelectedLead] = useState(null);
+
+    const [openCloseDialog, setOpenCloseDialog] = useState(false);
+
+    const [selectedLeadToClose, setSelectedLeadToClose] = useState(null);
+
+    const [openCallDialog, setOpenCallDialog] = useState(false);
+
+
     const [counts, setCounts] = useState({
         today: 0,
         pending: 0,
@@ -42,38 +49,28 @@ const Followups = () => {
 
             setLoading(true);
 
-            const [
-                todayResponse,
-                pendingResponse,
-                overdueResponse,
-            ] = await Promise.all([
-                callLogApi.getTodayFollowups(),
-                callLogApi.getPendingFollowups(),
-                callLogApi.getOverdueFollowups(),
-            ]);
+            const response = await followupApi.getFollowups();
 
-            setCounts({
-                today: todayResponse.data.length,
-                pending: pendingResponse.data.length,
-                overdue: overdueResponse.data.length,
-            });
+            const data = response.data;
+
+            setCounts(data.stats);
 
             switch (tab) {
 
                 case 0:
-                    setFollowups(todayResponse.data);
+                    setFollowups(data.today);
                     break;
 
                 case 1:
-                    setFollowups(pendingResponse.data);
+                    setFollowups(data.pending);
                     break;
 
                 case 2:
-                    setFollowups(overdueResponse.data);
+                    setFollowups(data.overdue);
                     break;
 
                 default:
-                    setFollowups(todayResponse.data);
+                    setFollowups(data.today);
 
             }
 
@@ -96,14 +93,14 @@ const Followups = () => {
     
     useEffect(() => {
 
-        loadFollowups();
+        void Promise.resolve().then(loadFollowups);
 
     }, [loadFollowups]);
 
     const filteredFollowups = [...followups]
         .filter((followup) => {
 
-            const business = followup.lead_assignment.business;
+            const business = followup.assignment.business;
 
             return business.business_name
                 .toLowerCase()
@@ -115,13 +112,13 @@ const Followups = () => {
             switch (sortBy) {
 
                 case "business":
-                    return a.lead_assignment.business.business_name.localeCompare(
-                        b.lead_assignment.business.business_name
+                    return a.assignment.business.business_name.localeCompare(
+                        b.assignment.business.business_name
                     );
 
                 default:
-                    return new Date(a.next_followup_date) -
-                        new Date(b.next_followup_date);
+                    return new Date(a.latest_call.next_followup_date) -
+                        new Date(b.latest_call.next_followup_date);
 
             }
 
@@ -251,18 +248,71 @@ const Followups = () => {
                     {filteredFollowups.map((followup) => (
 
                         <FollowupCard
-                            key={followup.id}
+                            key={followup.assignment.id}
                             followup={followup}
+                            onCall={(followup) => {
+
+                                const lead = {
+
+                                    assignment_id: followup.assignment.id,
+
+                                    employee_id: followup.assignment.employee_id,
+
+                                    status: followup.assignment.status,
+
+                                    remarks: followup.assignment.remarks,
+
+                                    call_outcome: followup.assignment.call_outcome,
+
+                                    business_name:
+                                        followup.assignment.business.business_name,
+
+                                    phone_number:
+                                        followup.assignment.business.phone_number,
+
+                                    email:
+                                        followup.assignment.business.email,
+
+                                    website_url:
+                                        followup.assignment.business.website_url,
+
+                                    google_maps_link:
+                                        followup.assignment.business.google_maps_link,
+
+                                    queue_id: null,
+
+                                };
+
+                                setSelectedLead(lead);
+
+                                setOpenCallDialog(true);
+
+                            }}
                             onViewBusiness={(businessId) => {
 
                                 setSelectedBusiness(businessId);
+
                                 setOpenDrawer(true);
 
                             }}
                             onComplete={(followup) => {
 
-                                setSelectedFollowup(followup);
-                                setOpenCompleteDialog(true);
+                                const lead = {
+
+                                    assignment_id: followup.assignment.id,
+
+                                    employee_id: followup.assignment.employee_id,
+
+                                    remarks: followup.assignment.remarks,
+
+                                    business_name:
+                                        followup.assignment.business.business_name,
+
+                                };
+
+                                setSelectedLeadToClose(lead);
+
+                                setOpenCloseDialog(true);
 
                             }}
                         />
@@ -284,15 +334,37 @@ const Followups = () => {
                 businessId={selectedBusiness}
             />
 
-            <CompleteFollowupDialog
-                open={openCompleteDialog}
-                followup={selectedFollowup}
+            <CallDialog
+                open={openCallDialog}
+                lead={selectedLead}
                 onClose={() => {
-                    setOpenCompleteDialog(false);
-                    setSelectedFollowup(null);
+
+                    setOpenCallDialog(false);
+
+                    setSelectedLead(null);
+
                 }}
-                onSaved={async () => {
+                onSuccess={async () => {
+
                     await loadFollowups();
+
+                }}
+            />
+
+            <CloseLeadDialog
+                open={openCloseDialog}
+                lead={selectedLeadToClose}
+                onClose={() => {
+
+                    setOpenCloseDialog(false);
+
+                    setSelectedLeadToClose(null);
+
+                }}
+                onSuccess={async () => {
+
+                    await loadFollowups();
+
                 }}
             />
 

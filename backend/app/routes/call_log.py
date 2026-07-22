@@ -130,6 +130,22 @@ def get_employee_calls(
 
 
 @router.get(
+    "/business/{business_id}",
+    response_model=List[CallLogResponse],
+    summary="Get Business Call Logs"
+)
+def get_business_calls(
+    business_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_verified_user)
+):
+
+    service = get_service(db)
+
+    return service.get_by_business(business_id)
+
+
+@router.get(
     "/followups/today",
     response_model=List[CallLogResponse],
     summary="Today's Follow-ups"

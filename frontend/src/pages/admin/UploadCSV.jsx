@@ -25,24 +25,17 @@ const UploadCSV = () => {
     try {
       const response = await uploadApi.previewCSV(selectedFile);
 
-      console.log("Preview Response:", response.data);
-
       setUploadId(response.data.upload_id);
       setPreviewColumns(response.data.columns);
       setPreviewRows(response.data.sample_rows);
       setMapping(invertMapping(response.data.suggested_mapping));
 
-      console.log("Upload ID from API:", response.data.upload_id);
     } catch (error) {
       console.error("Preview Error:", error);
     }
   };
 
   const handleImport = async () => {
-    console.log("========== IMPORT ==========");
-    console.log("Upload ID:", uploadId);
-    console.log("Mapping:", mapping);
-    console.log("Type:", typeof uploadId);
 
     if (uploadId === null) {
       alert("Please upload and preview a CSV first.");
@@ -54,8 +47,6 @@ const UploadCSV = () => {
         uploadId,
         mapping
       );
-
-      console.log("Import Success:", response.data);
 
       setImportResult(response.data);
       setHistoryRefreshKey((value) => value + 1);
@@ -69,7 +60,6 @@ const UploadCSV = () => {
     }
   };
 
-  console.log("Current State Upload ID:", uploadId);
 
   return (
     <Box p={3}>

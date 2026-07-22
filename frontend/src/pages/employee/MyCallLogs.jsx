@@ -1,3 +1,4 @@
+
 import {
   Alert,
   Box,
@@ -80,7 +81,7 @@ const MyCallLogs = () => {
 
   useEffect(() => {
     if (user?.id) {
-      loadData();
+      void Promise.resolve().then(loadData);
     }
   }, [loadData, user]);
 

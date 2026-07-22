@@ -36,9 +36,9 @@ const CompleteFollowupDialog = ({
     });
 
     useEffect(() => {
+        if (!followup) return undefined;
 
-        if (followup) {
-
+        const resetTimer = window.setTimeout(() => {
             setFormData({
                 call_outcome: followup.call_outcome || "",
                 duration: followup.duration || "",
@@ -46,9 +46,9 @@ const CompleteFollowupDialog = ({
                 next_followup_date:
                     followup.next_followup_date || "",
             });
+        }, 0);
 
-        }
-
+        return () => window.clearTimeout(resetTimer);
     }, [followup]);
 
     const handleChange = (e) => {

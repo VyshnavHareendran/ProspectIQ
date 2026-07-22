@@ -58,6 +58,11 @@ class User(Base):
         server_default=text("CURRENT_TIMESTAMP")
     )
 
+    last_login = Column(
+        TIMESTAMP,
+        nullable=True
+    )
+
     call_logs = relationship(
     "CallLog",
     back_populates="employee"

@@ -1,11 +1,8 @@
-import GroupsRoundedIcon from '@mui/icons-material/GroupsRounded'
 import {
-  Alert,
-  Box,
   Card,
   CardContent,
+  Chip,
   Skeleton,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -13,86 +10,145 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from '@mui/material'
-import React from 'react'
+  Avatar,
+  Box,
+  LinearProgress,
+} from "@mui/material";
+import EmojiEventsRoundedIcon from "@mui/icons-material/EmojiEventsRounded";
 
-const EmployeePerformanceTable = ({
-  data = [],
-  loading = false,
-  error = '',
-}) => {
+const getRank = (index) => {
+  if (index === 0) return "🥇";
+  if (index === 1) return "🥈";
+  if (index === 2) return "🥉";
+  return index + 1;
+};
+
+const getInitials = (name) => {
+  return name
+    ?.split(" ")
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+};
+
+
+const getChipColor = (rate) => {
+  if (rate >= 75) return "success";
+  if (rate >= 50) return "warning";
+  return "error";
+};
+
+export default function EmployeePerformanceTable({
+  data,
+  loading,
+  error,
+}) {
+
+  const rows = [...(data || [])].sort(
+    (a, b) => b.conversion_rate - a.conversion_rate
+  );
+
+  const topPerformer = rows[0];
+
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card>
       <CardContent>
 
-        <Stack spacing={0.5} sx={{ mb: 2.5 }}>
-          <Typography variant="h3">
-            Employee Performance
-          </Typography>
+        <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mb={2}
+        >
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-          >
-            Employee productivity overview.
-          </Typography>
-        </Stack>
+            <Typography
+                variant="h6"
+            >
+                Employee Performance
+            </Typography>
 
-        {error && (
-          <Alert severity="error">
-            {error}
-          </Alert>
-        )}
+            {
+
+                topPerformer && (
+
+                    <Chip
+
+                        icon={<EmojiEventsRoundedIcon />}
+
+                        label={`Top Performer: ${topPerformer.employee_name}`}
+
+                        color="warning"
+
+                    />
+
+                )
+
+            }
+
+        </Box>
 
         {loading ? (
+
           <Skeleton
             variant="rounded"
-            height={300}
+            height={350}
           />
-        ) : data.length === 0 ? (
-          <Box
-            sx={{
-              minHeight: 250,
-              display: 'grid',
-              placeItems: 'center',
-            }}
-          >
-            <Stack spacing={1} alignItems="center">
-              <GroupsRoundedIcon color="action" />
 
-              <Typography fontWeight={700}>
-                No employee data
-              </Typography>
+        ) : error ? (
 
-              <Typography
-                variant="body2"
-                color="text.secondary"
-              >
-                Employee performance will appear here.
-              </Typography>
-            </Stack>
-          </Box>
+          <Typography color="error">
+            {error}
+          </Typography>
+
+        ) : rows.length === 0 ? (
+
+          <Typography color="text.secondary">
+            No employee performance data available.
+          </Typography>
+
         ) : (
+
           <TableContainer>
 
-            <Table>
+            <Table stickyHeader>
 
-              <TableHead>
+              <TableHead
+                  sx={{
+                      "& th": {
+                          fontWeight: 700,
+                          backgroundColor: "#fafafa",
+                      },
+                  }}
+              >
 
                 <TableRow>
 
-                  <TableCell><strong>Employee</strong></TableCell>
+                  <TableCell width={80}>
+                      Rank
+                  </TableCell>
 
-                  <TableCell align="center">
-                    <strong>Assigned Leads</strong>
+                  <TableCell>
+                      Employee
                   </TableCell>
 
                   <TableCell align="center">
-                    <strong>Calls Made</strong>
+                    Assigned
                   </TableCell>
 
                   <TableCell align="center">
-                    <strong>Pending Follow-ups</strong>
+                    Calls
+                  </TableCell>
+
+                  <TableCell align="center">
+                    Follow-ups
+                  </TableCell>
+
+                  <TableCell align="center">
+                    Closed
+                  </TableCell>
+
+                  <TableCell width={180}>
+                      Conversion
                   </TableCell>
 
                 </TableRow>
@@ -101,12 +157,83 @@ const EmployeePerformanceTable = ({
 
               <TableBody>
 
-                {data.map((employee) => (
+                {rows.map((employee, index) => (
 
-                  <TableRow key={employee.employee_name} hover>
+                  <TableRow
+                        key={employee.employee_id}
+                        hover
+                        sx={{
+                            backgroundColor:
+                                index === 0
+                                    ? "rgba(255, 193, 7, 0.08)"
+                                    : "inherit",
+
+                            "& td": {
+                                fontWeight: index === 0 ? 600 : 400,
+                            },
+
+                            transition: "all 0.2s ease",
+
+                            "&:hover": {
+                                transform: "scale(1.003)",
+                            },
+                        }}
+                  >
+                  
 
                     <TableCell>
-                      {employee.employee_name}
+
+                        <Typography
+                            fontSize={22}
+                        >
+                            {getRank(index)}
+                        </Typography>
+
+                    </TableCell>
+
+                    <TableCell>
+
+                        <Box
+                            display="flex"
+                            alignItems="center"
+                            gap={1.5}
+                        >
+
+                            <Avatar
+                                sx={{
+                                    width: 34,
+                                    height: 34,
+                                    fontSize: 14,
+                                }}
+                            >
+                                {getInitials(employee.employee_name)}
+                            </Avatar>
+
+                            <Box
+                                display="flex"
+                                alignItems="center"
+                                gap={1}
+                            >
+
+                                {employee.employee_name}
+
+                                {
+
+                                    index === 0 && (
+
+                                        <EmojiEventsRoundedIcon
+                                            color="warning"
+                                            fontSize="small"
+                                        />
+
+                                    )
+
+                                }
+
+                            </Box>
+
+                        </Box>
+
                     </TableCell>
 
                     <TableCell align="center">
@@ -121,6 +248,46 @@ const EmployeePerformanceTable = ({
                       {employee.pending_followups}
                     </TableCell>
 
+                    <TableCell align="center">
+                      {employee.closed_leads}
+                    </TableCell>
+
+                    <TableCell>
+
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          gap={1.5}
+                        >
+
+                          <Box
+                            sx={{
+                              width: 90,
+                            }}
+                          >
+
+                            <LinearProgress
+                              variant="determinate"
+                              value={employee.conversion_rate}
+                              color={getChipColor(employee.conversion_rate)}
+                              sx={{
+                                height: 8,
+                                borderRadius: 5,
+                              }}
+                            />
+
+                          </Box>
+
+                          <Chip
+                            label={`${employee.conversion_rate}%`}
+                            color={getChipColor(employee.conversion_rate)}
+                            size="small"
+                          />
+
+                        </Box>
+
+                      </TableCell>
+
                   </TableRow>
 
                 ))}
@@ -130,11 +297,10 @@ const EmployeePerformanceTable = ({
             </Table>
 
           </TableContainer>
+
         )}
 
       </CardContent>
     </Card>
-  )
+  );
 }
-
-export default React.memo(EmployeePerformanceTable)

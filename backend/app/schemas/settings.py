@@ -48,7 +48,6 @@ class CompanySettings(BaseModel):
     timezone: str = "Asia/Kolkata"
     currency: str = "INR"
     business_hours: str = "09:00 - 18:00"
-    logo_url: str = ""
 
 
 class AISettings(BaseModel):
@@ -81,11 +80,6 @@ class DashboardSettings(BaseModel):
 
 class AppearanceSettings(BaseModel):
     theme: str = "light"
-    primary_color: str = "#1976d2"
-    density: str = "comfortable"
-    font_size: int = Field(default=14, ge=12, le=18)
-    border_radius: int = Field(default=12, ge=4, le=20)
-    language: str = "en"
 
 
 class SessionInfoResponse(BaseModel):

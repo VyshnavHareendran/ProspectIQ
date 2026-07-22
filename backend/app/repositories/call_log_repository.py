@@ -90,6 +90,26 @@ class CallLogRepository:
             .all()
         )
 
+    def get_by_business(
+    self,
+    business_id: int
+    ):
+
+        return (
+            self.db.query(CallLog)
+            .options(
+                joinedload(CallLog.employee),
+                joinedload(CallLog.lead_assignment)
+                    .joinedload(LeadAssignment.business)
+            )
+            .join(LeadAssignment)
+            .filter(
+                LeadAssignment.business_id == business_id
+            )
+            .order_by(CallLog.created_at.desc())
+            .all()
+        )
+
     def get_today_followups(
     self,
     employee_id: int | None = None
@@ -365,3 +385,22 @@ class CallLogRepository:
             > 0
 
         )
+    
+    def get_employee_call_count(
+    self,
+    employee_id: int
+    ):
+
+        return (
+
+            self.db.query(CallLog)
+
+            .filter(
+                CallLog.employee_id == employee_id
+            )
+
+            .count()
+
+        )
+    
+    

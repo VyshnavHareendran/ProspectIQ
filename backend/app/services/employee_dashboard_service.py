@@ -100,6 +100,12 @@ class EmployeeDashboardService:
 
         for assignment in assigned_leads:
 
+            latest_call = (
+                self.call_repo.get_latest_by_assignment(
+                    assignment.id
+                )
+            )
+
             lead_score = next(
                 iter(assignment.business.lead_scores),
                 None
@@ -122,7 +128,12 @@ class EmployeeDashboardService:
                     lead_score.lead_score if lead_score else None,
 
                 "status":
-                    assignment.status
+                    assignment.status,
+
+                "attempt":
+                    latest_call.attempt_number
+                    if latest_call
+                    else 0
 
             })
 

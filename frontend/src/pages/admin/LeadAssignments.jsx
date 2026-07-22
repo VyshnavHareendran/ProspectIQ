@@ -5,7 +5,6 @@ import {
   Typography,
   CircularProgress,
   Button,
-  Stack,
 } from "@mui/material";
 
 import { leadScoreApi } from "../../api/admin";
@@ -94,16 +93,8 @@ export default function LeadAssignments() {
 
   const handleAssign = async () => {
 
-    console.log("Assign button clicked");
-
-    console.log(selectedEmployee);
+  
     if (!selectedEmployee) return;
-
-    console.log({
-        business_id: selectedLead.business.id,
-        employee_id: selectedEmployee,
-        remarks,
-    });
 
     try {
 

@@ -17,8 +17,16 @@ from app.schemas.call_log import (
     CallLogUpdate
 )
 
+from datetime import date, timedelta
+from app.schemas.call_status import CallStatus
+from app.schemas.lead_assignment_status import (
+    LeadAssignmentStatus
+)
+
 
 class CallLogService:
+
+    MAX_RETRY_ATTEMPTS = 5
 
     def __init__(
     self,
@@ -30,7 +38,47 @@ class CallLogService:
         self.call_log_repository = call_log_repository
         self.lead_assignment_repository = lead_assignment_repository
         self.user_repository = user_repository
-   
+    
+
+    def _get_followup_calls(
+        self,
+        employee_id: int | None = None
+    ):
+
+        if employee_id is None:
+
+            assignments = (
+                self.lead_assignment_repository
+                .get_all_followup_assignments()
+            )
+
+        else:
+
+            assignments = (
+                self.lead_assignment_repository
+                .get_employee_followup_assignments(
+                    employee_id
+                )
+            )
+
+        followups = []
+
+        for assignment in assignments:
+
+            latest_call = (
+                self.call_log_repository
+                .get_latest_by_assignment(
+                    assignment.id
+                )
+            )
+
+            if latest_call:
+
+                followups.append(latest_call)
+
+        return followups
+
+
     def create(
         self,
         request: CallLogCreate
@@ -57,7 +105,19 @@ class CallLogService:
                 "Employee not found."
             )
 
+        latest_call = (
+            self.call_log_repository.get_latest_by_assignment(
+                request.lead_assignment_id
+            )
+        )
+
+        attempt = 1
+
+        if latest_call:
+            attempt = latest_call.attempt_number + 1
+
         call_log = CallLog(
+
 
             lead_assignment_id=request.lead_assignment_id,
 
@@ -69,13 +129,114 @@ class CallLogService:
 
             notes=request.notes,
 
-            next_followup_date=request.next_followup_date
+            next_followup_date=request.next_followup_date,
+
+            attempt_number=attempt
+
+        
 
         )
 
-        return self.call_log_repository.create(
+        saved_call = self.call_log_repository.create(
             call_log
         )
+
+        if request.call_outcome == CallStatus.INTERESTED:
+
+            assignment.status = (
+                LeadAssignmentStatus.IN_PROGRESS.value
+            )
+
+            saved_call.next_followup_date = None
+
+        elif request.call_outcome in [
+            CallStatus.FOLLOW_UP,
+            "CALL_BACK",
+        ]:
+
+            assignment.status = (
+                LeadAssignmentStatus.FOLLOW_UP.value
+            )
+
+            saved_call.next_followup_date = (
+                request.next_followup_date
+            )
+
+        elif request.call_outcome == CallStatus.NO_ANSWER:
+
+            if attempt < self.MAX_RETRY_ATTEMPTS:
+
+                assignment.status = (
+                    LeadAssignmentStatus.IN_PROGRESS.value
+                )
+
+                saved_call.next_followup_date = (
+                    date.today() + timedelta(days=1)
+                )
+
+            else:
+
+                assignment.status = (
+                    LeadAssignmentStatus.CLOSED.value
+                )
+
+                saved_call.next_followup_date = None
+
+        elif request.call_outcome == CallStatus.BUSY:
+
+            if attempt < self.MAX_RETRY_ATTEMPTS:
+
+                assignment.status = (
+                    LeadAssignmentStatus.IN_PROGRESS.value
+                )
+
+                saved_call.next_followup_date = (
+                    date.today() + timedelta(days=1)
+                )
+
+            else:
+
+                assignment.status = (
+                    LeadAssignmentStatus.CLOSED.value
+                )
+
+                saved_call.next_followup_date = None
+
+        
+
+        elif request.call_outcome == CallStatus.NOT_INTERESTED:
+
+            assignment.status = (
+                LeadAssignmentStatus.CLOSED.value
+            )
+
+            saved_call.next_followup_date = None
+
+        elif request.call_outcome == CallStatus.WRONG_NUMBER:
+
+            assignment.status = (
+                LeadAssignmentStatus.CLOSED.value
+            )
+
+            saved_call.next_followup_date = None
+
+        elif request.call_outcome == CallStatus.CLOSED:
+
+            assignment.status = (
+                LeadAssignmentStatus.CLOSED.value
+            )
+
+            saved_call.next_followup_date = None
+
+        self.lead_assignment_repository.update(
+            assignment
+        )
+
+        self.call_log_repository.update(
+            saved_call
+        )
+
+        return saved_call
 
     def get_by_id(
         self,
@@ -124,39 +285,77 @@ class CallLogService:
             )
         )
 
+    def get_by_business(
+        self,
+        business_id: int
+    ):
+
+        return (
+            self.call_log_repository.get_by_business(
+                business_id
+            )
+        )
+
+
     def get_today_followups(
     self,
     employee_id: int | None = None
     ):
 
-        return (
-            self.call_log_repository.get_today_followups(
+        return [
+
+            call
+
+            for call in self._get_followup_calls(
                 employee_id
             )
-        )
+
+            if (
+                call.next_followup_date
+                and call.next_followup_date == date.today()
+            )
+
+        ]
 
     def get_pending_followups(
     self,
     employee_id: int | None = None
     ):
 
-        return (
-            self.call_log_repository.get_pending_followups(
+        return [
+
+            call
+
+            for call in self._get_followup_calls(
                 employee_id
             )
-        )
+
+            if (
+                call.next_followup_date
+                and call.next_followup_date > date.today()
+            )
+
+        ]
     
     def get_overdue_followups(
     self,
     employee_id: int | None = None
     ):
 
-        return (
-            self.call_log_repository
-            .get_overdue_followups(
+        return [
+
+            call
+
+            for call in self._get_followup_calls(
                 employee_id
             )
-        )
+
+            if (
+                call.next_followup_date
+                and call.next_followup_date < date.today()
+            )
+
+        ]
 
     def update(
         self,

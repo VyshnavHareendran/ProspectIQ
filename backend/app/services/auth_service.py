@@ -7,6 +7,8 @@ from app.core.auth import create_access_token
 from app.models.user import User
 from app.core.security import hash_password
 
+from datetime import datetime, timezone
+
 class AuthService:
 
     def __init__(self, user_repository: UserRepository):
@@ -31,6 +33,10 @@ class AuthService:
         if not user.is_active:
             raise ValueError("Employee account is inactive. Please contact the administrator.")
 
+        user.last_login = datetime.now(timezone.utc)
+
+        self.user_repository.update(user)
+
         payload = {
             "sub": user.email,
             "user_id": user.id,
@@ -48,14 +54,28 @@ class AuthService:
     def change_password(
     self,
     user: User,
-    new_password: str
+    new_password: str,
+    confirm_password: str,
     ):
+
+        if new_password != confirm_password:
+            raise ValueError(
+                "New password and confirm password do not match."
+            )
+
+        if verify_password(
+            new_password,
+            user.password_hash,
+        ):
+            raise ValueError(
+                "New password must be different from the current password."
+            )
 
         password_hash = hash_password(new_password)
 
         self.user_repository.change_password(
             user,
-            password_hash
+            password_hash,
         )
 
         return {
