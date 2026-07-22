@@ -1,32 +1,35 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
+import RoleProtectedRoute from "../components/RoleProtectedRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
-import Dashboard from "../pages/admin/Dashboard";
 
+import { routePaths } from "./routePaths";
+
+// Auth Pages
+import Login from "../pages/auth/Login";
+import ChangePassword from "../pages/auth/ChangePassword";
+
+// Admin Pages
+import Dashboard from "../pages/admin/Dashboard";
 import Businesses from "../pages/admin/Businesses";
 import UploadCSV from "../pages/admin/UploadCSV";
 import LeadScores from "../pages/admin/LeadScores";
 import CallLogs from "../pages/admin/CallLogs";
 import Followups from "../pages/admin/Followups";
-import Login from "../pages/auth/Login";
-import ChangePassword from "../pages/auth/ChangePassword";
 import EmployeeManagement from "../pages/admin/EmployeeManagement";
-import LeadAssignments from '../pages/admin/LeadAssignments';
+
+import LeadAssignments from "../pages/admin/LeadAssignments";
 import Settings from "../pages/admin/settings/Settings";
 import EmployeePerformance from "../pages/admin/EmployeePerformance";
+import Reports from "../pages/admin/Reports";
 
-import { routePaths } from "./routePaths";
-
+// Employee Pages
 import EmployeeDashboard from "../pages/employee/Dashboard";
 import TodaysCalls from "../pages/employee/TodaysCalls";
 import MyLeads from "../pages/employee/MyLeads";
 import MyCallLogs from "../pages/employee/MyCallLogs";
 import MyFollowups from "../pages/employee/MyFollowups";
 import Profile from "../pages/employee/Profile";
-
-
-import RoleProtectedRoute from "../components/RoleProtectedRoute";
-
 
 const AppRoutes = () => (
   <Routes>
@@ -44,7 +47,7 @@ const AppRoutes = () => (
       />
     </Route>
 
-    {/* Protected Routes */}
+    {/* Admin Routes */}
     <Route element={<ProtectedRoute />}>
       <Route element={<RoleProtectedRoute allowedRoles={["ADMIN"]} />}>
         <Route element={<DashboardLayout />}>
@@ -85,13 +88,18 @@ const AppRoutes = () => (
           />
 
           <Route
-              path={routePaths.employeeManagement}
-              element={<EmployeeManagement />}
+            path={routePaths.employeeManagement}
+            element={<EmployeeManagement />}
           />
 
           <Route
-              path={routePaths.followups}
-              element={<Followups />}
+            path={routePaths.followups}
+            element={<Followups />}
+          />
+
+          <Route
+            path={routePaths.reports}
+            element={<Reports />}
           />
 
           <Route
@@ -103,6 +111,7 @@ const AppRoutes = () => (
       </Route>
     </Route>
 
+    {/* Employee Routes */}
     <Route element={<ProtectedRoute />}>
       <Route element={<RoleProtectedRoute allowedRoles={["EMPLOYEE"]} />}>
         <Route element={<DashboardLayout />}>
@@ -128,8 +137,8 @@ const AppRoutes = () => (
           />
 
           <Route
-              path={routePaths.employeeMyFollowups}
-              element={<MyFollowups />}
+            path={routePaths.employeeMyFollowups}
+            element={<MyFollowups />}
           />
 
           <Route
@@ -147,8 +156,6 @@ const AppRoutes = () => (
       element={<Navigate to={routePaths.dashboard} replace />}
     />
   </Routes>
-
-
 );
 
 export default AppRoutes;
