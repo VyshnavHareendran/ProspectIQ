@@ -123,3 +123,30 @@ class UserRepository:
         self.db.refresh(employee)
 
         return employee
+
+    def update_employee(
+    self,
+    employee: User,
+    full_name: str,
+    email: str,
+    ):
+        employee.full_name = full_name
+        employee.email = email
+
+        self.db.commit()
+        self.db.refresh(employee)
+
+        return employee
+
+    def reset_employee_password(
+    self,
+    user: User,
+    password_hash: str,
+    ):
+        user.password_hash = password_hash
+        user.must_change_password = True
+
+        self.db.commit()
+        self.db.refresh(user)
+
+        return user

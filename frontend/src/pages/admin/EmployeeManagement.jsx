@@ -22,9 +22,9 @@ import { employeeManagementApi } from "../../api/admin/employeeManagementApi";
 import ConfirmStatusDialog from "../../components/employee/ConfirmStatusDialog";
 import AppSnackbar from "../../components/common/AppSnackbar";
 import DeleteEmployeeDialog from "../../components/employee/DeleteEmployeeDialog";
-
+import EditEmployeeDialog from "../../components/employee/EditEmployeeDialog";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
+import ResetPasswordDialog from "../../components/employee/ResetPasswordDialog";
 import {
   Menu,
   MenuItem,
@@ -46,7 +46,8 @@ const EmployeeManagement = () => {
 
   const [openStatusDialog, setOpenStatusDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [openResetPasswordDialog, setOpenResetPasswordDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   
   const [anchorEl, setAnchorEl] = useState(null);
@@ -485,6 +486,58 @@ const EmployeeManagement = () => {
             }}
         />
 
+        <EditEmployeeDialog
+            open={openEditDialog}
+            employee={selectedEmployee}
+            onClose={() => {
+                setOpenEditDialog(false);
+                setSelectedEmployee(null);
+            }}
+            onEmployeeUpdated={(updatedEmployee) => {
+                setEmployees((prev) =>
+                prev.map((employee) =>
+                    employee.id === updatedEmployee.id
+                    ? {
+                        ...employee,
+                        ...updatedEmployee,
+                        }
+                    : employee
+                )
+                );
+
+                setOpenEditDialog(false);
+                setSelectedEmployee(null);
+
+                setSnackbar({
+                open: true,
+                message: "Employee updated successfully.",
+                severity: "success",
+                });
+            }}
+        />
+
+        <ResetPasswordDialog
+            open={openResetPasswordDialog}
+            employee={selectedEmployee}
+            onClose={() => {
+                setOpenResetPasswordDialog(false);
+                setSelectedEmployee(null);
+            }}
+            onPasswordReset={(resetData) => {
+                setEmployees((prev) =>
+                prev.map((employee) =>
+                    employee.id === resetData.employee_id
+                    ? {
+                        ...employee,
+                        must_change_password:
+                            resetData.must_change_password,
+                        }
+                    : employee
+                )
+                );
+            }}
+        />
+
         <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
@@ -509,20 +562,26 @@ const EmployeeManagement = () => {
 
             </MenuItem>
 
-            <MenuItem disabled>
-
+            <MenuItem
+                onClick={() => {
+                    closeActionMenu();
+                    setOpenEditDialog(true);
+                }}
+            >
                 <ListItemText>
-                    Edit Employee (Coming Soon)
+                    Edit Employee
                 </ListItemText>
-
             </MenuItem>
 
-            <MenuItem disabled>
-
+            <MenuItem
+                onClick={() => {
+                    closeActionMenu();
+                    setOpenResetPasswordDialog(true);
+                }}
+            >
                 <ListItemText>
-                    Reset Password (Coming Soon)
+                    Reset Password
                 </ListItemText>
-
             </MenuItem>
 
             <MenuItem

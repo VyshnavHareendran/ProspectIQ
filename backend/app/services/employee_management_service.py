@@ -76,3 +76,49 @@ class EmployeeManagementService:
         return {
             "message": "Employee deleted successfully."
         }
+
+    def update_employee(
+    self,
+    employee_id: int,
+    full_name: str,
+    email: str,
+    ):
+        employee = self.user_repository.get_by_id(employee_id)
+
+        if not employee or employee.role != UserRole.EMPLOYEE.value:
+            raise ValueError("Employee not found.")
+
+        existing_user = self.user_repository.get_by_email(email)
+
+        if existing_user and existing_user.id != employee.id:
+            raise ValueError("Email already exists.")
+
+        return self.user_repository.update_employee(
+            employee,
+            full_name.strip(),
+            email,
+        )
+
+    def reset_employee_password(
+    self,
+    employee_id: int,
+    ):
+        employee = self.user_repository.get_by_id(employee_id)
+
+        if not employee or employee.role != UserRole.EMPLOYEE.value:
+            raise ValueError("Employee not found.")
+
+        temporary_password = generate_temporary_password()
+
+        self.user_repository.reset_employee_password(
+            employee,
+            hash_password(temporary_password),
+        )
+
+        return {
+            "employee_id": employee.id,
+            "full_name": employee.full_name,
+            "email": employee.email,
+            "temporary_password": temporary_password,
+            "must_change_password": True,
+        }

@@ -16,6 +16,9 @@ from app.schemas.auth import (
     CreateEmployeeResponse,
     ChangeEmployeeStatusRequest,
     ChangeEmployeeStatusResponse,
+    UpdateEmployeeRequest,
+    UpdateEmployeeResponse,
+    ResetEmployeePasswordResponse,
 )
 
 from app.services.employee_management_service import EmployeeManagementService
@@ -127,6 +130,60 @@ def delete_employee(
 
     try:
         return service.delete_employee(employee_id)
+
+    except ValueError as e:
+        raise HTTPException(
+            status_code=404,
+            detail=str(e),
+        )
+
+
+@router.put(
+    "/{employee_id}",
+    response_model=UpdateEmployeeResponse,
+)
+def update_employee(
+    employee_id: int,
+    request: UpdateEmployeeRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin),
+):
+    repository = UserRepository(db)
+    service = EmployeeManagementService(repository)
+
+    try:
+        return service.update_employee(
+            employee_id=employee_id,
+            full_name=request.full_name,
+            email=request.email,
+        )
+
+    except ValueError as e:
+        if str(e) == "Email already exists.":
+            raise HTTPException(
+                status_code=409,
+                detail=str(e),
+            )
+
+        raise HTTPException(
+            status_code=404,
+            detail=str(e),
+        )
+
+@router.post(
+    "/{employee_id}/reset-password",
+    response_model=ResetEmployeePasswordResponse,
+)
+def reset_employee_password(
+    employee_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin),
+):
+    repository = UserRepository(db)
+    service = EmployeeManagementService(repository)
+
+    try:
+        return service.reset_employee_password(employee_id)
 
     except ValueError as e:
         raise HTTPException(

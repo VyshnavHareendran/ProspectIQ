@@ -141,3 +141,24 @@ class ChangeEmployeeStatusResponse(BaseModel):
     class Config:
 
         from_attributes = True
+
+
+class UpdateEmployeeRequest(BaseModel):
+        full_name: str
+        email: EmailStr
+
+
+class UpdateEmployeeResponse(BaseModel):
+        id: int
+        full_name: str
+        email: EmailStr
+        role: str
+        is_active: bool
+        must_change_password: bool
+
+class ResetEmployeePasswordResponse(BaseModel):
+    employee_id: int
+    full_name: str
+    email: EmailStr
+    temporary_password: str
+    must_change_password: bool
