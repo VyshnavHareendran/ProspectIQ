@@ -152,17 +152,16 @@ class LeadScoreRepository:
     limit: int = 20
     ):
 
-        return (
+        lead_scores = (
             self.db.query(LeadScore)
             .options(
-                joinedload(
-                    LeadScore.business
-                )
+                joinedload(LeadScore.business),
+                joinedload(LeadScore.business)
+                    .joinedload(Business.lead_assignments)
+                    .joinedload(LeadAssignment.employee)
             )
             .filter(
-                LeadScore.priority.in_(
-                    ["HIGH", "MEDIUM"]
-                )
+                LeadScore.priority.in_(["HIGH", "MEDIUM"])
             )
             .order_by(
                 desc(LeadScore.lead_score)
@@ -170,6 +169,20 @@ class LeadScoreRepository:
             .limit(limit)
             .all()
         )
+
+        for lead in lead_scores:
+
+            lead.assigned_to = "Unassigned"
+
+            for assignment in lead.business.lead_assignments:
+
+                if assignment.is_active:
+
+                    lead.assigned_to = assignment.employee.full_name
+
+                    break
+
+        return lead_scores
     
     def get_feature_importance(self):
 
@@ -274,6 +287,10 @@ class LeadScoreRepository:
     self,
     business_id: int
     ):
+        
+        print("=" * 50)
+        print(f"Generating score for Business ID: {business_id}")
+        print("=" * 50)
 
         try:
             business = (

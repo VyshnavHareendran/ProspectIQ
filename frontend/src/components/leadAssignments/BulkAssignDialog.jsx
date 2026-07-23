@@ -14,6 +14,8 @@ import {
   Checkbox,
   ListItemText,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
@@ -31,7 +33,7 @@ export default function BulkAssignDialog({
 }) {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState(null);
-
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   useEffect(() => {
 
     if (!open) return;
@@ -84,7 +86,7 @@ export default function BulkAssignDialog({
       setSelectedEmployees([]);
       setLeadCount(100);
 
-      alert("Bulk assignment completed.");
+      setSnackbarOpen(true);
 
     } catch (error) {
 
@@ -103,6 +105,7 @@ export default function BulkAssignDialog({
   };
 
   return (
+   <>
     <Dialog
       open={open}
       onClose={onClose}
@@ -259,5 +262,24 @@ export default function BulkAssignDialog({
 
       </DialogActions>
     </Dialog>
+    <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+        }}
+    >
+        <Alert
+            onClose={() => setSnackbarOpen(false)}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+        >
+            Bulk assignment completed successfully.
+        </Alert>
+    </Snackbar>
+   </>
   );
 }

@@ -1,4 +1,13 @@
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+
 import ApiRoundedIcon from "@mui/icons-material/ApiRounded";
 import CloudDoneRoundedIcon from "@mui/icons-material/CloudDoneRounded";
 import DataObjectRoundedIcon from "@mui/icons-material/DataObjectRounded";
@@ -8,60 +17,123 @@ import ScheduleRoundedIcon from "@mui/icons-material/ScheduleRounded";
 import StorageRoundedIcon from "@mui/icons-material/StorageRounded";
 import WebAssetRoundedIcon from "@mui/icons-material/WebAssetRounded";
 
-import { SettingsCard, SettingsHeader } from "../../../../components/settings";
+import {
+  SettingsCard,
+  SettingsHeader,
+} from "../../../../components/settings";
 
-const systemItems = [
-  {
-    label: "Application Version",
-    value: "ProspectIQ CRM 2.4.0",
-    icon: <DataObjectRoundedIcon />,
-  },
-  {
-    label: "Environment",
-    value: "Production",
-    icon: <CloudDoneRoundedIcon />,
-    chip: "Live",
-    color: "success",
-  },
-  {
-    label: "Database Status",
-    value: "Connected",
-    icon: <StorageRoundedIcon />,
-    chip: "Healthy",
-    color: "success",
-  },
-  {
-    label: "API Status",
-    value: "Operational",
-    icon: <ApiRoundedIcon />,
-    chip: "200 OK",
-    color: "success",
-  },
-  {
-    label: "Backend URL",
-    value: "https://api.prospectiq.com",
-    icon: <LinkRoundedIcon />,
-  },
-  {
-    label: "Frontend Version",
-    value: "React 19 + Vite",
-    icon: <WebAssetRoundedIcon />,
-  },
-  {
-    label: "Server Time",
-    value: "20 Jul 2026, 09:25 AM IST",
-    icon: <ScheduleRoundedIcon />,
-  },
-  {
-    label: "Health Status",
-    value: "All services available",
-    icon: <HealthAndSafetyRoundedIcon />,
-    chip: "Healthy",
-    color: "success",
-  },
-];
+import { settingsApi } from "../../../../api/admin/settingsApi";
+
 
 export default function SystemTab() {
+  const [systemInfo, setSystemInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    const loadSystemInfo = async () => {
+      try {
+        const response = await settingsApi.getSystem();
+
+        setSystemInfo(response.data);
+      } catch (error) {
+        console.error("Failed to load system information:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void Promise.resolve().then(loadSystemInfo);
+  }, []);
+
+
+  if (loading) {
+    return (
+      <Box>
+        <SettingsHeader
+          title="System Information"
+          subtitle="Read-only application, API, and infrastructure status."
+        />
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            py: 8,
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </Box>
+    );
+  }
+
+
+  const formatServerTime = (value) => {
+    if (!value) return "N/A";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleString();
+  };
+
+
+  const systemItems = [
+    {
+      label: "Application Version",
+      value: systemInfo?.application_version || "N/A",
+      icon: <DataObjectRoundedIcon />,
+    },
+    {
+      label: "Environment",
+      value: systemInfo?.environment || "N/A",
+      icon: <CloudDoneRoundedIcon />,
+      chip: systemInfo?.environment || "Unknown",
+      color: "success",
+    },
+    {
+      label: "Database Status",
+      value: systemInfo?.database_status || "N/A",
+      icon: <StorageRoundedIcon />,
+      chip: systemInfo?.database_status || "Unknown",
+      color: "success",
+    },
+    {
+      label: "API Status",
+      value: systemInfo?.api_status || "N/A",
+      icon: <ApiRoundedIcon />,
+      chip: systemInfo?.api_status || "Unknown",
+      color: "success",
+    },
+    {
+      label: "Backend URL",
+      value: systemInfo?.backend_url || "N/A",
+      icon: <LinkRoundedIcon />,
+    },
+    {
+      label: "Frontend Version",
+      value: systemInfo?.frontend_version || "N/A",
+      icon: <WebAssetRoundedIcon />,
+    },
+    {
+      label: "Server Time",
+      value: formatServerTime(systemInfo?.server_time),
+      icon: <ScheduleRoundedIcon />,
+    },
+    {
+      label: "Health Status",
+      value: systemInfo?.health_status || "N/A",
+      icon: <HealthAndSafetyRoundedIcon />,
+      chip: systemInfo?.health_status || "Unknown",
+      color: "success",
+    },
+  ];
+
+
   return (
     <Box>
       <SettingsHeader
@@ -71,9 +143,16 @@ export default function SystemTab() {
 
       <Grid container spacing={3}>
         {systemItems.map((item) => (
-          <Grid key={item.label} size={{ xs: 12, md: 6 }}>
+          <Grid
+            key={item.label}
+            size={{ xs: 12, md: 6 }}
+          >
             <SettingsCard sx={{ height: "100%" }}>
-              <Stack direction="row" spacing={2} alignItems="flex-start">
+              <Stack
+                direction="row"
+                spacing={2}
+                alignItems="flex-start"
+              >
                 <Box
                   sx={{
                     width: 42,
@@ -88,6 +167,7 @@ export default function SystemTab() {
                 >
                   {item.icon}
                 </Box>
+
                 <Box sx={{ minWidth: 0, flex: 1 }}>
                   <Stack
                     direction="row"
@@ -96,14 +176,26 @@ export default function SystemTab() {
                     justifyContent="space-between"
                     sx={{ mb: 0.75 }}
                   >
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                    >
                       {item.label}
                     </Typography>
+
                     {item.chip ? (
-                      <Chip label={item.chip} color={item.color} size="small" />
+                      <Chip
+                        label={item.chip}
+                        color={item.color}
+                        size="small"
+                      />
                     ) : null}
                   </Stack>
-                  <Typography fontWeight={700} sx={{ overflowWrap: "anywhere" }}>
+
+                  <Typography
+                    fontWeight={700}
+                    sx={{ overflowWrap: "anywhere" }}
+                  >
                     {item.value}
                   </Typography>
                 </Box>

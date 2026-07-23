@@ -2,6 +2,7 @@ from fastapi import (
     APIRouter,
     Depends,
     HTTPException,
+    Query,
 )
 from sqlalchemy.orm import Session
 
@@ -20,6 +21,7 @@ from app.schemas.complete_call import CompleteCallRequest
 from app.dependencies.auth import get_verified_user
 from app.services.followup_service import FollowupService
 
+from typing import Optional
 
 router = APIRouter(
     prefix="/employee",
@@ -45,12 +47,16 @@ def get_service(db: Session):
     summary="Get My Leads"
 )
 def get_my_leads(
+    search: Optional[str] = Query(default=None),
     current_user: User = Depends(get_current_employee),
     db: Session = Depends(get_db),
 ):
     service = get_service(db)
 
-    return service.get_my_leads(current_user.id)
+    return service.get_my_leads(
+        current_user.id,
+        search
+    )
 
 
 

@@ -8,10 +8,14 @@ import {
 } from "@mui/material";
 
 import PhotoCameraRoundedIcon from "@mui/icons-material/PhotoCameraRounded";
-
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { InfoRow, SettingsCard } from ".";
 
-export default function ProfileCard({ user, onPhotoUpload }) {
+export default function ProfileCard({
+    user,
+    onPhotoUpload,
+    onPhotoReset,
+  }) {
   const initials = `${user.firstName?.[0] || user.full_name?.[0] || ""}${user.lastName?.[0] || ""}`;
   const displayName = user.full_name || `${user.firstName || ""} ${user.lastName || ""}`.trim();
 
@@ -99,7 +103,18 @@ export default function ProfileCard({ user, onPhotoUpload }) {
                 accept="image/png,image/jpeg,image/jpg"
                 onChange={onPhotoUpload}
               />
-            </Button>
+              </Button>
+              {onPhotoReset && user.avatar_url && (
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="error"
+                  startIcon={<DeleteOutlineRoundedIcon />}
+                  onClick={onPhotoReset}
+                >
+                  Reset Profile Photo
+                </Button>
+              )}
       </Stack>
     </SettingsCard>
   );

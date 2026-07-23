@@ -111,6 +111,39 @@ def upload_profile_photo(
         "avatar_url": current_user.profile_photo,
     }
 
+@router.delete("/profile/photo")
+def reset_profile_photo(
+    current_user: User = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    old_photo = current_user.profile_photo
+
+    # Reset profile photo in database
+    current_user.profile_photo = None
+
+    db.commit()
+    db.refresh(current_user)
+
+    # Remove old uploaded file if it exists
+    if old_photo and old_photo.startswith("/static/profile_photos/"):
+        filename = os.path.basename(old_photo)
+
+        file_path = os.path.join(
+            "static/profile_photos",
+            filename,
+        )
+
+        if os.path.isfile(file_path):
+            try:
+                os.remove(file_path)
+            except OSError:
+                pass
+
+    return {
+        "message": "Profile photo reset successfully.",
+        "avatar_url": "",
+    }
+
 @router.post("/security/change-password", response_model=MessageResponse)
 def change_password(
     payload: SecurityPasswordChangeRequest,

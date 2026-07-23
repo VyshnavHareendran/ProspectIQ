@@ -72,3 +72,42 @@ class CallLogReportResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ReportSummaryResponse(BaseModel):
+
+    total_businesses: int
+
+    calls_made: int
+
+    interested_leads: int
+
+    follow_ups: int
+
+    average_lead_score: float
+
+    active_employees: int
+
+class BusinessCategoryDistributionResponse(BaseModel):
+
+    category: str
+
+    count: int
+
+class CityDistributionResponse(BaseModel):
+
+    city: str
+
+    count: int
+
+class LeadScoreChartResponse(BaseModel):
+
+    name: str
+
+    leadScore: float
+
+class CallsPerEmployeeChartResponse(BaseModel):
+
+    employee: str
+
+    callsMade: int

@@ -76,22 +76,24 @@ const CallDialog = ({
 
             setSaving(true);
 
-            await employeeApi.updateLead(
-                lead.assignment_id,
-                {
-                    remarks,
-                    call_outcome: callOutcome,
-                }
-            );
+            await employeeApi.completeCall({
 
-            await callLogApi.createCallLog({
-                lead_assignment_id: lead.assignment_id,
-                employee_id: lead.employee_id,
-                call_outcome: callOutcome,
-                duration,
-                notes,
-                next_followup_date: nextFollowupDate || null,
-            });
+              assignment_id: lead.assignment_id,
+
+              call_status: callOutcome,
+
+              remarks: remarks,
+
+              duration: duration,
+
+              next_followup_date:
+                  nextFollowupDate || null,
+
+          });
+
+          await employeeApi.completeQueueItem(
+              lead.queue_id
+          );
 
             if (lead.queue_id) {
 

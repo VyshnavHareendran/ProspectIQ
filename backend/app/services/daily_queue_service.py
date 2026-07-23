@@ -21,15 +21,42 @@ class DailyQueueService:
         self.score_repo = LeadScoreRepository(db)
 
     def get_or_create_queue(
-        self,
-        employee_id: int
+    self,
+    employee_id: int
     ):
 
-        if self.queue_repo.queue_exists(employee_id):
+        existing_queue = self.queue_repo.get_employee_queue(employee_id)
 
-            return self.queue_repo.get_employee_queue(employee_id)
+        # No queue yet → create one
+        if not existing_queue:
+            return self.generate_queue(employee_id)
 
-        return self.generate_queue(employee_id)
+        # Queue belongs to a previous day → regenerate
+        if existing_queue[0].queue_date != date.today():
+            return self.generate_queue(employee_id)
+
+        current_assignments = {
+            assignment.id
+            for assignment in self.assignment_repo.get_employee_assignments(
+                employee_id
+            )
+        }
+
+        queue_assignments = {
+            item.assignment_id
+            for item in existing_queue
+        }
+
+        # Assignments changed (reassignment/new assignment)
+        if current_assignments != queue_assignments:
+            return self.generate_queue(employee_id)
+
+        # Queue is still valid
+        return [
+            item
+            for item in existing_queue
+            if item.status == "PENDING"
+        ]
 
     def generate_queue(
     self,
@@ -131,18 +158,40 @@ class DailyQueueService:
                 )
             )
 
-        # Sort by Lead Score
-        scored_leads.sort(
-            key=lambda x: x[1],
-            reverse=True
-        )
+        # ----------------------------
+        # Sort queues by Priority first,
+        # then by Lead Score
+        # ----------------------------
+
+        priority_order = {
+            "HIGH": 3,
+            "MEDIUM": 2,
+            "LOW": 1
+        }
+
+        def sort_queue(items):
+            return sorted(
+                items,
+                key=lambda x: (
+                    priority_order.get(x[2], 0),
+                    x[1]
+                ),
+                reverse=True
+            )
+
+        overdue_followups = sort_queue(overdue_followups)
+
+        today_followups = sort_queue(today_followups)
+
+        never_contacted = sort_queue(never_contacted)
+
+        scored_leads = sort_queue(scored_leads)
 
         final_queue = []
 
         final_queue.extend(overdue_followups)
         final_queue.extend(today_followups)
         final_queue.extend(never_contacted)
-
         final_queue.extend(scored_leads)
 
         final_queue = final_queue[:20]

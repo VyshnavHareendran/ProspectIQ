@@ -1,8 +1,6 @@
-import CallRoundedIcon from '@mui/icons-material/CallRounded'
 import InboxRoundedIcon from '@mui/icons-material/InboxRounded'
 import {
   Box,
-  Button,
   Card,
   CardContent,
   Chip,
@@ -96,7 +94,7 @@ const DailyCallList = ({ dailyCallList, loading }) => {
                   <TableCell>Priority</TableCell>
                   <TableCell>Lead Score</TableCell>
                   <TableCell>Phone Number</TableCell>
-                  <TableCell align="center">Call</TableCell>
+                  <TableCell align="center">Assigned To</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -125,16 +123,9 @@ const DailyCallList = ({ dailyCallList, loading }) => {
                       <TableCell>{formatScore(leadScore.lead_score)}</TableCell>
                       <TableCell>{phoneNumber || '-'}</TableCell>
                       <TableCell align="center">
-                        <Button
-                          component="a"
-                          disabled={!phoneNumber}
-                          href={phoneNumber ? `tel:${phoneNumber}` : undefined}
-                          size="small"
-                          startIcon={<CallRoundedIcon />}
-                          variant="contained"
-                        >
-                          Call
-                        </Button>
+                        <Typography fontWeight={600}>
+                          {leadScore.assigned_to || "Unassigned"}
+                        </Typography>
                       </TableCell>
                     </TableRow>
                   )

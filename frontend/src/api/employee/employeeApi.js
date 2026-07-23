@@ -6,8 +6,12 @@ export const employeeApi = {
     return httpClient.get("/employee/dashboard");
   },
 
-  getMyLeads() {
-    return httpClient.get("/employee/my-leads");
+  getMyLeads(search = "") {
+    return httpClient.get("/employee/my-leads", {
+      params: {
+        search,
+      },
+    });
   },
 
   updateLead(assignmentId, data) {
@@ -15,6 +19,17 @@ export const employeeApi = {
       `/employee/my-leads/${assignmentId}`,
       data
     );
+  },
+  completeCall(data) {
+    return httpClient.post(
+      "/employee/calls/complete",
+      data
+    );
+  },
+  completeQueueItem(queueId) {
+      return httpClient.put(
+          `/employee/todays-queue/${queueId}/complete`
+      );
   },
 
 };

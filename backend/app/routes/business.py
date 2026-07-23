@@ -15,7 +15,7 @@ from app.schemas.business import (
 
 from app.repositories.business_repository import BusinessRepository
 from app.services.business_service import BusinessService
-
+from app.repositories.lead_score_repository import LeadScoreRepository
 from typing import Optional
 from fastapi import Query
 
@@ -47,11 +47,14 @@ def create_business(
     - Sets created_by from logged-in user
     """
 
-    # Repository
     repository = BusinessRepository(db)
 
-    # Service
-    service = BusinessService(repository)
+    lead_score_repository = LeadScoreRepository(db)
+
+    service = BusinessService(
+        repository,
+        lead_score_repository
+    )
 
     # Create Business
     return service.create_business(
@@ -76,8 +79,13 @@ def get_all_businesses(
     current_user: User = Depends(get_verified_user)
 ):
     repository = BusinessRepository(db)
-    service = BusinessService(repository)
 
+    lead_score_repository = LeadScoreRepository(db)
+
+    service = BusinessService(
+        repository,
+        lead_score_repository
+    )
     return service.get_all_businesses(
         search=search,
         city=city,
@@ -98,7 +106,13 @@ def get_business(
     current_user: User = Depends(get_verified_user)
 ):
     repository = BusinessRepository(db)
-    service = BusinessService(repository)
+
+    lead_score_repository = LeadScoreRepository(db)
+
+    service = BusinessService(
+        repository,
+        lead_score_repository
+    )
 
     return service.get_business_by_id(business_id)
 
@@ -122,7 +136,12 @@ def update_business(
 
     repository = BusinessRepository(db)
 
-    service = BusinessService(repository)
+    lead_score_repository = LeadScoreRepository(db)
+
+    service = BusinessService(
+        repository,
+        lead_score_repository
+    )
 
     return service.update_business(
         business_id=business_id,
@@ -141,7 +160,12 @@ def delete_business(
 
     repository = BusinessRepository(db)
 
-    service = BusinessService(repository)
+    lead_score_repository = LeadScoreRepository(db)
+
+    service = BusinessService(
+        repository,
+        lead_score_repository
+    )
 
     service.delete_business(
         business_id

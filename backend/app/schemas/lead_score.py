@@ -37,6 +37,8 @@ class LeadScoreResponse(BaseModel):
 
     business: LeadScoreBusinessResponse
 
+    assigned_to: str | None = None
+
     class Config:
         from_attributes = True
 

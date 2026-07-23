@@ -16,6 +16,8 @@ export const routePaths = Object.freeze({
   reports: "/reports",
   settings: "/settings",
 
+  profile: "/profile",
+
   // Employee
   employeeDashboard: "/employee/dashboard",
   employeeTodaysCalls: "/employee/todays-calls",

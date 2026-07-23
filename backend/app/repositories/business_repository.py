@@ -296,26 +296,28 @@ class BusinessRepository:
             .first()
         )
     
-    def bulk_create(
-    self,
-    businesses: list[Business]
-    ):
+    def bulk_create(self, businesses: list[Business]):
         """
         Bulk insert businesses.
+        Uses individual flushes to avoid SQLAlchemy bulk insert
+        parameter binding issues with PostgreSQL.
         """
 
-        self.db.add_all(
-            businesses
-        )
+        try:
+            for business in businesses:
+                self.db.add(business)
+                self.db.flush()
 
-        self.db.commit()
+            self.db.commit()
 
-        for business in businesses:
-            self.db.refresh(
-                business
-            )
+            for business in businesses:
+                self.db.refresh(business)
 
-        return businesses
+            return businesses
+
+        except Exception:
+            self.db.rollback()
+            raise
 
     @staticmethod
     def _has_value(value):

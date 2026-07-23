@@ -29,7 +29,8 @@ import TodaysCalls from "../pages/employee/TodaysCalls";
 import MyLeads from "../pages/employee/MyLeads";
 import MyCallLogs from "../pages/employee/MyCallLogs";
 import MyFollowups from "../pages/employee/MyFollowups";
-import Profile from "../pages/employee/Profile";
+import Profile from "../pages/Profile";
+import EmployeeSettings from "../pages/employee/settings/Settings";
 
 const AppRoutes = () => (
   <Routes>
@@ -105,7 +106,12 @@ const AppRoutes = () => (
           <Route
               path={routePaths.settings}
               element={<Settings />}
-          />          
+          />      
+
+          <Route
+              path={routePaths.profile}
+              element={<Profile />}
+          />   
 
         </Route>
       </Route>
@@ -145,6 +151,11 @@ const AppRoutes = () => (
             path={routePaths.employeeProfile}
             element={<Profile />}
           />
+
+          <Route
+            path={routePaths.employeeSettings}
+            element={<EmployeeSettings />}
+          /> 
 
         </Route>
       </Route>

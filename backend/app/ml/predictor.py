@@ -44,6 +44,7 @@ class Predictor:
             transformed_features
         )[0][1]
 
+
         score = float(
             round(
                 float(probability) * 100,

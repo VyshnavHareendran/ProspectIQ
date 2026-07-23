@@ -37,8 +37,23 @@ const UserMenu = ({ onLogout, user }) => {
 
   const openSettings = () => {
     closeMenu()
-    navigate(routePaths.settings)
+
+    navigate(
+      user?.role === "ADMIN"
+        ? routePaths.settings
+        : routePaths.employeeSettings
+    )
   }
+
+  const openProfile = () => {
+    closeMenu();
+
+    navigate(
+      user?.role === "ADMIN"
+        ? routePaths.profile
+        : routePaths.employeeProfile
+    );
+  };
 
   const handleLogout = () => {
     closeMenu()
@@ -128,7 +143,7 @@ const UserMenu = ({ onLogout, user }) => {
           },
         }}
       >
-        <MenuItem onClick={closeMenu} sx={{ borderRadius: 1.5 }}>
+        <MenuItem onClick={openProfile} sx={{ borderRadius: 1.5 }}>
           <ListItemIcon>
             <AccountCircleRoundedIcon fontSize="small" />
           </ListItemIcon>

@@ -18,4 +18,7 @@ export const profileService = {
       },
     });
   },
+  resetProfilePhoto() {
+    return httpClient.delete("/settings/profile/photo");
+  },
 };

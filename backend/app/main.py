@@ -25,11 +25,13 @@ from app.routes.employee import (
     router as employee_router
 )
 from app.routes.settings import router as settings_router
+from app.routes.employee_settings import router as employee_settings_router
 from app.routes.daily_queue import router as daily_queue_router
 
 from app.routes.employee_dashboard import (
     router as employee_dashboard_router
 )
+from app.routes import profile
 
 app = FastAPI(
     title="ProspectIQ",
@@ -62,8 +64,10 @@ app.include_router(lead_assignment_router)
 app.include_router(employee_router)
 app.include_router(business_profile.router)
 app.include_router(settings_router)
+app.include_router(employee_settings_router)
 app.include_router(employee_dashboard_router)
 app.include_router(daily_queue_router)
+app.include_router(profile.router)
 
 @app.get("/")
 def home():

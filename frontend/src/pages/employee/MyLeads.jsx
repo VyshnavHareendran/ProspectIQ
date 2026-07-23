@@ -1,27 +1,36 @@
 import {
   Box,
   Typography,
+  Pagination,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useCallback } from "react";
 import { employeeApi } from "../../api/employee/employeeApi";
 
 import MyLeadsTable from "../../components/employee/MyLeadsTable";
 import BusinessProfileDrawer from "../../components/business/BusinessProfileDrawer";
+
+import SearchIcon from "@mui/icons-material/Search";
 
 const MyLeads = () => {
 
     const [leads, setLeads] = useState([]);
     const [selectedBusiness, setSelectedBusiness] = useState(null);
     const [openBusinessDrawer, setOpenBusinessDrawer] = useState(false);
+    const [page, setPage] = useState(1);
+    const [search, setSearch] = useState("");
 
-    const loadLeads = async () => {
+    const pageSize = 10;
+
+    const loadLeads = useCallback(async () => {
 
         try {
 
             const response =
-                await employeeApi.getMyLeads();
-
+                await employeeApi.getMyLeads(search);
 
             setLeads(response.data);
 
@@ -30,7 +39,8 @@ const MyLeads = () => {
             console.error(error);
 
         }
-    };
+
+    }, [search]);
 
         const handleViewBusiness = (businessId) => {
         setSelectedBusiness(businessId);
@@ -39,12 +49,17 @@ const MyLeads = () => {
 
     
     useEffect(() => {
-        const fetchLeads = async () => {
-            await loadLeads();
-        };
+        loadLeads();
+    }, [loadLeads]);
 
-        fetchLeads();
-    }, []);
+    const totalPages = Math.ceil(
+        leads.length / pageSize
+    );
+
+    const paginatedLeads = leads.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+    );
 
     return (
     <>
@@ -62,10 +77,47 @@ const MyLeads = () => {
         </Typography>
         </Box>
 
+        <Box mb={3}>
+            <TextField
+                fullWidth
+                size="small"
+                placeholder="Search business..."
+                value={search}
+                onChange={(e) => {
+                    setSearch(e.target.value);
+                    setPage(1);
+                }}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <SearchIcon />
+                        </InputAdornment>
+                    ),
+                }}
+            />
+        </Box>
+
         <MyLeadsTable
-            leads={leads}
+            leads={paginatedLeads}
             onViewBusiness={handleViewBusiness}
         />
+
+        
+
+        <Box
+            mt={3}
+            display="flex"
+            justifyContent="center"
+        >
+            <Pagination
+                page={page}
+                count={totalPages}
+                color="primary"
+                onChange={(event, value) => {
+                    setPage(value);
+                }}
+            />
+        </Box>
 
         <BusinessProfileDrawer
             open={openBusinessDrawer}

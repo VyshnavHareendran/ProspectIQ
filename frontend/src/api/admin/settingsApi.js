@@ -22,4 +22,7 @@ export const settingsApi = {
   updateAppearance(data) {
     return httpClient.put("/settings/appearance", data);
   },
+  getSystem() {
+    return httpClient.get("/settings/system");
+  },
 };

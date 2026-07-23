@@ -5,6 +5,8 @@ import {
   Typography,
   CircularProgress,
   Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import { leadScoreApi } from "../../api/admin";
@@ -16,6 +18,7 @@ import AssignEmployeeDialog from "../../components/leadAssignments/AssignEmploye
 
 import BusinessProfileDrawer from "../../components/business/BusinessProfileDrawer";
 import BulkAssignDialog from "../../components/leadAssignments/BulkAssignDialog";
+import { Pagination } from "@mui/material";
 
 export default function LeadAssignments() {
   const [leadScores, setLeadScores] = useState([]);
@@ -27,7 +30,7 @@ export default function LeadAssignments() {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [selectedLead, setSelectedLead] = useState(null);
-
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState("");
 
   const [remarks, setRemarks] = useState("");
@@ -41,6 +44,22 @@ export default function LeadAssignments() {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const [openBusinessDrawer, setOpenBusinessDrawer] = useState(false);
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const [page, setPage] = useState(1);
+  const pageSize = 20;
+  const totalPages = Math.ceil(
+      leadScores.length / pageSize
+  );
+
+  const paginatedLeadScores = leadScores.slice(
+      (page - 1) * pageSize,
+      page * pageSize
+  );
+
+
   const loadData = async () => {
     try {
       const [
@@ -48,16 +67,22 @@ export default function LeadAssignments() {
         employeeResponse,
         assignmentResponse,
       ] = await Promise.all([
-        leadScoreApi.getLeadScores(),
+        leadScoreApi.getLeadScores({
+            page: 1,
+            page_size: 1000,
+        }),
         authApi.getEmployees(),
         leadAssignmentApi.getAssignments(),
       ]);
 
       setLeadScores(leadScoreResponse.data.items);
 
+      console.log("Lead Scores:", leadScoreResponse.data.items.length);
+
       setEmployees(employeeResponse.data);
 
       setAssignments(assignmentResponse.data);
+
     } catch (error) {
       console.error(error);
     } finally {
@@ -67,7 +92,7 @@ export default function LeadAssignments() {
 
   const handleOpenDialog = (lead, assignment = null) => {
     setSelectedLead(lead);
-
+    setSelectedAssignment(assignment);
     if (assignment) {
         setSelectedEmployee(assignment.employee_id);
         setRemarks(assignment.remarks || "");
@@ -83,6 +108,7 @@ export default function LeadAssignments() {
     setDialogOpen(false);
     setSelectedLead(null);
     setSelectedEmployee("");
+    setSelectedAssignment(null);
     setRemarks("");
     };
 
@@ -98,19 +124,37 @@ export default function LeadAssignments() {
 
     try {
 
-        await leadAssignmentApi.assignLead({
+        if (selectedAssignment) {
 
-        business_id: selectedLead.business.id,
+            await leadAssignmentApi.updateAssignment(
+                selectedAssignment.id,
+                {
+                    employee_id: selectedEmployee,
+                    remarks,
+                }
+            );
 
-        employee_id: selectedEmployee,
+        } else {
 
-        remarks,
+            await leadAssignmentApi.assignLead({
+                business_id: selectedLead.business.id,
+                employee_id: selectedEmployee,
+                remarks,
+            });
 
-        });
+        }
 
         handleCloseDialog();
 
         await loadData();
+
+        setSnackbarMessage(
+            selectedAssignment
+                ? "Lead reassigned successfully."
+                : "Lead assigned successfully."
+        );
+
+        setSnackbarOpen(true);
 
     } catch (error) {
 
@@ -122,12 +166,10 @@ export default function LeadAssignments() {
 
 
   useEffect(() => {
-    const fetchData = async () => {
-        await loadData();
-    };
 
-    fetchData();
-    }, []);
+      loadData();
+
+  }, []);
 
   if (loading) {
     return (
@@ -169,12 +211,29 @@ export default function LeadAssignments() {
       </Box>
 
       <LeadAssignmentTable
-          leadScores={leadScores}
+          leadScores={paginatedLeadScores}
           employees={employees}
           assignments={assignments}
           onAssign={handleOpenDialog}
           onViewBusiness={handleViewBusiness}
       />
+
+      <Box
+          mt={3}
+          display="flex"
+          justifyContent="center"
+      >
+
+          <Pagination
+              page={page}
+              count={totalPages}
+              color="primary"
+              onChange={(event, value) => {
+                  setPage(value);
+              }}
+          />
+
+      </Box>
       
       <AssignEmployeeDialog
             open={dialogOpen}
@@ -207,6 +266,24 @@ export default function LeadAssignments() {
                 setSelectedBusiness(null);
             }}
         />
+
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={() => setSnackbarOpen(false)}
+          anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+          }}
+      >
+          <Alert
+              onClose={() => setSnackbarOpen(false)}
+              severity="success"
+              variant="filled"
+          >
+              {snackbarMessage}
+          </Alert>
+      </Snackbar>
 
     </Box>
   );

@@ -75,10 +75,12 @@ class User(Base):
 
     employee_assignments = relationship(
         "LeadAssignment",
-        foreign_keys="LeadAssignment.employee_id"
+        foreign_keys="LeadAssignment.employee_id",
+        back_populates="employee"
     )
 
     admin_assignments = relationship(
         "LeadAssignment",
-        foreign_keys="LeadAssignment.assigned_by"
+        foreign_keys="LeadAssignment.assigned_by",
+        back_populates="admin"
     )

@@ -2,8 +2,13 @@ import httpClient from "../httpClient";
 
 export const leadAssignmentApi = {
 
-  getAssignments() {
-    return httpClient.get("/lead-assignments");
+  getAssignments(page = 1, pageSize = 20) {
+    return httpClient.get("/lead-assignments", {
+      params: {
+        page,
+        page_size: pageSize,
+      },
+    });
   },
 
   assignLead(data) {

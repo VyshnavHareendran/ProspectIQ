@@ -403,4 +403,18 @@ class CallLogRepository:
 
         )
     
+    def get_attempt_count(
+    self,
+    lead_assignment_id: int,
+    ):
+        return (
+            self.db.query(CallLog)
+            .filter(
+                CallLog.lead_assignment_id == lead_assignment_id
+            )
+            .count()
+        )
+    
+    
+    
     

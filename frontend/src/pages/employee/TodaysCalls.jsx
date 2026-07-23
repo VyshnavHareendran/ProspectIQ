@@ -12,6 +12,7 @@ import {
   Chip,
   CircularProgress,
   Button,
+  Pagination,
 } from "@mui/material";
 
 import { dailyQueueApi } from "../../api/employee";
@@ -26,6 +27,10 @@ export default function TodaysCalls() {
     const [selectedLead, setSelectedLead] = useState(null);
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    
+    const [page, setPage] = useState(1);
+
+    const pageSize = 10;
 
     const loadQueue = async () => {
     try {
@@ -43,6 +48,15 @@ export default function TodaysCalls() {
         void Promise.resolve().then(loadQueue);
 
     }, []);
+
+    const totalPages = Math.ceil(
+        queue.length / pageSize
+    );
+
+    const paginatedQueue = queue.slice(
+        (page - 1) * pageSize,
+        page * pageSize
+    );
 
     
 
@@ -108,7 +122,7 @@ export default function TodaysCalls() {
 
                     <TableBody>
 
-                        {queue.length === 0 ? (
+                        {paginatedQueue.length === 0 ? (
 
                             <TableRow>
 
@@ -125,7 +139,7 @@ export default function TodaysCalls() {
 
                                 ) : (
 
-                                    queue.map((lead) => (
+                                    paginatedQueue.map((lead) => (
 
                                         <TableRow key={lead.queue_id}>
 
@@ -190,6 +204,21 @@ export default function TodaysCalls() {
                 </Table>
 
             </Paper>
+
+            <Box
+                mt={3}
+                display="flex"
+                justifyContent="center"
+            >
+                <Pagination
+                    page={page}
+                    count={totalPages}
+                    color="primary"
+                    onChange={(event, value) => {
+                        setPage(value);
+                    }}
+                />
+            </Box>
 
             <CallDialog
                 open={dialogOpen}

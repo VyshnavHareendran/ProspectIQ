@@ -16,7 +16,12 @@ from app.services.report_service import (
 from app.schemas.report import (
     BusinessReportResponse,
     UploadReportResponse,
-    CallLogReportResponse
+    CallLogReportResponse,
+    ReportSummaryResponse,
+    BusinessCategoryDistributionResponse,
+    CityDistributionResponse,
+    LeadScoreChartResponse,
+    CallsPerEmployeeChartResponse
 )
 
 from fastapi.responses import StreamingResponse
@@ -38,6 +43,75 @@ def get_service(
     repository = ReportRepository(db)
 
     return ReportService(repository)
+
+
+@router.get(
+    "/summary",
+    response_model=ReportSummaryResponse
+)
+def get_report_summary(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    return get_service(db).get_summary()
+
+@router.get(
+    "/city-distribution",
+    response_model=List[CityDistributionResponse]
+)
+def get_city_distribution(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    return (
+        get_service(db)
+        .get_city_distribution()
+    )
+
+@router.get(
+    "/category-distribution",
+    response_model=List[BusinessCategoryDistributionResponse]
+)
+def get_business_category_distribution(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    return (
+        get_service(db)
+        .get_business_category_distribution()
+    )
+
+@router.get(
+    "/lead-score-chart",
+    response_model=List[LeadScoreChartResponse]
+)
+def get_lead_score_chart(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    return (
+        get_service(db)
+        .get_lead_score_chart()
+    )
+
+@router.get(
+    "/calls-per-employee",
+    response_model=List[CallsPerEmployeeChartResponse]
+)
+def get_calls_per_employee_chart(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    return (
+        get_service(db)
+        .get_calls_per_employee_chart()
+    )
+
 
 
 @router.get(

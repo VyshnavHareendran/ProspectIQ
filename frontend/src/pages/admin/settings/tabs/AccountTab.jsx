@@ -125,6 +125,32 @@ export default function AccountTab() {
     }
   };
 
+  const handlePhotoReset = async () => {
+    try {
+      const response = await profileService.resetProfilePhoto();
+
+      setFormData((prev) => ({
+        ...prev,
+        avatar_url: response.data.avatar_url || "",
+      }));
+
+      await refreshUser();
+
+      setFeedback({
+        severity: "success",
+        message: "Profile photo reset successfully.",
+      });
+    } catch (error) {
+      setFeedback({
+        severity: "error",
+        message: getSettingsErrorMessage(
+          error,
+          "Unable to reset profile photo."
+        ),
+      });
+    }
+  };
+
   const handleSave = async () => {
     setSaving(true);
 
@@ -173,6 +199,7 @@ export default function AccountTab() {
             <ProfileCard
               user={formData}
               onPhotoUpload={handlePhotoUpload}
+              onPhotoReset={handlePhotoReset}
             />
           </Grid>
 

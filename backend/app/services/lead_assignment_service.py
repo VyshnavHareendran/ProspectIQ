@@ -251,12 +251,23 @@ class LeadAssignmentService:
     def get_my_leads(
     self,
     employee_id: int,
+    search: str | None = None,
     ):
 
         assignments = (
             self.lead_assignment_repository
             .get_employee_assignments(employee_id)
         )
+
+
+        if search:
+            search = search.strip().lower()
+
+            assignments = [
+                assignment
+                for assignment in assignments
+                if search in assignment.business.business_name.lower()
+            ]
 
         result = []
 
@@ -386,12 +397,19 @@ class LeadAssignmentService:
         if assignment.employee_id != current_user.id:
             raise ValueError("You are not assigned to this lead.")
 
+        attempt_number = (
+            self.call_log_repository.get_attempt_count(
+                assignment.id
+            ) + 1
+        )
+
         # Create call log
         call_log = CallLog(
-            assignment_id=assignment.id,
+            lead_assignment_id=assignment.id,
             employee_id=current_user.id,
-            call_status=request.call_status,
-            remarks=request.remarks,
+            call_outcome=request.call_status,
+            attempt_number=attempt_number,
+            notes=request.remarks,
             duration=request.duration,
             next_followup_date=request.next_followup_date,
             created_at=datetime.utcnow(),

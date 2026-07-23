@@ -69,10 +69,10 @@ const LoginForm = ({ errorMessage = '', isLoading = false, onSubmit = noOp }) =>
             disabled={isLoading}
             type="email"
             label="Email address"
-            autoComplete="email"
-            autoFocus
+            autoComplete="off"
+            autoFocus={false}
             error={Boolean(error)}
-            helperText={error?.message || ' '}
+            helperText={error ? error.message : ""}
           />
         )}
       />

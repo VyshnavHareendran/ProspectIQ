@@ -9,13 +9,17 @@ from app.schemas.business import (
 
 from typing import Optional
 
+from app.repositories.lead_score_repository import LeadScoreRepository
+
 class BusinessService:
 
     def __init__(
         self,
-        repository: BusinessRepository
+        repository: BusinessRepository,
+        lead_score_repository: LeadScoreRepository
     ):
         self.repository = repository
+        self.lead_score_repository = lead_score_repository
 
     def create_business(
         self,
@@ -62,7 +66,15 @@ class BusinessService:
         
         # Save Business
 
-        return self.repository.create(business)
+        # Save Business
+        business = self.repository.create(business)
+
+        # Generate lead score
+        self.lead_score_repository.generate_score(
+            business.id
+        )
+
+        return business
     
     def get_all_businesses(
     self,
@@ -160,9 +172,15 @@ class BusinessService:
                 status_code=status.HTTP_409_CONFLICT,
                 detail="Another business with the same details already exists."
             )
-
         # Save changes
-        return self.repository.update(business)
+        updated_business = self.repository.update(business)
+
+        # Regenerate Lead Score
+        self.lead_score_repository.generate_score(
+            updated_business.id
+        )
+
+        return updated_business
     
     
     def delete_business(

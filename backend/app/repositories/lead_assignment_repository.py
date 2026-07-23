@@ -92,6 +92,12 @@ class LeadAssignmentRepository:
 
         return (
             self.db.query(LeadAssignment)
+            .join(
+                LeadAssignment.business
+            )
+            .join(
+                Business.lead_scores
+            )
             .options(
                 joinedload(
                     LeadAssignment.business
@@ -103,8 +109,12 @@ class LeadAssignmentRepository:
                 LeadAssignment.employee_id == employee_id,
                 LeadAssignment.is_active == True
             )
+            .order_by(
+                LeadScore.lead_score.desc()
+            )
             .all()
         )
+    
     
     def get_employee_followup_assignments(
     self,
@@ -175,6 +185,9 @@ class LeadAssignmentRepository:
 
         return (
             self.db.query(LeadAssignment)
+            .filter(
+                LeadAssignment.is_active == True
+            )
             .all()
         )
     

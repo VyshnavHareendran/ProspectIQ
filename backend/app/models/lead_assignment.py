@@ -76,12 +76,14 @@ class LeadAssignment(Base):
 
     employee = relationship(
         "User",
-        foreign_keys=[employee_id]
+        foreign_keys=[employee_id],
+        back_populates="employee_assignments"
     )
 
     admin = relationship(
         "User",
-        foreign_keys=[assigned_by]
+        foreign_keys=[assigned_by],
+        back_populates="admin_assignments"
     )
 
     call_logs = relationship(

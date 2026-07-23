@@ -234,3 +234,35 @@ class ReportService:
             "Call Logs"
 
         )
+    
+    def get_summary(self):
+
+        return self.repository.get_summary()
+    
+    def get_business_category_distribution(self):
+
+        return (
+            self.repository
+            .get_business_category_distribution()
+        )
+
+    def get_city_distribution(self):
+
+        return (
+            self.repository
+            .get_city_distribution()
+        )
+
+    def get_lead_score_chart(self):
+
+        return (
+            self.repository
+            .get_lead_score_chart()
+        )
+
+    def get_calls_per_employee_chart(self):
+
+        return (
+            self.repository
+            .get_calls_per_employee_chart()
+        )

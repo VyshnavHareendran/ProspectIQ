@@ -1,4 +1,5 @@
-import { reportMockData } from '../data/reportMockData'
+import httpClient from "../api/httpClient";
+import { reportMockData } from "../data/reportMockData";
 
 const matchesFilters = (business, filters) =>
   (!filters.employeeId || business.assignedTo === Number(filters.employeeId)) &&
@@ -8,26 +9,53 @@ export const reportsService = {
   // Replace this mock-backed method with GET /reports/summary, /reports/charts,
   // /reports/employee-performance and /reports/recent-activities when available.
   getReports: async (filters = {}) => {
+    const summaryResponse = await httpClient.get("/reports/summary");
+    const summary = summaryResponse.data;
+    const categoryResponse = await httpClient.get(
+    "/reports/category-distribution"
+    );
+    const cityResponse = await httpClient.get(
+        "/reports/city-distribution"
+    );
+
+    const cityDistribution = cityResponse.data;
+    const leadScoreResponse = await httpClient.get(
+        "/reports/lead-score-chart"
+    );
+    const callsPerEmployeeResponse = await httpClient.get(
+        "/reports/calls-per-employee"
+    );
+
+    const callsPerEmployeeChart =
+        callsPerEmployeeResponse.data;
+
+    const leadScoreChart = leadScoreResponse.data;
+
+    const categoryDistribution = categoryResponse.data;
+        
     const businesses = reportMockData.businesses.filter((business) => matchesFilters(business, filters))
     const employeeIds = new Set(businesses.map((business) => business.assignedTo))
-    const performance = reportMockData.employeePerformance
-      .filter((item) => !filters.employeeId || item.employeeId === Number(filters.employeeId))
-      .map((item) => ({ ...item, employee: reportMockData.employees.find((employee) => employee.id === item.employeeId)?.name || 'Unassigned' }))
 
     return {
       businesses,
       employees: reportMockData.employees,
-      employeePerformance: performance,
-      recentActivities: reportMockData.recentActivities,
       summary: {
-        totalBusinesses: businesses.length,
+        totalBusinesses: summary.total_businesses,
+        totalCalls: summary.calls_made,
+        interestedLeads: summary.interested_leads,
+        followUps: summary.follow_ups,
+        averageLeadScore: summary.average_lead_score,
+        activeEmployees: summary.active_employees,
+
+        // Keep these mock values temporarily until we connect their backend APIs
         assignedLeads: businesses.filter((business) => business.assignedTo).length,
-        totalCalls: performance.reduce((total, item) => total + item.callsMade, 0),
         todaysFollowups: reportMockData.todaysFollowups,
-        averageLeadScore: businesses.length ? Math.round(businesses.reduce((total, item) => total + item.leadScore, 0) / businesses.length) : 0,
-        activeEmployees: reportMockData.employees.filter((employee) => employee.role === 'EMPLOYEE' && employee.is_active).length,
         employeesWithLeads: employeeIds.size,
       },
+      categoryDistribution,
+      cityDistribution,
+      leadScoreChart,
+      callsPerEmployeeChart,
     }
   },
 

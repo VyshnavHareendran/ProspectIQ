@@ -9,6 +9,7 @@ from app.schemas.import_request import ImportRequest
 from app.repositories.upload_history_repository import (
     UploadHistoryRepository,
 )
+from app.repositories.lead_score_repository import LeadScoreRepository
 from app.repositories.business_repository import (
     BusinessRepository,
 )
@@ -59,6 +60,7 @@ class ImportService:
             request.mapping
         )
 
+
         dataframe = self._prepare_dataframe(dataframe)
 
         # Validate rows
@@ -97,6 +99,7 @@ class ImportService:
         businesses = []
 
         for row in ready_to_insert:
+        
 
             business = Business(
 
@@ -114,11 +117,9 @@ class ImportService:
                 if row.get("whatsapp_number")
                 else None,
 
-                email=row.get("email"),
-
-                website_url=row.get(
-                    "website_url"
-                ),
+                email = self._clean_value(row.get("email")),
+                
+                website_url = self._clean_value(row.get("website_url")),
 
                 address=str(row["address"]).strip(),
 
@@ -142,9 +143,7 @@ class ImportService:
                     "business_hours"
                 ),
 
-                remarks=row.get(
-                    "remarks"
-                ),
+                remarks = self._clean_value(row.get("remarks")),
 
                 data_source="CSV",
 
@@ -165,6 +164,9 @@ class ImportService:
                 self.business_repository.bulk_create(
                     businesses
                 )
+
+                lead_score_repository = LeadScoreRepository(self.db)
+                lead_score_repository.generate_all_scores()
 
             # Update upload history
             upload.total_records = len(dataframe)
