@@ -1,10 +1,7 @@
 import {
   Alert,
   Button,
-  Checkbox,
   CircularProgress,
-  FormControlLabel,
-  Link,
   Stack,
   TextField,
   Typography,
@@ -21,7 +18,6 @@ const LoginForm = ({ errorMessage = '', isLoading = false, onSubmit = noOp }) =>
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false,
     },
   })
 
@@ -78,51 +74,6 @@ const LoginForm = ({ errorMessage = '', isLoading = false, onSubmit = noOp }) =>
       />
 
       <PasswordField control={control} disabled={isLoading} />
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{ mt: '-4px !important' }}
-      >
-        <Controller
-          name="rememberMe"
-          control={control}
-          render={({ field }) => (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={field.value}
-                  disabled={isLoading}
-                  inputRef={field.ref}
-                  name={field.name}
-                  size="small"
-                  onBlur={field.onBlur}
-                  onChange={field.onChange}
-                />
-              }
-              label="Remember me"
-              sx={{
-                mr: 1,
-                '& .MuiFormControlLabel-label': {
-                  color: 'text.secondary',
-                  fontSize: '0.8125rem',
-                },
-              }}
-            />
-          )}
-        />
-
-        <Link
-          component="button"
-          type="button"
-          underline="hover"
-          disabled={isLoading}
-          sx={{ flexShrink: 0, fontSize: '0.8125rem', fontWeight: 600 }}
-        >
-          Forgot password?
-        </Link>
-      </Stack>
 
       <Button
         fullWidth

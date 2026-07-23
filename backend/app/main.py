@@ -33,6 +33,8 @@ from app.routes.employee_dashboard import (
 )
 from app.routes import profile
 
+from app.core.config import settings
+
 app = FastAPI(
     title="ProspectIQ",
     version="1.0.0"
@@ -44,7 +46,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
+        origin.strip()
+        for origin in settings.CORS_ORIGINS.split(",")
+        if origin.strip()
     ],
     allow_credentials=True,
     allow_methods=["*"],

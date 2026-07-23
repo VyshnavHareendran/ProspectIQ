@@ -11,6 +11,9 @@ import PhotoCameraRoundedIcon from "@mui/icons-material/PhotoCameraRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import { InfoRow, SettingsCard } from ".";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+
 export default function ProfileCard({
     user,
     onPhotoUpload,
@@ -30,11 +33,11 @@ export default function ProfileCard({
         alignItems="center"
       >
         <Avatar
-          src={
-            user.avatar_url
-              ? `http://localhost:8000${user.avatar_url}`
-              : undefined
-          }
+            src={
+              user.avatar_url
+                ? `${API_BASE_URL}${user.avatar_url}`
+                : undefined
+            }
           sx={{
             width: 90,
             height: 90,
