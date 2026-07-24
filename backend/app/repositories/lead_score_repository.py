@@ -187,7 +187,7 @@ class LeadScoreRepository:
     def get_feature_importance(self):
 
         return {
-            "image_url": "http://localhost:8000/static/feature_importance_yelp.png"
+            "image_url": "/static/feature_importance_yelp.png"
         }
     
 
