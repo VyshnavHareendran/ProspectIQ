@@ -13,6 +13,8 @@ import {
   CircularProgress,
   Button,
   Pagination,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import { dailyQueueApi } from "../../api/employee";
@@ -30,6 +32,8 @@ export default function TodaysCalls() {
     
     const [page, setPage] = useState(1);
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    
     const pageSize = 10;
 
     const loadQueue = async () => {
@@ -227,8 +231,29 @@ export default function TodaysCalls() {
                     setDialogOpen(false);
                     setSelectedLead(null);
                 }}
-                onSuccess={loadQueue}
+                onSuccess={() => {
+                    loadQueue();
+                    setSnackbarOpen(true);
+                }}
             />
+
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarOpen(false)}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                }}
+            >
+                <Alert
+                    severity="success"
+                    onClose={() => setSnackbarOpen(false)}
+                    sx={{ width: "100%" }}
+                >
+                    Call completed successfully
+                </Alert>
+            </Snackbar>
 
 
         </Box>
