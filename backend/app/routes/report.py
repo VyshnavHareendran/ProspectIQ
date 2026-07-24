@@ -1,5 +1,5 @@
 from typing import List
-
+from fastapi import Query
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -55,6 +55,14 @@ def get_report_summary(
 ):
 
     return get_service(db).get_summary()
+
+@router.get("/employees")
+def get_employees(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    return get_service(db).get_employees()
 
 @router.get(
     "/city-distribution",
@@ -322,13 +330,20 @@ def export_call_log_excel(
     "/export/pdf"
 )
 def export_pdf(
+    employee_id: int = None,
+    city: str = None,
+    start_date: str = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_admin)
 ):
 
     pdf = (
         get_service(db)
-        .export_professional_pdf()
+        .export_professional_pdf(
+            employee_id,
+            city,
+            start_date
+        )
     )
 
 
@@ -344,3 +359,4 @@ def export_pdf(
         }
 
     )
+

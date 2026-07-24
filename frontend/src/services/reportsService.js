@@ -1,6 +1,42 @@
 import httpClient from "../api/httpClient";
 import { reportMockData } from "../data/reportMockData";
 
+const getStartDate = (range)=>{
+
+ const today = new Date();
+
+ switch(range){
+
+ case "today":
+   return today.toISOString().split("T")[0];
+
+
+ case "last7":
+   today.setDate(today.getDate()-7);
+   return today.toISOString().split("T")[0];
+
+
+ case "last30":
+   today.setDate(today.getDate()-30);
+   return today.toISOString().split("T")[0];
+
+
+ case "last6months":
+   today.setMonth(today.getMonth()-6);
+   return today.toISOString().split("T")[0];
+
+
+ case "last1year":
+   today.setFullYear(today.getFullYear()-1);
+   return today.toISOString().split("T")[0];
+
+
+ default:
+   return null;
+ }
+
+}
+
 const matchesFilters = (business, filters) =>
   (!filters.employeeId || business.assignedTo === Number(filters.employeeId)) &&
   (!filters.city || business.city === filters.city)
@@ -11,6 +47,13 @@ export const reportsService = {
   getReports: async (filters = {}) => {
     const summaryResponse = await httpClient.get("/reports/summary");
     const summary = summaryResponse.data;
+    
+    const employeesResponse = await httpClient.get(
+      "/reports/employees"
+    );
+
+    const employees = employeesResponse.data;
+    
     const categoryResponse = await httpClient.get(
     "/reports/category-distribution"
     );
@@ -38,7 +81,20 @@ export const reportsService = {
 
     return {
       businesses,
-      employees: reportMockData.employees,
+
+      employees: employees.map((employee)=>({
+          id: employee.id,
+          name: employee.full_name
+      })),
+
+      cities: [
+        ...new Set(
+          cityDistribution.map(
+            (item) => item.city
+          )
+        )
+      ],
+
       summary: {
         totalBusinesses: summary.total_businesses,
         totalCalls: summary.calls_made,
@@ -61,8 +117,26 @@ export const reportsService = {
 
   // Replace with GET /reports/export once the backend provides file exports.
   exportReport: async (filters = {}) => {
-    const { businesses } = await reportsService.getReports(filters)
-    const rows = [['Business Name', 'City', 'Category', 'Lead Score'], ...businesses.map(({ name, city, category, leadScore }) => [name, city, category, leadScore])]
-    return rows.map((row) => row.join(',')).join('\n')
+
+      const startDate = getStartDate(
+          filters.dateRange
+      );
+
+
+      const response = await httpClient.get(
+          "/reports/export/pdf",
+          {
+              params: {
+                  employee_id: filters.employeeId || null,
+                  city: filters.city || null,
+                  start_date: startDate,
+              },
+
+              responseType: "blob",
+          }
+      );
+
+
+      return response.data;
   },
 }

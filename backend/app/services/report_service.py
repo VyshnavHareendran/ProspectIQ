@@ -271,16 +271,36 @@ class ReportService:
 
     def export_professional_pdf(
     self,
-    filters=None
+    employee_id=None,
+    city=None,
+    start_date=None
     ):
 
         summary = self.repository.get_summary()
 
-        businesses = self.repository.get_business_report()
+        businesses = (
+            self.repository
+            .get_filtered_business_report(
+                employee_id,
+                city,
+                start_date
+            )
+        )
 
-        calls = self.repository.get_call_log_report()
 
-        employees = []
+        calls = (
+            self.repository
+            .get_filtered_call_report(
+                employee_id,
+                start_date
+            )
+        )
+
+
+        employees = (
+            self.repository
+            .get_calls_per_employee_chart()
+        )
 
 
         return PDFExporter.generate(
@@ -289,3 +309,8 @@ class ReportService:
             calls,
             employees
         )
+
+
+    def get_employees(self):
+
+        return self.repository.get_employees()

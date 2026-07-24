@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { reportsService } from '../services/reportsService'
 
-const initialFilters = { dateRange: 'last30', employeeId: '', city: '' }
+const initialFilters = {
+  dateRange: "last30",
+  employeeId: "",
+  city: "",
+}
 
 const useReports = () => {
   const [filters, setFilters] = useState(initialFilters)

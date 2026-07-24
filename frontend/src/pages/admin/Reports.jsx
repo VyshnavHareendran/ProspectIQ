@@ -27,21 +27,23 @@ const Reports = () => {
     }))
 
   const handleExport = async () => {
-    const csv = await exportReport()
 
-    const link = document.createElement('a')
+    const pdf = await exportReport()
+
+    const link = document.createElement("a")
 
     link.href = URL.createObjectURL(
-      new Blob([csv], {
-        type: 'text/csv;charset=utf-8;',
+      new Blob([pdf], {
+        type: "application/pdf",
       })
     )
 
-    link.download = 'reports.csv'
+    link.download = "ProspectIQ_Report.pdf"
 
     link.click()
 
     URL.revokeObjectURL(link.href)
+
   }
 
   return (
@@ -59,6 +61,7 @@ const Reports = () => {
 
         <ReportFilters
           employees={data?.employees}
+          cities={data?.cities}
           filters={filters}
           onChange={updateFilter}
           onExport={handleExport}

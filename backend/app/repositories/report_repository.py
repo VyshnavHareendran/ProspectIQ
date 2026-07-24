@@ -221,19 +221,16 @@ class ReportRepository:
                 .filter(
                     LeadAssignment.employee_id == employee_id
                 )
-                .distinct()
             )
 
 
         if city:
-
             query = query.filter(
                 Business.city == city
             )
 
 
         if start_date:
-
             query = query.filter(
                 Business.created_at >= start_date
             )
@@ -248,27 +245,43 @@ class ReportRepository:
         )
 
     def get_filtered_call_report(
-        self,
-        employee_id=None,
-        start_date=None
+    self,
+    employee_id=None,
+    start_date=None
     ):
 
         query = self.db.query(CallLog)
 
+
         if employee_id:
+
             query = query.filter(
                 CallLog.employee_id == employee_id
             )
 
+
         if start_date:
+
             query = query.filter(
                 CallLog.created_at >= start_date
             )
+
 
         return (
             query
             .order_by(
                 CallLog.created_at.desc()
+            )
+            .all()
+        )
+
+    def get_employees(self):
+
+        return (
+            self.db.query(User)
+            .filter(
+                User.role == "EMPLOYEE",
+                User.is_active == True
             )
             .all()
         )
