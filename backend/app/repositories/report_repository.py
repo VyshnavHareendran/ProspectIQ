@@ -3,10 +3,12 @@ from sqlalchemy.orm import Session
 from app.models.business import Business
 from app.models.upload_history import UploadHistory
 from app.models.call_log import CallLog
+from datetime import datetime, timedelta
 
 from sqlalchemy import func
 from app.models.user import User
 from app.models.lead_score import LeadScore
+from app.models.lead_assignment import LeadAssignment
 
 class ReportRepository:
 
@@ -192,3 +194,81 @@ class ReportRepository:
             }
             for employee_name, calls_made in results
         ]
+
+    def get_filtered_business_report(
+    self,
+    employee_id=None,
+    city=None,
+    start_date=None
+    ):
+
+        query = (
+            self.db.query(Business)
+            .filter(
+                Business.is_active == True
+            )
+        )
+
+
+        if employee_id:
+
+            query = (
+                query
+                .join(
+                    LeadAssignment,
+                    Business.id == LeadAssignment.business_id
+                )
+                .filter(
+                    LeadAssignment.employee_id == employee_id
+                )
+                .distinct()
+            )
+
+
+        if city:
+
+            query = query.filter(
+                Business.city == city
+            )
+
+
+        if start_date:
+
+            query = query.filter(
+                Business.created_at >= start_date
+            )
+
+
+        return (
+            query
+            .order_by(
+                Business.created_at.desc()
+            )
+            .all()
+        )
+
+    def get_filtered_call_report(
+        self,
+        employee_id=None,
+        start_date=None
+    ):
+
+        query = self.db.query(CallLog)
+
+        if employee_id:
+            query = query.filter(
+                CallLog.employee_id == employee_id
+            )
+
+        if start_date:
+            query = query.filter(
+                CallLog.created_at >= start_date
+            )
+
+        return (
+            query
+            .order_by(
+                CallLog.created_at.desc()
+            )
+            .all()
+        )

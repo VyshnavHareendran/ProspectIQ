@@ -4,6 +4,7 @@ from app.repositories.report_repository import (
 
 from app.utils.csv_export import CSVExporter
 from app.utils.excel_export import ExcelExporter
+from app.utils.pdf_export import PDFExporter
 
 class ReportService:
 
@@ -265,4 +266,26 @@ class ReportService:
         return (
             self.repository
             .get_calls_per_employee_chart()
+        )
+
+
+    def export_professional_pdf(
+    self,
+    filters=None
+    ):
+
+        summary = self.repository.get_summary()
+
+        businesses = self.repository.get_business_report()
+
+        calls = self.repository.get_call_log_report()
+
+        employees = []
+
+
+        return PDFExporter.generate(
+            summary,
+            businesses,
+            calls,
+            employees
         )

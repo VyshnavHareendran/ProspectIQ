@@ -317,3 +317,30 @@ def export_call_log_excel(
         }
 
     )
+
+@router.get(
+    "/export/pdf"
+)
+def export_pdf(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_admin)
+):
+
+    pdf = (
+        get_service(db)
+        .export_professional_pdf()
+    )
+
+
+    return StreamingResponse(
+
+        pdf,
+
+        media_type="application/pdf",
+
+        headers={
+            "Content-Disposition":
+            "attachment; filename=ProspectIQ_Report.pdf"
+        }
+
+    )
