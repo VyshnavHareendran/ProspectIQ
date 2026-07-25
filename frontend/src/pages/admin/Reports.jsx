@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Alert, Box, Grid, Snackbar, Stack, Typography } from '@mui/material'
 import BusinessCategoryChart from '../../components/reports/BusinessCategoryChart'
 import CallsChart from '../../components/reports/CallsChart'
@@ -6,6 +7,7 @@ import LeadScoreChart from '../../components/reports/LeadScoreChart'
 import ReportFilters from '../../components/reports/ReportFilters'
 import ReportSummaryCards from '../../components/reports/ReportSummaryCards'
 import useReports from '../../hooks/useReports'
+import { settingsApi } from '../../api/admin/settingsApi'
 
 const Reports = () => {
   const {
@@ -17,6 +19,45 @@ const Reports = () => {
     setError,
     setFilters,
   } = useReports()
+
+    const [dashboardSettings, setDashboardSettings] = useState({
+        recentActivities: true,
+        statistics: true,
+        charts: true,
+    });
+
+    useEffect(() => {
+
+      const loadSettings = async () => {
+
+        try {
+
+          const response = await settingsApi.getDashboard();
+
+          setDashboardSettings({
+            recentActivities: response.data.recent_activities,
+            statistics: response.data.statistics,
+            charts: response.data.charts,
+          });
+
+        } catch (error) {
+
+          console.error(
+            "Unable to load report settings",
+            error
+          );
+
+        }
+
+      };
+
+
+      loadSettings();
+
+    }, []);
+
+  
+  
 
   const hasData = data?.businesses?.length > 0
 
@@ -69,12 +110,21 @@ const Reports = () => {
 
         {loading || hasData ? (
           <>
-            <ReportSummaryCards
-              loading={loading}
-              summary={data?.summary}
-            />
+            {
+              dashboardSettings.statistics && (
 
-            <Grid container spacing={2.5}>
+                <ReportSummaryCards
+                    loading={loading}
+                    summary={data?.summary}
+                />
+
+              )
+            }
+
+            {
+              dashboardSettings.charts && (
+
+              <Grid container spacing={2.5}>
               <Grid size={{ xs: 12, lg: 6 }}>
                 <LeadScoreChart
                     data={data?.businesses}
@@ -107,6 +157,8 @@ const Reports = () => {
                 />
               </Grid>
             </Grid>
+              )
+            } 
           </>
         ) : (
           <Typography
